@@ -6,9 +6,11 @@ import SocialMediaLinks from 'src/components/molecules/anchor/social-media';
 export default function Home() {
   return (
     <>
-      <div className="h-36 sm:h-40 w-full" />
-      <div className="w-full max-w-2xl mt-8">
-        <H1 className="drop-shadow-lg">Software Engineer. Freelancer.</H1>
+      <div className="h-36 sm:h-48 w-full" />
+      <div className="w-full max-w-2xl">
+        <H1 className="drop-shadow-lg max-w-md lg:max-w-xl">
+          Software Engineer. Freelancer.
+        </H1>
         <P>
           {`Hello, I'm Sekhudin. I'm `}
           <span className="font-semibold">{'a software engineer '}</span>
