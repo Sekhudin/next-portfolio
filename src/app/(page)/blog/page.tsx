@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { cn } from 'src/utils';
 
 export const metadata: Metadata = {
   title: 'Blog | Sekhudin',
@@ -8,6 +7,10 @@ export const metadata: Metadata = {
   Stay informed, enhance your skills, and join a community passionate about the ever-evolving tech landscape.`,
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default function Page() {
+  return (
+    <>
+      <div>blog</div>
+    </>
+  );
 }

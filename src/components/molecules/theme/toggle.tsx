@@ -26,8 +26,11 @@ export default function ThemeToggle({ className, ...props }: PropsWithClassName)
       size="fit"
       aria-label="toggle dark-theme"
       onClick={onClickHandler}>
-      <SunIcon className="dark:hidden h-6 w-6" />
-      <MoonStarIcon className="hidden dark:block h-6 w-6 stroke-indigo-700 group-hover:fill-indigo-700/25" />
+      <SunIcon className="dark:hidden h-5 w-5 sm:h-6 sm:w-6" />
+      <MoonStarIcon
+        className="hidden dark:block h-5 w-5 sm:h-6 sm:w-6
+      stroke-indigo-700 group-hover:fill-indigo-700/25"
+      />
     </Button>
   );
 }

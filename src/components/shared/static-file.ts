@@ -1,3 +1,3 @@
-import avatar from 'public/images/sekhudin.jpeg';
+import avatar from 'public/images/sekhudin.webp';
 
 export { avatar };

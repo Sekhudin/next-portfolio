@@ -1,21 +1,62 @@
-import { cn, PropsWithChildren } from 'src/utils';
+import React, { AnchorHTMLAttributes } from 'react';
+import { cn, PropsWithChildren, PropsWithClassName } from 'src/utils';
 
 export const P = ({ children, className }: PropsWithChildren) => (
-  <p className={cn(`leading-7 [&:not(:first-child)]:mt-6`, className)}>{children}</p>
+  <p
+    className={cn(
+      `leading-7 [&:not(:first-child)]:mt-6 font-light text-zinc-800 dark:text-zinc-300`,
+      className
+    )}>
+    {children}
+  </p>
 );
 
 export const Lead = ({ children, className }: PropsWithChildren) => (
-  <p className={cn(`text-xl text-muted-foreground`, className)}>{children}</p>
+  <p className={cn(`text-xl text-muted-foreground text-zinc-800 dark:text-zinc-300`, className)}>
+    {children}
+  </p>
 );
 
 export const Large = ({ children, className }: PropsWithChildren) => (
-  <div className={cn(`text-lg font-semibold`, className)}>{children}</div>
+  <div className={cn(`text-lg font-semibold text-zinc-800 dark:text-zinc-300`, className)}>
+    {children}
+  </div>
 );
 
 export const Small = ({ children, className }: PropsWithChildren) => (
-  <small className={cn(`text-sm font-medium leading-none`, className)}>{children}</small>
+  <small
+    className={cn(`text-sm font-medium leading-none text-zinc-800 dark:text-zinc-300`, className)}>
+    {children}
+  </small>
 );
 
 export const Muted = ({ children, className }: PropsWithChildren) => (
   <p className={cn(`text-sm text-muted-foreground`, className)}>{children}</p>
 );
+
+export type AnchorProps = PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement>>;
+export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <a
+        className={cn(
+          `font-semibold text-zinc-800 dark:text-indigo-700 hover:lg:underline lg:underline-offset-2`,
+          className
+        )}
+        {...props}>
+        {children}
+      </a>
+    );
+  }
+);
+Anchor.displayName = 'Anchor';
+// export const Anchor = ({ children, className, ...props }: AnchorProps) => (
+//   <a
+//     className={cn(
+//       `font-semibold text-zinc-800 dark:text-indigo-700 hover:lg:underline lg:underline-offset-2`,
+//       className
+//     )}
+//     {...props}>
+//     {children}
+//   </a>
+// );

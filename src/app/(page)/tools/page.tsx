@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { cn } from 'src/utils';
 
 export const metadata: Metadata = {
   title: 'Tools | Sekhudin',
@@ -8,6 +7,10 @@ export const metadata: Metadata = {
   creativity and efficiency at every stage of development.`,
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default function Page() {
+  return (
+    <>
+      <div>tools</div>
+    </>
+  );
 }
