@@ -17,11 +17,24 @@ import { NavigationItem, navigation } from './navigation-main-item';
 export default function NavigationMain({ children, className }: PropsWithChildren) {
   const [open, setOpen] = React.useState<boolean>();
   const pathName = usePathname();
-  const match = (v: string) => pathName.includes(v);
+  const isMatch = (v: string) => pathName.includes(v);
 
   const closeHndler = () => {
     setOpen(false);
   };
+
+  React.useEffect(() => {
+    const evenListener = () => {
+      if (open) {
+        closeHndler();
+        return;
+      }
+    };
+    window.addEventListener('resize', evenListener);
+    return () => {
+      window.removeEventListener('resize', evenListener);
+    };
+  }, [open]);
 
   return (
     <Dialog modal open={open} onOpenChange={setOpen}>
@@ -33,7 +46,7 @@ export default function NavigationMain({ children, className }: PropsWithChildre
           className={cn(`bg-white/10 dark:bg-zinc-90/10 backdrop-blur-sm`, className)}
         />
         <DialogRootContent
-          className="h-fit fixed top-6 inset-4 z-50
+          className="md:hidden h-fit fixed top-6 inset-4 z-50
         bg-white dark:bg-secondary border dark:border-zinc-700 rounded-3xl py-8 px-6">
           <h3 className="text-sm font-bold mb-2">Navigation</h3>
           <Separator orientation="horizontal" className="mb-2 dark:bg-zinc-700/50" />
@@ -44,9 +57,8 @@ export default function NavigationMain({ children, className }: PropsWithChildre
                 href={nav}
                 onClick={closeHndler}
                 className={cn(
-                  `font-medium dark:font-medium rounded-md shadow-none hover:bg-indigo-700/20 dark:hover:bg-zinc-700/30 px-2 py-1.5`,
-                  `${match(nav) && 'text-indigo-600 bg-indigo-700/20 dark:bg-zinc-700/30'}`,
-                  'duration-300'
+                  `hover:bg-indigo-700/10 hover:text-indigo-700 rounded-md px-2 py-1.5`,
+                  `${isMatch(nav) ? `bg-indigo-700/10 text-indigo-700 dark:text-indigo-700` : null}`
                 )}>
                 {nav}
               </NavigationItem>

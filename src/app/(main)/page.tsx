@@ -6,7 +6,7 @@ import SocialMediaLinks from 'src/components/molecules/anchor/social-media';
 export default function Home() {
   return (
     <>
-      <div className="h-36 sm:h-48 w-full" />
+      <div className="h-44 sm:h-48 w-full" />
       <div className="w-full max-w-2xl">
         <H1 className="drop-shadow-lg max-w-md lg:max-w-xl">
           Software Engineer. Freelancer.

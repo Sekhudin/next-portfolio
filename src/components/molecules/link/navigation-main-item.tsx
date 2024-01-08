@@ -9,8 +9,7 @@ export const NavigationItem = ({ className, children, ...props }: PropsWithChild
     <Link {...props}>
       <div
         className={cn(
-          `text-sm font-semibold text-zinc-800 dark:text-zinc-300 first-letter:uppercase duration-500 hover:text-indigo-600
-          hover:md:drop-shadow-xl md:shadow-indigo-800`,
+          `text-sm font-semibold first-letter:uppercase text-zinc-800 dark:text-zinc-300 duration-300`,
           className
         )}>
         {children}

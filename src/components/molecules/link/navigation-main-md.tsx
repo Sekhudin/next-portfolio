@@ -6,7 +6,7 @@ import { NavigationItem, navigation } from './navigation-main-item';
 
 export default function MainNaigation({ className }: PropsWithChildren) {
   const pathName = usePathname();
-  const match = (v: string) => pathName.includes(v);
+  const isMatch = (v: string) => pathName.includes(v);
   return (
     <div
       className={cn(
@@ -17,7 +17,10 @@ export default function MainNaigation({ className }: PropsWithChildren) {
         <NavigationItem
           key={key}
           href={nav}
-          className={`${match(nav) && 'text-indigo-600 after:visible'}`}>
+          className={cn(
+            `hover:text-indigo-700`,
+            `${isMatch(nav) ? 'text-indigo-700 dark:text-indigo-700' : ''}`
+          )}>
           {nav}
         </NavigationItem>
       ))}
