@@ -1,5 +1,6 @@
 'use client';
 import { Button } from 'src/components/ui/button';
+import { Span } from 'src/components/atoms/typography/p';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function Translate({ className }: PropsWithClassName) {
@@ -14,7 +15,7 @@ export default function Translate({ className }: PropsWithClassName) {
       variant="outline"
       outlineFor="dark"
       onClick={onClickHandler}>
-      <p className="h-6 w-6 flex items-center justify-center">EN</p>
+      <Span className="h-6 w-6 flex items-center justify-center font-normal">EN</Span>
     </Button>
   );
 }

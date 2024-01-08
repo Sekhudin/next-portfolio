@@ -1,5 +1,5 @@
 import { H1 } from 'src/components/atoms/typography/h';
-import { P, Anchor } from 'src/components/atoms/typography/p';
+import { P } from 'src/components/atoms/typography/p';
 import HashnodeLink from 'src/components/molecules/anchor/hash-node';
 import SocialMediaLinks from 'src/components/molecules/anchor/social-media';
 

@@ -1,5 +1,5 @@
-import React, { AnchorHTMLAttributes } from 'react';
-import { cn, PropsWithChildren, PropsWithClassName } from 'src/utils';
+import React, { AnchorHTMLAttributes, HTMLAttributes } from 'react';
+import { cn, PropsWithChildren } from 'src/utils';
 
 export const P = ({ children, className }: PropsWithChildren) => (
   <p
@@ -9,6 +9,26 @@ export const P = ({ children, className }: PropsWithChildren) => (
     )}>
     {children}
   </p>
+);
+
+export const Div = ({
+  children,
+  className,
+  ...props
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) => (
+  <div className={cn(`font-light text-zinc-800 dark:text-zinc-300`, className)} {...props}>
+    {children}
+  </div>
+);
+
+export const Span = ({
+  children,
+  className,
+  ...props
+}: PropsWithChildren<HTMLAttributes<HTMLSpanElement>>) => (
+  <span className={cn(`font-light text-zinc-800 dark:text-zinc-300`, className)} {...props}>
+    {children}
+  </span>
 );
 
 export const Lead = ({ children, className }: PropsWithChildren) => (
@@ -40,7 +60,7 @@ export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>(
     return (
       <a
         className={cn(
-          `font-semibold text-zinc-800 dark:text-indigo-700 hover:lg:underline lg:underline-offset-2`,
+          `font-semibold text-indigo-700 hover:lg:underline lg:underline-offset-2`,
           className
         )}
         {...props}>
@@ -50,13 +70,3 @@ export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>(
   }
 );
 Anchor.displayName = 'Anchor';
-// export const Anchor = ({ children, className, ...props }: AnchorProps) => (
-//   <a
-//     className={cn(
-//       `font-semibold text-zinc-800 dark:text-indigo-700 hover:lg:underline lg:underline-offset-2`,
-//       className
-//     )}
-//     {...props}>
-//     {children}
-//   </a>
-// );

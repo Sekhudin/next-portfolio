@@ -13,10 +13,10 @@ export function Header({ className }: PropsWithClassName) {
       )}>
       <div className="w-full h-full flex items-center justify-center px-4 sm:px-16 lg:px-28">
         <div className="w-full max-w-2xl lg:max-w-5xl flex justify-between space-x-2 lg:space-x-4">
-          <div className="flex items-center justify-start">
+          <div className="h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-start">
             <AvatarMain
               className="h-10 w-10 sm:h-12 sm:w-12"
-              mainClassName="fixed top-32 h-20 w-20 sm:h-24 sm:w-24"
+              mainClassName="fixed top-32 h-20 w-20 sm:h-24 sm:w-24 text-4xl"
             />
           </div>
 
