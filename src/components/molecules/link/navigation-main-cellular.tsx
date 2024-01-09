@@ -12,7 +12,8 @@ import {
 } from 'src/components/ui/dialog';
 import { Separator } from 'src/components/ui/separator';
 import { cn, PropsWithChildren } from 'src/utils';
-import { NavigationItem, navigation } from './navigation-main-item';
+import { MAIN } from 'src/config/link';
+import NavigationItem from './navigation-item';
 
 export default function NavigationMain({ children, className }: PropsWithChildren) {
   const [open, setOpen] = React.useState<boolean>();
@@ -51,16 +52,18 @@ export default function NavigationMain({ children, className }: PropsWithChildre
           <h3 className="text-sm font-bold mb-2">Navigation</h3>
           <Separator orientation="horizontal" className="mb-2 dark:bg-zinc-700/50" />
           <div className={cn(`flex flex-col space-y-1`)}>
-            {navigation.map((nav, key) => (
+            {MAIN.map((v, key) => (
               <NavigationItem
                 key={key}
-                href={nav}
+                href={v.href}
                 onClick={closeHndler}
                 className={cn(
                   `hover:bg-indigo-700/10 hover:text-indigo-700 rounded-md px-2 py-1.5`,
-                  `${isMatch(nav) ? `bg-indigo-700/10 text-indigo-700 dark:text-indigo-700` : null}`
+                  `${
+                    isMatch(v.href) ? `bg-indigo-700/10 text-indigo-700 dark:text-indigo-700` : null
+                  }`
                 )}>
-                {nav}
+                {v.name}
               </NavigationItem>
             ))}
           </div>

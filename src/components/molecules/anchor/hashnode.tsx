@@ -1,6 +1,6 @@
 import { Anchor, AnchorProps } from 'src/components/atoms/typography/p';
-import { HASHNODE } from 'src/config/anchor-link';
 import { cn, PropsWithClassName } from 'src/utils';
+import { HASHNODE } from 'src/config/anchor';
 
 export default function AnchorToHashnode({
   className,

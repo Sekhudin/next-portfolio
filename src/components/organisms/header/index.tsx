@@ -4,11 +4,12 @@ import AvatarMain from 'src/components/molecules/link/avatar-main';
 import NavigationMain from 'src/components/molecules/link/navigation-main';
 import { cn, PropsWithClassName } from 'src/utils';
 
-export function Header({ className }: PropsWithClassName) {
+export default function Header({ className }: PropsWithClassName) {
   return (
     <header
       className={cn(
-        `h-16 sm:h-[70px] fixed top-0 inset-x-0 bg-white/20 dark:bg-zinc-900/20 backdrop-blur-sm`,
+        `h-16 sm:h-[70px] fixed top-0 inset-x-0 z-10 bg-white/20
+        dark:bg-zinc-900/20 backdrop-blur-sm`,
         className
       )}>
       <div className="w-full h-full flex items-center justify-center px-4 sm:px-16 lg:px-28">
@@ -35,6 +36,6 @@ export function Header({ className }: PropsWithClassName) {
   );
 }
 
-export function HeaderSpace({ className }: PropsWithClassName) {
+export function HeaderGap({ className }: PropsWithClassName) {
   return <div className={cn(`w-full h-16 sm:h-[70px]`, className)} />;
 }

@@ -1,19 +1,18 @@
 import { ScrollArea } from 'src/components/ui/scroll-area';
-import Container from 'src/components/atoms/container';
-import { Header, HeaderSpace } from 'src/components/organisms/header';
-import { Footer } from 'src/components/organisms/footer';
+import Container, { ContainerGapTop, ContainerGapBottom } from 'src/components/atoms/container';
+import { HeaderGap } from 'src/components/organisms/header';
+import Footer from 'src/components/organisms/footer';
 
 export default function Layout({ children, ...props }: React.PropsWithChildren) {
   return (
-    <>
-      <Header className="z-10" />
-      <ScrollArea className="h-screen w-screen overflow-x-hidden">
-        <main className="min-h-screen h-fit flex flex-col">
-          <HeaderSpace />
-          <Container>{children}</Container>
-          <Footer />
-        </main>
-      </ScrollArea>
-    </>
+    <ScrollArea type="scroll" className="h-screen w-screen overflow-x-hidden">
+      <main className="min-h-screen h-fit flex flex-col">
+        <HeaderGap />
+        <Container header={<ContainerGapTop />} footer={<ContainerGapBottom />}>
+          {children}
+        </Container>
+        <Footer />
+      </main>
+    </ScrollArea>
   );
 }

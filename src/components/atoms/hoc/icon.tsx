@@ -5,7 +5,11 @@ export type HOCIcon = ReturnType<typeof HOC>;
 export default function HOC(IconElement: LucideIcon) {
   const Icon = ({ className, ...props }: LucideProps) => (
     <IconElement
-      className={cn(`h-5 w-5 stroke-zinc-800 dark:stroke-indigo-700`, className)}
+      className={cn(
+        `h-6 w-6 stroke-zinc-500 group-hover:stroke-zinc-600/90
+      dark:stroke-zinc-600 dark:group-hover:stroke-indigo-800`,
+        className
+      )}
       {...props}
     />
   );

@@ -17,7 +17,7 @@ export default function AnchorTooltip({
   return (
     <TooltipProvider delayDuration={300}>
       <Tooltip defaultOpen={false}>
-        <TooltipTrigger asChild className={cn(``)}>
+        <TooltipTrigger asChild className={cn(`group`)}>
           <Anchor className={cn(``, className)} {...props}>
             {children}
           </Anchor>
