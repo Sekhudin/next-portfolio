@@ -5,7 +5,7 @@ import { cn, PropsWithClassName } from 'src/utils';
 export default function DescriptionSection({ className }: PropsWithClassName) {
   return (
     <Div className={cn(``, className)}>
-      <H1 className="w-11/12 lg:w-full drop-shadow-lg tracking-widest">
+      <H1 className="w-11/12 lg:w-full drop-shadow-lg">
         {`I'm Sekhudin. Crafting a brighter future through code.`}
       </H1>
       <P>
