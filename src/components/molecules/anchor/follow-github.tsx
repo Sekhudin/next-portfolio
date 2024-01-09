@@ -4,5 +4,5 @@ import HOC from './follow-hoc';
 
 const AnchorGithub = HOC(GITHUB);
 export default function FollowGithub({ className }: PropsWithClassName) {
-  return <AnchorGithub href="/" className={cn(``, className)} />;
+  return <AnchorGithub href={GITHUB.href} className={cn(``, className)} />;
 }

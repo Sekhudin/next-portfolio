@@ -7,7 +7,7 @@ export default function HOC(IconElement: LucideIcon) {
     <IconElement
       className={cn(
         `h-6 w-6 stroke-zinc-500 group-hover:stroke-zinc-600/90
-      dark:stroke-zinc-600 dark:group-hover:stroke-indigo-800`,
+      dark:stroke-zinc-600 dark:lg:group-hover:stroke-indigo-800`,
         className
       )}
       {...props}

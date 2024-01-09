@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import { PlainAnchor, type AnchorProps } from 'src/components/atoms/typography/p';
-import ICON from 'src/components/atoms/hoc/rounded-icon';
+import ICON from 'src/components/atoms/hoc/icon';
 import { cn } from 'src/utils';
 import type { BaseContact } from 'src/config/types';
 
@@ -13,7 +13,7 @@ export default function HOC(icon: LucideIcon, v: BaseContact) {
         className
       )}
       {...props}>
-      <IconComponent />
+      <IconComponent className="h-5 w-5" />
       <span>{v.contact}</span>
     </PlainAnchor>
   );

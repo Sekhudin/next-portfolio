@@ -6,7 +6,7 @@ export default function AboutProfile({ className }: PropsWithClassName) {
   return (
     <div
       className={cn(
-        `relative w-72 h-72 rounded-xl overflow-hidden rotate-6 drop-shadow-lg
+        `relative w-72 h-72 lg:w-11/12 lg:h-96 rounded-xl overflow-hidden rotate-3 drop-shadow-lg
         lg:shadow-2xl lg:dark:shadow-indigo-700/50 lg:dark:shadow-2xl`,
         className
       )}>

@@ -1,9 +1,10 @@
 import { MessageCircleMoreIcon } from 'lucide-react';
 import { cn, PropsWithClassName } from 'src/utils';
-import { WA } from 'src/config/contact';
+import { WA, whatsapp } from 'src/config/contact';
 import HOC from './contact-hoc';
 
 const AnchorWhatsapp = HOC(MessageCircleMoreIcon, WA);
 export default function ContactWhatsapp({ className }: PropsWithClassName) {
-  return <AnchorWhatsapp href="/" className={cn(``, className)} />;
+  const wa = whatsapp(WA.contact);
+  return <AnchorWhatsapp className={cn(``, className)} href={wa.anchor} target="_blank" />;
 }

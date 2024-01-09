@@ -1,7 +1,11 @@
 import { cn, PropsWithChildren, PropsWithClassName } from 'src/utils';
 
 export const ContainerGapTop = ({ className }: PropsWithClassName) => (
-  <div className={cn(`h-36`, className)} />
+  <div className={cn(`h-32`, className)} />
+);
+
+export const DynamicGapTop = ({ className }: PropsWithClassName) => (
+  <div className={cn(`h-16 sm:h-32`, className)} />
 );
 
 export const ContainerGapBottom = ({ className }: PropsWithClassName) => (

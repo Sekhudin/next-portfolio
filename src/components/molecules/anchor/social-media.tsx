@@ -11,12 +11,7 @@ export default function AnchorSocialMedia({ className }: PropsWithClassName) {
         className
       )}>
       {SOCIAL_MEDIA.map((v, key) => (
-        <SocialMediaItem
-          key={key}
-          tooltip={v.tooltip}
-          href={v.href}
-          target="_blank"
-          aria-label={v.name}>
+        <SocialMediaItem key={key} tooltip={v.tooltip} href={v.href} aria-label={v.name}>
           <v.IconComponent className="dark:h-5 dark:w-5" />
         </SocialMediaItem>
       ))}

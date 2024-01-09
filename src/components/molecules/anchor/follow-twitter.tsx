@@ -4,5 +4,5 @@ import HOC from './follow-hoc';
 
 const AnchorTwitter = HOC(TWITTER);
 export default function FollowTwitter({ className }: PropsWithClassName) {
-  return <AnchorTwitter href="/" className={cn(``, className)} />;
+  return <AnchorTwitter href={TWITTER.href} className={cn(``, className)} />;
 }

@@ -5,5 +5,5 @@ import HOC from './contact-hoc';
 
 const AnchorGmail = HOC(MailIcon, GMAIL);
 export default function ContactGmail({ className }: PropsWithClassName) {
-  return <AnchorGmail href="/" className={cn(``, className)} />;
+  return <AnchorGmail className={cn(``, className)} href={`mailto:${GMAIL.contact}`} />;
 }
