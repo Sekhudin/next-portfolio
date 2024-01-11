@@ -1,15 +1,15 @@
 import type { LucideIcon } from 'lucide-react';
-import { type HOCIcon } from 'src/components/atoms/hoc/rounded-icon';
 
-export type BaseSocialMedia = BaseAnchor & {
-  plainIcon: LucideIcon;
-  IconComponent: HOCIcon;
-};
-export type BaseContact = Omit<BaseAnchor, 'href'> & { contact: string };
+export type BaseContact = BaseAnchor & { icon: LucideIcon };
 export type BaseLink = BaseAnchor;
+export type BaseSocialMedia = BaseAnchor & { icon: LucideIcon };
+export type BaseTools = {
+  title: string;
+  stacks: Omit<BaseAnchor & { sub: string }, 'tooltip'>[];
+};
 export type BaseAnchor = {
-  name: string;
+  display: string;
   href: string;
-  alt: string;
   tooltip: string;
+  ariaLabel: string;
 };

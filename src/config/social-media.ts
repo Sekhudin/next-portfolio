@@ -1,41 +1,36 @@
 import { GithubIcon, LinkedinIcon, InstagramIcon, TwitterIcon } from 'lucide-react';
-import HOC from 'src/components/atoms/hoc/rounded-icon';
 import type { BaseSocialMedia } from './types';
 
 export const GITHUB: BaseSocialMedia = {
-  name: 'Github',
+  display: 'Github',
   href: 'https://github.com/Sekhudin',
   tooltip: 'Sekhudin',
-  alt: 'Follow on Github',
-  plainIcon: GithubIcon,
-  IconComponent: HOC(GithubIcon),
+  ariaLabel: 'Follow on Github',
+  icon: GithubIcon,
 };
 
 export const LINKEDIN: BaseSocialMedia = {
-  name: 'Linkedin',
+  display: 'Linkedin',
   href: 'https://www.linkedin.com/in/sekhudin/',
   tooltip: 'Sekhudin',
-  alt: 'Follow on Linkedin',
-  plainIcon: LinkedinIcon,
-  IconComponent: HOC(LinkedinIcon),
+  ariaLabel: 'Follow on Linkedin',
+  icon: LinkedinIcon,
 };
 
 export const TWITTER: BaseSocialMedia = {
-  name: 'Twitter',
+  display: 'Twitter',
   href: 'https://twitter.com/sekhudin_y',
   tooltip: 'Sekhudin_y',
-  alt: 'Follow on Twitter',
-  plainIcon: TwitterIcon,
-  IconComponent: HOC(TwitterIcon),
+  ariaLabel: 'Follow on Twitter',
+  icon: TwitterIcon,
 };
 
 export const IG: BaseSocialMedia = {
-  name: 'Instagram',
+  display: 'Instagram',
   href: 'https://www.instagram.com/sekhudin_y/',
   tooltip: 'Sekhudin_y',
-  alt: 'Follow on IG',
-  plainIcon: InstagramIcon,
-  IconComponent: HOC(InstagramIcon),
+  ariaLabel: 'Follow on IG',
+  icon: InstagramIcon,
 };
 
 export const SOCIAL_MEDIA: BaseSocialMedia[] = [GITHUB, LINKEDIN, TWITTER, IG];

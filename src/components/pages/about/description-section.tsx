@@ -1,10 +1,14 @@
 import { H1 } from 'src/components/atoms/typography/h';
-import { Div, SpanPoint, P, Anchor } from 'src/components/atoms/typography/p';
+import { SpanPoint, P } from 'src/components/atoms/typography/p';
+import {
+  AnchorKampurMerdeka,
+  AnchorOrbitFutureAcademy,
+} from 'src/components/molecules/anchor/anchor';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function DescriptionSection({ className }: PropsWithClassName) {
   return (
-    <Div className={cn(``, className)}>
+    <div className={cn(``, className)}>
       <H1 className="w-11/12 lg:w-full drop-shadow-lg">
         {`I'm Sekhudin. Crafting a brighter future through code.`}
       </H1>
@@ -24,15 +28,11 @@ export default function DescriptionSection({ className }: PropsWithClassName) {
         {`In addition to my journey, I have `}
         <SpanPoint>{`actively explored various bootcamps`}</SpanPoint>
         {` and dedicated `}
-        <SpanPoint>{`six months to the enriching`}</SpanPoint>
-        <Anchor
-          href="https://kampusmerdeka.kemdikbud.go.id/"
-          target="_blank">{` Kampus Merdeka `}</Anchor>
-        <SpanPoint>{`program`}</SpanPoint>
+        <SpanPoint>{`six months to the enriching `}</SpanPoint>
+        <AnchorKampurMerdeka target="_blank" />
+        <SpanPoint>{` program`}</SpanPoint>
         {` at `}
-        <Anchor
-          href="https://orbitfutureacademy.id/"
-          target="_blank">{`Orbit Future Academy.`}</Anchor>
+        <AnchorOrbitFutureAcademy target="_blank" className='after:content-["."]' />
         {` This experience immersed me in the practical realms of `}
         <SpanPoint>{`Artificial Intelligence (AI), Machine Learning (ML), and Data Science`}</SpanPoint>
         {``}
@@ -45,6 +45,6 @@ export default function DescriptionSection({ className }: PropsWithClassName) {
         <SpanPoint>{`Let's collaborate`}</SpanPoint>
         {` and create something exceptional together!`}
       </P>
-    </Div>
+    </div>
   );
 }

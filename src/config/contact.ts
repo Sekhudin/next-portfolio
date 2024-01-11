@@ -1,22 +1,34 @@
+import { MailIcon, MessageCircleMoreIcon } from 'lucide-react';
 import type { BaseContact } from './types';
 
-type WhatsappFunc = (v: string) => { waNumber: string; anchor: string };
-export const whatsapp: WhatsappFunc = (v) => {
-  const waNumber = v.replace(/\s/g, '');
-  const anchor = `https://wa.me/${waNumber}`;
-  return { waNumber, anchor };
+type WhatsappFunc = (v: string) => { display: string; href: string; contact: string };
+const whatsapp: WhatsappFunc = (display) => {
+  const contact = display.replace(/\s/g, '');
+  const href = `https://wa.me/${contact}`;
+  return { display, href, contact };
 };
 
+type EmailFunc = (v: string) => { display: string; href: string; contact: string };
+const email: EmailFunc = (display) => {
+  const contact = display.toLowerCase().trim();
+  const href = `mailto:${contact}`;
+  return { display, href, contact };
+};
+
+const wa = whatsapp('+62 818 0220 3863');
 export const WA: BaseContact = {
-  name: 'Whatsapp',
-  contact: '+62 818 0220 3863',
+  display: wa.display,
+  href: wa.href,
   tooltip: 'Sekhudin',
-  alt: 'Send Message',
+  ariaLabel: 'Send Message',
+  icon: MessageCircleMoreIcon,
 };
 
+const gmail = email('sekhudinpbg3@gmail.com');
 export const GMAIL: BaseContact = {
-  name: 'Gmail',
-  contact: 'sekhudinpbg3@gmail.com',
+  display: gmail.display,
+  href: gmail.href,
   tooltip: 'sekhudinpbg3@gmail.com',
-  alt: 'Send Mail',
+  ariaLabel: 'Send Mail',
+  icon: MailIcon,
 };

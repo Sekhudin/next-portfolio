@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Page from 'src/components/pages/tools';
 
 export const metadata: Metadata = {
   title: 'Tools | Sekhudin',
@@ -7,10 +8,4 @@ export const metadata: Metadata = {
   creativity and efficiency at every stage of development.`,
 };
 
-export default function Page() {
-  return (
-    <>
-      <div>tools</div>
-    </>
-  );
-}
+export default Page;

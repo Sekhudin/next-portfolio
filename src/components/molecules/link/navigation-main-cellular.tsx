@@ -63,7 +63,7 @@ export default function NavigationMain({ children, className }: PropsWithChildre
                     isMatch(v.href) ? `bg-indigo-700/10 text-indigo-700 dark:text-indigo-700` : null
                   }`
                 )}>
-                {v.name}
+                {v.display}
               </NavigationItem>
             ))}
           </div>

@@ -1,5 +1,5 @@
 import { Div } from 'src/components/atoms/typography/p';
-import Container from 'src/components/atoms/container/container-footer';
+import Container from 'src/components/atoms/container/footer';
 import Navigation from 'src/components/molecules/link/navigation-footer';
 import { cn, PropsWithClassName } from 'src/utils';
 

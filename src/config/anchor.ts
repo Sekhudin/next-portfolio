@@ -1,7 +1,21 @@
 import type { BaseAnchor } from './types';
 export const HASHNODE: BaseAnchor = {
-  name: 'Hashnode',
+  display: 'Hashnode',
   href: 'https://sekhudin.hashnode.dev/',
-  tooltip: 'hashnode link',
-  alt: 'Read Article',
+  tooltip: '',
+  ariaLabel: 'Sekhudin Hashnode Platform',
+};
+
+export const KAMPUS_MERDEKA: BaseAnchor = {
+  display: 'Kampus Merdeka',
+  href: 'https://kampusmerdeka.kemdikbud.go.id/',
+  tooltip: '',
+  ariaLabel: 'Kampus Merdeka',
+};
+
+export const ORBIT_FA: BaseAnchor = {
+  display: 'Orbit Future Academy',
+  href: 'https://orbitfutureacademy.id/',
+  tooltip: '',
+  ariaLabel: 'Orbit Future Academy',
 };

@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Avatar from 'src/components/molecules/image/avatar';
+import Avatar from 'src/components/atoms/image/avatar';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function AvatarMain({

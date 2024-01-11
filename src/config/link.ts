@@ -2,54 +2,54 @@ import type { BaseLink } from './types';
 
 export const MAIN: BaseLink[] = [
   {
-    name: 'About',
+    display: 'About',
     href: '/about',
     tooltip: 'About',
-    alt: '',
+    ariaLabel: '',
   },
   {
-    name: 'Blog',
+    display: 'Blog',
     href: '/blog',
     tooltip: 'Blog',
-    alt: '',
+    ariaLabel: '',
   },
   {
-    name: 'Projects',
+    display: 'Projects',
     href: '/projects',
     tooltip: 'Projects',
-    alt: '',
+    ariaLabel: '',
   },
   {
-    name: 'Tools',
+    display: 'Tools',
     href: '/tools',
     tooltip: 'Tools',
-    alt: '',
+    ariaLabel: '',
   },
   {
-    name: 'Inquiry',
+    display: 'Inquiry',
     href: '/inquiry',
     tooltip: 'Inquiry',
-    alt: '',
+    ariaLabel: '',
   },
 ];
 
 export const FOOTER: BaseLink[] = [
   {
-    name: 'About',
+    display: 'About',
     href: '/about',
     tooltip: 'About',
-    alt: '',
+    ariaLabel: '',
   },
   {
-    name: 'Projects',
+    display: 'Projects',
     href: '/projects',
     tooltip: 'Projects',
-    alt: '',
+    ariaLabel: '',
   },
   {
-    name: 'Blog',
+    display: 'Blog',
     href: '/blog',
     tooltip: 'Blog',
-    alt: '',
+    ariaLabel: '',
   },
 ];

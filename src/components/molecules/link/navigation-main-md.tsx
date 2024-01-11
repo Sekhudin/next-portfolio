@@ -21,7 +21,7 @@ export default function MainNaigation({ className }: PropsWithChildren) {
             `hover:text-indigo-700`,
             `${isMatch(v.href) ? 'text-indigo-700 dark:text-indigo-700' : ''}`
           )}>
-          {v.name}
+          {v.display}
         </NavigationItem>
       ))}
     </div>
