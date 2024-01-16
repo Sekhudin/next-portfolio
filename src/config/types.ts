@@ -13,3 +13,8 @@ export type BaseAnchor = {
   tooltip: string;
   ariaLabel: string;
 };
+
+export type BaseWorkService = {
+  title: string;
+  services: string[];
+};

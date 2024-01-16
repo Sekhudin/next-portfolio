@@ -1,5 +1,3 @@
-import ScrollLayout from 'src/components/organisms/layout/page';
+import Layout from 'src/components/organisms/layout/page-group';
 
-export default function Layout({ children }: React.PropsWithChildren) {
-  return <ScrollLayout>{children}</ScrollLayout>;
-}
+export default Layout;

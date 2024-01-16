@@ -13,7 +13,7 @@ export default function HOC(v: BaseTools) {
       <Div className="grid grid-cols-3 place-items-center justify-items-center gap-x-8 mb-4">
         <Separator />
         <h2
-          className="w-full text-sm font-semibold border-2 bg-zinc-50 dark:bg-zinc-900
+          className="w-full font-semibold border-2 bg-zinc-50 dark:bg-zinc-900
           border-dashed text-center rounded-md px-4 py-2">
           {v.title}
         </h2>
@@ -22,13 +22,13 @@ export default function HOC(v: BaseTools) {
 
       <Div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {v.stacks.map((_, key) => (
-          <PlainAnchor key={key} className="w-full group">
+          <PlainAnchor key={key} href={_.href} className="w-full group">
             <Card
               className={`bg-background dark:bg-zinc-800 border dark:border-zinc-600/50
-            group-hover:border-zinc-700 group-hover:dark:border-indigo-700`}>
+            group-hover:border-zinc-500 group-hover:dark:border-indigo-700`}>
               <CardContent className="relative flex items-center p-4 m-0">
                 <Div className="flex flex-col gap-y-2 mr-4">
-                  <span className="text-sm font-semibold">{_.display}</span>
+                  <span className="font-semibold">{_.display}</span>
                   <span className="text-xs font-extralight">{_.sub}</span>
                 </Div>
                 <span className="absolute top-2 right-2 hidden group-hover:block">

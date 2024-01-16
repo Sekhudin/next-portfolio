@@ -1,6 +1,6 @@
 import { avatar } from 'src/components/shared/static-file';
 import { cn, PropsWithClassName } from 'src/utils';
-import HOC from './static.hoc';
+import HOC from './static-hoc';
 
 const ProfileImage = HOC(avatar);
 export default function AboutProfile({ className }: PropsWithClassName) {

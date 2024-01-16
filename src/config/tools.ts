@@ -1,7 +1,7 @@
 import { BaseTools } from './types';
 
 export const LANGUAGE: BaseTools = {
-  title: 'Programming Language',
+  title: 'Programming Languages',
   stacks: [
     {
       display: 'Typescript',
@@ -25,7 +25,7 @@ export const LANGUAGE: BaseTools = {
 };
 
 export const FRAMEWORK: BaseTools = {
-  title: 'Framework',
+  title: 'Frameworks',
   stacks: [
     {
       display: 'Next.js',
@@ -41,7 +41,7 @@ export const FRAMEWORK: BaseTools = {
     },
     {
       display: 'Express.js',
-      sub: 'Bckend Framework',
+      sub: 'Backend Framework',
       href: 'https://expressjs.com/',
       ariaLabel: '',
     },
@@ -67,12 +67,6 @@ export const DEVTOOLS: BaseTools = {
       display: 'Docker',
       sub: 'Containerization Platform',
       href: 'https://www.docker.com/',
-      ariaLabel: '',
-    },
-    {
-      display: 'MySQL',
-      sub: 'Relational Database',
-      href: 'https://www.mysql.com/',
       ariaLabel: '',
     },
     {

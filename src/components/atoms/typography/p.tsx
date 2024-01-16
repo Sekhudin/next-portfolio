@@ -26,7 +26,7 @@ export const Span = ({
   className,
   ...props
 }: PropsWithChildren<HTMLAttributes<HTMLSpanElement>>) => (
-  <span className={cn(`font-light text-zinc-800 dark:text-zinc-300`, className)} {...props}>
+  <span className={cn(`text-sm font-light text-zinc-800 dark:text-zinc-300`, className)} {...props}>
     {children}
   </span>
 );
@@ -36,7 +36,7 @@ export const SpanPoint = ({
   className,
   ...props
 }: PropsWithChildren<HTMLAttributes<HTMLSpanElement>>) => (
-  <span className={cn(`font-semibold text-zinc-800 dark:text-zinc-300`, className)} {...props}>
+  <span className={cn(`text-sm font-semibold text-zinc-800 dark:text-zinc-300`, className)} {...props}>
     {children}
   </span>
 );
@@ -70,7 +70,7 @@ export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>(
     return (
       <a
         className={cn(
-          `w-fit font-semibold text-indigo-700 hover:lg:underline lg:underline-offset-2 cursor-pointer`,
+          `w-fit text-sm font-semibold text-indigo-700 hover:lg:underline lg:underline-offset-2 cursor-pointer`,
           className
         )}
         {...props}>
@@ -86,7 +86,7 @@ export const PlainAnchor = React.forwardRef<HTMLAnchorElement, AnchorProps>(
     return (
       <a
         className={cn(
-          `w-fit font-semibold text-zinc-800 dark:text-zinc-300 cursor-pointer`,
+          `w-fit text-sm font-semibold text-zinc-800 dark:text-zinc-300 cursor-pointer`,
           className
         )}
         {...props}>
