@@ -21,8 +21,9 @@
     "paths": {
       "src/*": ["./src/*"],
       "public/*": ["./public/*"],
-    }
+    },
+    // add by me
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/codegen/hashnode.ts"],
   "exclude": ["node_modules"]
 }

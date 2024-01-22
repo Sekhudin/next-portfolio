@@ -1,4 +1,5 @@
 'use client';
+import { Small } from 'src/components/atoms/typography/p';
 import {
   Form,
   FieldInput,
@@ -6,7 +7,7 @@ import {
   FieldRadioGroup,
   Submit,
 } from 'src/components/molecules/form';
-import useForm, { type Schema, type FieldName, TIME_FRAME } from './send-form';
+import useForm, { type Schema, type FieldName, TIME_FRAME } from './use-send-form';
 
 export default function SendForm() {
   const { form, onSubmit, onInvalid, loading } = useForm();
@@ -46,10 +47,22 @@ export default function SendForm() {
           required
         />
 
-        <FieldTextArea<Schema, FieldName> name="brief" label="Project Brief" rows={8} required />
+        <FieldTextArea<Schema, FieldName>
+          name="brief"
+          label="Project Brief"
+          rows={8}
+          description="Please tell me about yourself, including your project objective,
+          when you need it, and whether you are familiar with domain, hosting, etc."
+          required
+        />
+
+        <Small className="dark:font-light">
+          {`I will get back to you in less than `}
+          <span className="font-semibold dark:text-indigo-700">{'3 working days.'}</span>
+        </Small>
 
         <div className="flex justify-end">
-          <Submit />
+          <Submit disabled={loading} />
         </div>
       </form>
     </Form>

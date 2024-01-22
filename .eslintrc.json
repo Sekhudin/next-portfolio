@@ -2,6 +2,6 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "no-console": "error",
-    "no-alert":"error"
+    "no-alert": "error"
   }
 }

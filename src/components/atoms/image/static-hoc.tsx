@@ -1,10 +1,9 @@
-import Image, { type StaticImageData } from 'next/image';
+import Image, { type StaticImageData, type ImageProps } from 'next/image';
 import { cn } from 'src/utils';
 
-type StaticHOC = Parameters<typeof Image>[0];
 export default function HOC(v: StaticImageData) {
   if (typeof v === 'string') throw new Error('');
-  const NewImage = ({ className, alt, ...props }: Omit<StaticHOC, 'src'>) => (
+  const NewImage = ({ className, alt, ...props }: Omit<ImageProps, 'src'>) => (
     <div className={cn(`relative`, className)}>
       <Image
         src={v}

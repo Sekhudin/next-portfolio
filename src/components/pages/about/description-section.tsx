@@ -12,10 +12,8 @@ export default function DescriptionSection({ className }: PropsWithClassName) {
       <H1 className="w-11/12 lg:w-full drop-shadow-lg">
         {`I'm Sekhudin. Crafting a brighter future through code.`}
       </H1>
-      <P>
-        {`As a `}
-        <SpanPoint>{`software engineer,`}</SpanPoint>
-        {` I bring `}
+      <P className="leading-7">
+        {`As a software engineer, I bring `}
         <SpanPoint>{`a year of freelance`}</SpanPoint>
         {` experience in software development and a total of `}
         <SpanPoint>{`three years of personal programming`}</SpanPoint>
@@ -24,21 +22,20 @@ export default function DescriptionSection({ className }: PropsWithClassName) {
         {` I am devoted to constantly refining my skills and staying abreast of the dynamic tech landscape.`}
       </P>
 
-      <P>
+      <P className="leading-7">
         {`In addition to my journey, I have `}
         <SpanPoint>{`actively explored various bootcamps`}</SpanPoint>
         {` and dedicated `}
         <SpanPoint>{`six months to the enriching `}</SpanPoint>
         <AnchorKampurMerdeka target="_blank" />
-        <SpanPoint>{` program`}</SpanPoint>
-        {` at `}
+        {` program at `}
         <AnchorOrbitFutureAcademy target="_blank" className='after:content-["."]' />
         {` This experience immersed me in the practical realms of `}
         <SpanPoint>{`Artificial Intelligence (AI), Machine Learning (ML), and Data Science`}</SpanPoint>
         {``}
       </P>
 
-      <P>
+      <P className="leading-7">
         <SpanPoint>{`Fueled by coding passion,`}</SpanPoint>
         {` I am excited about the prospect of exploring
         opportunities to deliver practical and high-quality solutions.`}

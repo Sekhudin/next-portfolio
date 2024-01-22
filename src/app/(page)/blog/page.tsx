@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Page from 'src/components/pages/blog';
 
 export const metadata: Metadata = {
   title: 'Blog | Sekhudin',
@@ -7,10 +8,4 @@ export const metadata: Metadata = {
   Stay informed, enhance your skills, and join a community passionate about the ever-evolving tech landscape.`,
 };
 
-export default function Page() {
-  return (
-    <>
-      <div>blog</div>
-    </>
-  );
-}
+export default Page;

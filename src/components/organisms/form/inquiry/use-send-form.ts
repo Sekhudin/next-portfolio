@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { type UseForm } from 'src/utils/hooks-form/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import useAsyncTask from 'src/hooks/use-async-task';
 import { TIME_FRAME as TFRAME } from 'src/config/work-service';
+import { onInvalid, UseForm } from 'src/utils/hook-form';
 import Str from 'src/utils/string';
 
 const [tf, ...tframe] = TFRAME;
@@ -27,18 +28,22 @@ const defaultValues: Schema = {
 
 type UseInquiry = UseForm<Schema>;
 export default function useSendInquiry(): UseInquiry {
+  const { loading, setLoading, setError } = useAsyncTask();
   const form = useForm<Schema>({
     resolver: zodResolver(schema),
     defaultValues,
   });
 
   const onSubmit: UseInquiry['onSubmit'] = (v) => {
-    // console.debug('valid', v);
+    try {
+      setLoading(true);
+      // code here
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
   };
 
-  const onInvalid: UseInquiry['onInvalid'] = (v) => {
-    // console.debug('invalid', v);
-  };
-
-  return { form, onSubmit, onInvalid, loading: false };
+  return { form, onSubmit, onInvalid, loading };
 }
