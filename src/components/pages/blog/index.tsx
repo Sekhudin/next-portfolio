@@ -2,7 +2,7 @@ import React from 'react';
 import HashnodeProvider from 'src/components/shared/provider/hashnode';
 import MeProfileCard, {
   MeProfileCardFallback,
-} from 'src/components/shared/hashnode/me-profile-card';
+} from 'src/components/shared/hashnode/me';
 import { H4 } from 'src/components/atoms/typography/h';
 import DescriptionSection from './description-section';
 import PostsSection from './posts-section';

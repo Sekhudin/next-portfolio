@@ -6,7 +6,7 @@ import {
   TooltipContent,
 } from 'src/components/ui/tooltip';
 import { Anchor, AnchorProps } from 'src/components/atoms/typography/p';
-import ICON from 'src/components/atoms/hoc/rounded-icon';
+import ICON from 'src/components/atoms/icon/rounded-hoc';
 import type { BaseSocialMedia } from 'src/config/types';
 import { cn, PropsWithClassName } from 'src/utils';
 

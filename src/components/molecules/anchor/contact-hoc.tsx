@@ -1,5 +1,5 @@
 import { PlainAnchor, type AnchorProps } from 'src/components/atoms/typography/p';
-import ICON from 'src/components/atoms/hoc/icon';
+import ICON from 'src/components/atoms/icon/hoc';
 import type { BaseContact } from 'src/config/types';
 import { cn } from 'src/utils';
 

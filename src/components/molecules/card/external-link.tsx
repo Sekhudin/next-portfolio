@@ -1,6 +1,6 @@
 import { ExternalLink } from 'lucide-react';
 import { Card, CardContent } from 'src/components/ui/card';
-import ICON from 'src/components/atoms/hoc/icon';
+import ICON from 'src/components/atoms/icon/hoc';
 import { cn, PropsWithChildren } from 'src/utils';
 
 const ExternalLinkIcon = ICON(ExternalLink);

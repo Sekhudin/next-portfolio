@@ -1,5 +1,5 @@
 import { ScrollArea } from 'src/components/ui/scroll-area';
-import Container, { DynamicGapTop, ContainerGapBottom } from 'src/components/atoms/container';
+import Container, { DynamicGapTop, ContainerGapBottom } from 'src/components/atoms/container/page';
 import { HeaderGap } from 'src/components/organisms/header';
 import Footer from 'src/components/organisms/footer';
 import { cn } from 'src/utils';

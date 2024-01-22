@@ -1,5 +1,5 @@
 import { SearchIcon } from 'lucide-react';
-import HOC from 'src/components/atoms/hoc/icon';
+import HOC from 'src/components/atoms/icon/hoc';
 import { Input, InputProps } from 'src/components/ui/input';
 import { cn } from 'src/utils';
 
