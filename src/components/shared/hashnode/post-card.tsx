@@ -5,13 +5,10 @@ import { SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
 import { H4 } from 'src/components/atoms/typography/h';
 import type { SinglePost } from 'src/service/hashnode/queries/posts';
-import { cn, PropsWithClassName } from 'src/utils';
+import { cn, hrefTo, PropsWithClassName } from 'src/utils';
 import Dt from 'src/utils/date';
 
 const PostCard = ({ className, ...v }: PropsWithClassName<SinglePost>) => {
-  const clickHandler = () => {
-    window.location.href = v.url;
-  };
 
   return (
     <div className={cn('grid grid-cols-12', className)}>
@@ -29,7 +26,7 @@ const PostCard = ({ className, ...v }: PropsWithClassName<SinglePost>) => {
       <div
         className="col-span-12 md:col-span-8 cursor-pointer rounded-lg md:rounded-xl group
         hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 p-4 md:p-6 xl:p-8"
-        onClick={clickHandler}>
+        onClick={()=> hrefTo(v.url)}>
         <div className="flex flex-col space-y-4">
           <H4 className="md:w-10/12">{v.title}</H4>
           <Small className="font-light dark:font-extralight leading-6 text-wrap truncate">

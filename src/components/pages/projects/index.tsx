@@ -9,7 +9,7 @@ const Projects = () => {
   return (
     <GithubProvider>
       <main>
-        <section>
+        <section className="mb-8 md:mb-14">
           <DescriptionSection />
         </section>
 

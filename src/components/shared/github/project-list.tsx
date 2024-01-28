@@ -43,7 +43,6 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
     },
   });
   const { nodes, pageInfo, totalCount } = Repos.flatten(data);
-  // console.log('nodes :>> ', nodes);
   const prevHandler = () => {
     if (pageInfo.startCursor) {
       setPage(page - 1);
@@ -66,10 +65,10 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
 
   return (
     <div className={cn(``, className)}>
-      <div>ProjectList</div>
+      <div></div>
 
       <div className="flex flex-col gap-y-16">
-        <div>
+        <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}>
           {nodes.map((repo, key) => (
             <ProjectCard className="" key={key} {...repo} />
           ))}

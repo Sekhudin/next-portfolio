@@ -6,7 +6,7 @@ import { cn, PropsWithChildren } from 'src/utils';
 const ExternalLinkIcon = ICON(ExternalLink);
 const ExternalLinkCard = ({ className, children }: PropsWithChildren) => (
   <Card
-    className={`bg-background dark:bg-secondary/50 border dark:border-zinc-600/50
+    className={`bg-background dark:bg-secondary/50 border dark:border-zinc-600/50 shadow-none
     group-hover:border-zinc-500 group-hover:dark:border-indigo-700 duration-150 delay-100`}>
     <CardContent className={cn(`relative flex items-center p-4 m-0`)}>
       <div className={cn(``, className)}>{children}</div>

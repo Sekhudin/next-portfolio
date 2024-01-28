@@ -1,4 +1,5 @@
 import { TypedDocumentNode, gql } from '@apollo/client';
+import { TECH_SELECTOR } from 'src/config/projects';
 import {
   RepositoryAffiliation as Affiliation,
   RepositoryPrivacy as Privacy,
@@ -69,8 +70,19 @@ const GET_REPOSITORIES: TypedDocumentNode<Response_REPOS, Args_REPOS> = gql`
 `;
 
 namespace Repos {
+  type TechProject = {
+    tech: string | null;
+    language: SingleRepository['primaryLanguage'];
+  };
+  export const techProject = ({ description, primaryLanguage }: SingleRepository): TechProject => {
+    const techSplit = description?.split(TECH_SELECTOR)[1];
+    const tech: string | null = description && techSplit ? techSplit.trim() : null;
+    const language = primaryLanguage || null;
+    return { tech, language };
+  };
   export const flatten = (response: Response_REPOS) => {
-    return response.viewer.repositories;
+    const { nodes, ...result } = response.viewer.repositories;
+    return { nodes, ...result };
   };
 }
 
