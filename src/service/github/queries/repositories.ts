@@ -74,6 +74,7 @@ namespace Repos {
     tech: string | null;
     language: SingleRepository['primaryLanguage'];
     isHidden: boolean;
+    newDescription?: string | null;
   };
 
   export const techProject = ({
@@ -83,9 +84,12 @@ namespace Repos {
   }: SingleRepository): TechProject => {
     const techSplit = description?.split(TECH_SELECTOR)[1];
     const tech: string | null = description && techSplit ? techSplit.trim() : null;
+    const newDescription: string | null | undefined = techSplit
+      ? description.replace(`${TECH_SELECTOR}${techSplit}`, '')
+      : description;
     const language = primaryLanguage || null;
     const isHidden: boolean = name ? REPOS_TO_HIDE.includes(name.toLowerCase().trim()) : false;
-    return { tech, language, isHidden };
+    return { tech, language, isHidden, newDescription };
   };
 
   export const flatten = (response: Response_REPOS) => {

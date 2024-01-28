@@ -10,7 +10,7 @@ import { cn, hrefTo, PropsWithClassName } from 'src/utils';
 
 const ExternalLinkIcon = ICON(ExternalLink);
 const ProjectCard = ({ className, ...v }: PropsWithClassName<SingleRepository>) => {
-  const { tech, language, isHidden } = Repos.techProject({ ...v });
+  const { tech, language, isHidden, newDescription } = Repos.techProject({ ...v });
 
   const anchorHandler = () => {
     if (isHidden) {
@@ -49,7 +49,7 @@ const ProjectCard = ({ className, ...v }: PropsWithClassName<SingleRepository>) 
         <div>
           <H4 className="first-letter:uppercase mb-4">{v.name}</H4>
           <Small className="font-light dark:font-extralight leading-5 text-wrap truncate">
-            {v.description}
+            {newDescription}
           </Small>
           <div className="mt-4 font-mono">
             {tech && (
