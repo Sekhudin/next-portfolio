@@ -7,7 +7,7 @@ import {
   PaginationNext,
   PaginationPrev,
 } from 'src/components/ui/pagination';
-import { Small } from 'src/components/atoms/typography/p';
+import { SkeletonTextSM } from 'src/components/ui/skeleton';
 import useQuery from 'src/hooks/use-suspense-query';
 import GET_REPOSITORIES, {
   Repos,
@@ -65,8 +65,6 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
 
   return (
     <div className={cn(``, className)}>
-      <div></div>
-
       <div className="flex flex-col gap-y-16">
         <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}>
           {nodes.map((repo, key) => (
@@ -106,7 +104,24 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
 
 export const ProjectListFallback = () => (
   <div>
-    <div>ProjectList Fallback</div>
+    <div className="flex flex-col gap-y-16">
+      <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}>
+        <ProjectCardFallback />
+        <ProjectCardFallback />
+        <ProjectCardFallback />
+        <ProjectCardFallback />
+        <ProjectCardFallback />
+        <ProjectCardFallback className="hidden md:block" />
+        <ProjectCardFallback className="hidden md:block" />
+        <ProjectCardFallback className="hidden md:block" />
+      </div>
+
+      <div className="flex justify-center space-x-4 mt-4">
+        <SkeletonTextSM className="w-16" />
+        <SkeletonTextSM className="w-12" />
+        <SkeletonTextSM className="w-16" />
+      </div>
+    </div>
   </div>
 );
 

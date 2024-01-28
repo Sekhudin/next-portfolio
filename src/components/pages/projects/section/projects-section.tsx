@@ -1,11 +1,10 @@
 import React from 'react';
-import { Separator } from 'src/components/ui/separator';
 import ProjectList, { ProjectListFallback } from 'src/components/shared/github/project-list';
-import { cn, PropsWithClassName, PropsWithChildren } from 'src/utils';
+import { cn, PropsWithClassName } from 'src/utils';
 
-const ProjectSection = () => (
+const ProjectSection = ({ className }: PropsWithClassName) => (
   <React.Suspense fallback={<ProjectListFallback />}>
-    <ProjectList pageSize={3} />
+    <ProjectList className={cn(``, className)} pageSize={10} />
   </React.Suspense>
 );
 

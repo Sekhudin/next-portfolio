@@ -1,5 +1,5 @@
 import { TypedDocumentNode, gql } from '@apollo/client';
-import { TECH_SELECTOR } from 'src/config/projects';
+import { TECH_SELECTOR, REPOS_TO_HIDE } from 'src/config/projects';
 import {
   RepositoryAffiliation as Affiliation,
   RepositoryPrivacy as Privacy,
@@ -73,13 +73,21 @@ namespace Repos {
   type TechProject = {
     tech: string | null;
     language: SingleRepository['primaryLanguage'];
+    isHidden: boolean;
   };
-  export const techProject = ({ description, primaryLanguage }: SingleRepository): TechProject => {
+
+  export const techProject = ({
+    description,
+    primaryLanguage,
+    name,
+  }: SingleRepository): TechProject => {
     const techSplit = description?.split(TECH_SELECTOR)[1];
     const tech: string | null = description && techSplit ? techSplit.trim() : null;
     const language = primaryLanguage || null;
-    return { tech, language };
+    const isHidden: boolean = name ? REPOS_TO_HIDE.includes(name.toLowerCase().trim()) : false;
+    return { tech, language, isHidden };
   };
+
   export const flatten = (response: Response_REPOS) => {
     const { nodes, ...result } = response.viewer.repositories;
     return { nodes, ...result };
