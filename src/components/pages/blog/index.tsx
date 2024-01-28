@@ -1,11 +1,9 @@
 import React from 'react';
-import HashnodeProvider from 'src/components/shared/provider/hashnode';
-import MeProfileCard, {
-  MeProfileCardFallback,
-} from 'src/components/shared/hashnode/me';
 import { H4 } from 'src/components/atoms/typography/h';
-import DescriptionSection from './description-section';
-import PostsSection from './posts-section';
+import HashnodeProvider from 'src/components/shared/provider/hashnode';
+import MeProfile, { MeProfileFallback } from 'src/components/shared/hashnode/me';
+import DescriptionSection from './section/description-section';
+import PostsSection from './section/posts-section';
 
 const Blog = () => {
   return (
@@ -21,8 +19,8 @@ const Blog = () => {
 
         <section className="h-fit mt-6">
           <H4 className="mb-2 text-zinc-500 dark:text-zinc-500">Word Artisan:</H4>
-          <React.Suspense fallback={<MeProfileCardFallback />}>
-            <MeProfileCard />
+          <React.Suspense fallback={<MeProfileFallback />}>
+            <MeProfile />
           </React.Suspense>
         </section>
       </main>

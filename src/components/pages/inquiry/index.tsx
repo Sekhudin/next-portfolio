@@ -1,6 +1,6 @@
-import TitleSection from './title-section';
-import ListServiceSection from './list-service-section';
-import FormSection from './form-section';
+import TitleSection from './section/title-section';
+import ListServiceSection from './section/list-service-section';
+import FormSection from './section/form-section';
 
 const Inquiry = () => {
   return (

@@ -21,5 +21,16 @@ namespace Str {
     if (text.length === 2) return text.toUpperCase();
     return text.slice(0, 2).toUpperCase();
   }
+
+  export const slugify = (str: string): string => {
+    return str
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+  };
 }
 export default Str;

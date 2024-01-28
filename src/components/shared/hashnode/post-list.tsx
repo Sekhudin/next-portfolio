@@ -7,11 +7,16 @@ import {
   PaginationNext,
   PaginationPrev,
 } from 'src/components/ui/pagination';
+import { ToggleGroup, ToggleGroupItem } from 'src/components/ui/toggle-group';
 import { SkeletonTextSM } from 'src/components/ui/skeleton';
-import InputSearch from 'src/components/atoms/input/search';
 import { Small } from 'src/components/atoms/typography/p';
 import useQuery from 'src/hooks/use-suspense-query';
-import GET_POSTS, { Post, UserPostsSort, Args_POST } from 'src/service/hashnode/queries/post';
+import GET_POSTS, {
+  PostSort,
+  Post,
+  type Args_POST,
+  type PostFilter,
+} from 'src/service/hashnode/queries/posts';
 import Pg from 'src/utils/pagination';
 import { cn, PropsWithClassName, PropsWithChildren } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
@@ -21,7 +26,7 @@ type PostListprops = PropsWithClassName<Omit<Args_POST, 'sortBy'>>;
 const args: Args_POST = {
   page: 1,
   pageSize: 1,
-  sortBy: UserPostsSort.DatePublishedAsc,
+  sortBy: PostSort.DatePublishedAsc,
 };
 
 const PostMessage = ({ children, className }: PropsWithChildren) => (
@@ -32,13 +37,44 @@ const PostMessage = ({ children, className }: PropsWithChildren) => (
 
 const PostList = ({ className, ...v }: PostListprops = { className: '', ...args }) => {
   const [page, setPage] = React.useState<number>(v.page);
+  const [beforePage, setBeforePage] = React.useState<number>(v.page);
   const [pageSize, setPageSize] = React.useState<number>(v.pageSize);
-  const [sortBy, setSortBy] = React.useState<UserPostsSort>(UserPostsSort.DatePublishedAsc);
-  const { data } = useQuery(GET_POSTS, {
-    variables: { page, pageSize, sortBy },
-  });
+  const [beforePageSize, setBeforePageSize] = React.useState<number>(v.pageSize);
+  const [sortBy, setSortBy] = React.useState<PostSort>(PostSort.DatePublishedAsc);
+  const [filter, setFilter] = React.useState<PostFilter>();
+  const { data } = useQuery(GET_POSTS, { variables: { page, pageSize, sortBy, filter } });
+  const { nodes, pageInfo, totalDocuments, uniqueTags } = Post.flatten(data);
 
-  const { nodes, pageInfo, totalDocuments } = Post.flatten(data);
+  const filterHandler = <T extends keyof PostFilter>(type: T, value: PostFilter[T]): void => {
+    if (value) {
+      setPage(v.page);
+      setPageSize(v.pageSize);
+      setBeforePage(page);
+      setBeforePageSize(pageSize);
+    }
+
+    if (!value) {
+      setPage(beforePage);
+      setPageSize(beforePageSize);
+    }
+
+    if (type === 'tags') {
+      const tags = value as PostFilter['tags'];
+      setFilter({
+        ...filter,
+        tags,
+      });
+      return;
+    }
+  };
+
+  const tagOnChange = (value: string | string[]) => {
+    const tagsId: string[] = typeof value === 'string' ? [value] : value;
+    const selectedTag = tagsId[0]
+      ? uniqueTags.filter(({ id }) => tagsId.includes(id)).map((v) => v.id)
+      : null;
+    filterHandler<'tags'>('tags', selectedTag);
+  };
 
   const prevHandler = () => {
     if (pageInfo.previousPage) {
@@ -52,14 +88,32 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
     }
   };
 
-  if (!nodes || nodes.length < 1) {
-    return <PostMessage>No article yet</PostMessage>;
+  if (nodes.length === 0) {
+    return <PostMessage>No articles yet</PostMessage>;
   }
 
   return (
     <div className={cn(`grow`, className)}>
-      <div className="md:max-w-xl mb-10">
-        <InputSearch placeholder="Search articles" disabled />
+      <div className="md:w-10/12 mb-10 flex gap-x-2">
+        <div className="py-1">
+          <Small className="font-semibold mb-4">Tags:</Small>
+        </div>
+        <ToggleGroup
+          className="grow justify-start items-start"
+          type="multiple"
+          orientation="horizontal"
+          onValueChange={tagOnChange}>
+          {uniqueTags.map((tag, key) => (
+            <ToggleGroupItem
+              className="text-xs font-light"
+              key={key}
+              variant="default"
+              size="fit"
+              value={tag.id}>
+              <p className="first-letter:uppercase">{tag.name}</p>
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
       </div>
 
       <div className={cn('flex flex-col gap-y-16')}>
@@ -80,7 +134,7 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
               />
             </PaginationItem>
 
-            <PaginationItem className="text-sm">
+            <PaginationItem className="text-sm mx-1">
               {Pg.pageOfPage(page, pageSize, totalDocuments).text}
             </PaginationItem>
 
@@ -101,8 +155,12 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
 
 export const PostlistFallback = ({ className }: PropsWithClassName) => (
   <div className="grow">
-    <div className="md:max-w-xl mb-10">
-      <InputSearch disabled />
+    <div className="md:w-10/12 mb-10 flex space-x-2">
+      <Small className="font-semibold mb-4 py-1">Tags:</Small>
+      <div className="grow flex justify-start items-start space-x-1">
+        <SkeletonTextSM className="w-10 px-2 py-1" />
+        <SkeletonTextSM className="w-12 px-2 py-1" />
+      </div>
     </div>
 
     <div className={cn('flex flex-col gap-y-16', className)}>

@@ -48,7 +48,7 @@ const PaginationLink = ({
       `${
         isActive
           ? 'cursor-pointer'
-          : 'cursor-not-allowed hover:bg-transparent opacity-80 dark:opacity-50'
+          : 'cursor-not-allowed hover:bg-transparent opacity-50 dark:opacity-20'
       }`,
       className
     )}

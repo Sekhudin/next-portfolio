@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Page from 'src/components/pages/projects';
 
 export const metadata: Metadata = {
   title: 'Projects | Sekhudin',
@@ -7,10 +8,4 @@ export const metadata: Metadata = {
   Uncover the intersection of creativity and functionality as I share my journey in crafting digital experiences and solving real-world challenges`,
 };
 
-export default function Page() {
-  return (
-    <>
-      <div>projects</div>
-    </>
-  );
-}
+export default Page;

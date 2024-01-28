@@ -1,7 +1,7 @@
 import { TypedDocumentNode, gql } from '@apollo/client';
 import type { MyUser } from 'src/types/graphql/hashnode';
 
-const GET_USER: TypedDocumentNode<Response_ME> = gql`
+const GET_ME: TypedDocumentNode<Response_ME> = gql`
   query ME {
     me {
       id
@@ -25,4 +25,4 @@ type Response_ME = {
 
 export { Me };
 export type { Response_ME };
-export default GET_USER;
+export default GET_ME;

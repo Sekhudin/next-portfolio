@@ -9,7 +9,7 @@ import { cn, PropsWithClassName } from 'src/utils';
 export default function DescriptionSection({ className }: PropsWithClassName) {
   return (
     <div className={cn(``, className)}>
-      <H1 className="w-11/12 lg:w-full drop-shadow-lg">
+      <H1 className="w-11/12 lg:w-full">
         {`I'm Sekhudin. Crafting a brighter future through code.`}
       </H1>
       <P className="leading-7">

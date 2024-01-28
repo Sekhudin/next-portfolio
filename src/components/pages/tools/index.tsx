@@ -1,5 +1,5 @@
-import DescriptionSection from './description-section';
-import ToolsSection from './tools-section';
+import DescriptionSection from './section/description-section';
+import ToolsSection from './section/tools-section';
 
 const Tools = () => {
   return (

@@ -5,8 +5,8 @@ import { cn, PropsWithClassName } from 'src/utils';
 
 const DescriptionSection = ({ className }: PropsWithClassName) => (
   <div className={cn(``, className)}>
-    <H1 className="drop-shadow-lg md:w-10/12">
-      {`Writing on software design, Web, and building products.`}
+    <H1 className="md:w-10/12 lg:w-9/12">
+      {`Writing on software design and building products.`}
     </H1>
     <P className="md:w-10/12">
       <SpanPoint>{`Code Chronicles:`}</SpanPoint>

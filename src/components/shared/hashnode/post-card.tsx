@@ -4,7 +4,7 @@ import { Separator } from 'src/components/ui/separator';
 import { SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
 import { H4 } from 'src/components/atoms/typography/h';
-import type { SinglePost } from 'src/service/hashnode/queries/post';
+import type { SinglePost } from 'src/service/hashnode/queries/posts';
 import { cn, PropsWithClassName } from 'src/utils';
 import Dt from 'src/utils/date';
 

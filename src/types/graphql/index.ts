@@ -1,5 +1,5 @@
 export enum GQLClient {
-  NAME = 'sekhudin-portfolio',
+  NAME = 'personal-portfolio',
   VERSION = '1.0',
 }
 
