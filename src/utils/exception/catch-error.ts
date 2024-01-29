@@ -1,13 +1,15 @@
 import { ApolloError } from '@apollo/client';
+import { EmailJSResponseStatus } from '@emailjs/browser/es/models/EmailJSResponseStatus';
 import { GQLErrorStatus, type CatchError, type ErrorMessage } from 'src/types/error';
-import Debug from 'src/utils/debugger';
 import {
   defaultError,
   catchString,
+  errorWithCode,
   HTTPException,
   UnauthorizedException,
   InternalServerErrorException,
 } from './throw-error';
+import Debug from './debugger';
 
 const catchInstanceError: CatchError<Error> = (errorObject) => {
   const { message, error } = defaultError;
@@ -50,6 +52,12 @@ const catchApolloError: CatchError<ApolloError> = (e) => {
   return { error, message, errorObject };
 };
 
+const catchEmailJSError: CatchError<EmailJSResponseStatus> = ({ status, text }) => {
+  const { code, ...message } = errorWithCode(status, text);
+  const errorObject = new Error(text);
+  return { error: { code, ...message }, message, errorObject };
+};
+
 const catchAllError: CatchError = (e) => {
   // debug Error
   Debug.error(e);
@@ -64,6 +72,10 @@ const catchAllError: CatchError = (e) => {
 
   if (e instanceof Error) {
     return catchInstanceError(e);
+  }
+
+  if (e instanceof EmailJSResponseStatus) {
+    return catchEmailJSError(e);
   }
 
   if (typeof e === 'string') {

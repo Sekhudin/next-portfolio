@@ -1,3 +1,3 @@
-import NotFound from 'src/components/shared/boundary/not-found-page';
+import NotFound from 'src/components/pages/_error/404';
 
 export default NotFound;

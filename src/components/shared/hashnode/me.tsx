@@ -8,12 +8,12 @@ import GET_ME, { Me } from 'src/service/hashnode/queries/me';
 import { cn, PropsWithClassName } from 'src/utils';
 
 const MeProfile = ({ className }: PropsWithClassName) => {
-  const { data, error } = useQuery(GET_ME);
+  const { data } = useQuery(GET_ME);
   const { ...v } = Me.flatten(data);
 
   return (
     <div className={cn('h-fit w-full md:max-w-sm flex gap-x-3', className)}>
-      <a href={Me.urlProfile(v.username)} aria-label="hashnode profile">
+      <a href={Me.profileUrl(v.username)} aria-label="hashnode profile">
         <Avatar className="h-16 w-16" src={v.profilePicture} alt={v.name} />
       </a>
       <div className="flex flex-col justify-center gap-y-3">

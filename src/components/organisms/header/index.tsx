@@ -1,7 +1,7 @@
-import Toggle from 'src/components/molecules/theme/toggle';
-import Translate from 'src/components/molecules/translate';
-import AvatarMain from 'src/components/molecules/link/avatar-main';
-import NavigationMain from 'src/components/molecules/link/navigation-main';
+import Toggle from 'src/components/atoms/togle/theme';
+import AvatarMain from 'src/components/atoms/link/avatar-main';
+import Translate from 'src/components/atoms/togle/translate';
+import NavigationMain from 'src/components/molecules/navigation/navigation-main';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function Header({ className }: PropsWithClassName) {

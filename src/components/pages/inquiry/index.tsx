@@ -10,11 +10,11 @@ const Inquiry = () => {
       </section>
 
       <div className="flex flex-col md:flex-row gap-y-10 md:gap-x-8">
-        <section className="md:w-[60%] lg:w-[40%]">
+        <section className="md:w-[40%]">
           <ListServiceSection />
         </section>
 
-        <section className="md:grow">
+        <section className="md:w-[60%]">
           <FormSection />
         </section>
       </div>

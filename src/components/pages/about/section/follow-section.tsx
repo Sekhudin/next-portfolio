@@ -1,4 +1,4 @@
-import { FollowGithub, FollowTwitter } from 'src/components/molecules/anchor/follow';
+import { FollowGithub, FollowTwitter } from 'src/components/atoms/anchor/follow';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function FollowSection({ className }: PropsWithClassName) {

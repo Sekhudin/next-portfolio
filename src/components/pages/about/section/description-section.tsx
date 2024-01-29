@@ -3,7 +3,7 @@ import { SpanPoint, P } from 'src/components/atoms/typography/p';
 import {
   AnchorKampurMerdeka,
   AnchorOrbitFutureAcademy,
-} from 'src/components/molecules/anchor/anchor';
+} from 'src/components/atoms/anchor/anchor';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function DescriptionSection({ className }: PropsWithClassName) {

@@ -1,8 +1,8 @@
 import { Separator } from 'src/components/ui/separator';
 import ProfileImage from 'src/components/atoms/image/profile';
-import DescriptionSection from './description-section';
-import ContactSection from './contact-section';
-import FollowSection from './follow-section';
+import DescriptionSection from './section/description-section';
+import ContactSection from './section/contact-section';
+import FollowSection from './section/follow-section';
 
 export const About = () => (
   <main className="h-full grid grid-cols-1 grid-rows-3 lg:grid-cols-2 lg:grid-rows-2 gap-x-14 gap-y-6">

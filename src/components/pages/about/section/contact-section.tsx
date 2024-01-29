@@ -1,4 +1,4 @@
-import { ContactGmail, ContactWhatsapp } from 'src/components/molecules/anchor/contact';
+import { ContactGmail, ContactWhatsapp } from 'src/components/atoms/anchor/contact';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function ContactSection({ className }: PropsWithClassName) {

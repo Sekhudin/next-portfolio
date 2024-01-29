@@ -1,6 +1,6 @@
 import { H1 } from 'src/components/atoms/typography/h';
 import { P, SpanPoint } from 'src/components/atoms/typography/p';
-import { AnchorHasnode } from 'src/components/molecules/anchor/anchor';
+import { AnchorHasnode } from 'src/components/atoms/anchor/anchor';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function DescriptionSection({ className }: PropsWithClassName) {

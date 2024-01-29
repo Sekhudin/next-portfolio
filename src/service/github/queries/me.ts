@@ -22,11 +22,11 @@ const GET_ME: TypedDocumentNode<Response_ME> = gql`
   }
 `;
 
-namespace Me {
-  export const flatten = (response: Response_ME) => {
+class Me {
+  static flatten(response: Response_ME) {
     const { followers, following, ...profile } = response.viewer;
     return { profile, followers, following };
-  };
+  }
 }
 
 type Response_ME = {

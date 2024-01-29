@@ -15,7 +15,6 @@ import GET_REPOSITORIES, {
   OrderField,
   Privacy,
 } from 'src/service/github/queries/repositories';
-import Pg from 'src/utils/pagination';
 import { cn, PropsWithClassName } from 'src/utils';
 import ProjectCard, { ProjectCardFallback } from './project-card';
 
@@ -84,7 +83,7 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {Pg.pageOfPage(page, v.pageSize, totalCount).text}
+              {Repos.pageStatus(page, v.pageSize, totalCount)}
             </PaginationItem>
 
             <PaginationItem>
@@ -106,14 +105,9 @@ export const ProjectListFallback = () => (
   <div>
     <div className="flex flex-col gap-y-16">
       <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}>
-        <ProjectCardFallback />
-        <ProjectCardFallback />
-        <ProjectCardFallback />
-        <ProjectCardFallback />
-        <ProjectCardFallback />
-        <ProjectCardFallback className="hidden md:block" />
-        <ProjectCardFallback className="hidden md:block" />
-        <ProjectCardFallback className="hidden md:block" />
+        {Array.from({ length: 10 }).map((_, key) => (
+          <ProjectCardFallback key={key} />
+        ))}
       </div>
 
       <div className="flex justify-center space-x-4 mt-4">

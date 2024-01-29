@@ -7,6 +7,12 @@ export type PagePropsParams<P extends string = string> = {
     [K in P]: string;
   };
 };
+
 export namespace Event {
   export type InputOnChange = React.ChangeEvent<HTMLInputElement>;
 }
+
+export type ErrorPageProps = {
+  error: Error & { digest?: string };
+  reset: () => void;
+};

@@ -26,12 +26,12 @@ export class BadRequestException extends HTTPException {
   }
 }
 
-export class NotFoundException extends HTTPException {
+export class UnauthorizedException extends HTTPException {
   constructor(message?: string) {
     super({
-      code: HTTPErrorCode.NotFound,
-      title: HTTPErrorStatus.NotFound,
-      description: message || HTTPErrorStatus.NotFound,
+      code: HTTPErrorCode.Unauthorized,
+      title: HTTPErrorStatus.Unauthorized,
+      description: message || HTTPErrorStatus.Unauthorized,
     });
   }
 }
@@ -46,12 +46,12 @@ export class ForbiddenException extends HTTPException {
   }
 }
 
-export class UnauthorizedException extends HTTPException {
+export class NotFoundException extends HTTPException {
   constructor(message?: string) {
     super({
-      code: HTTPErrorCode.Unauthorized,
-      title: HTTPErrorStatus.Unauthorized,
-      description: message || HTTPErrorStatus.Unauthorized,
+      code: HTTPErrorCode.NotFound,
+      title: HTTPErrorStatus.NotFound,
+      description: message || HTTPErrorStatus.NotFound,
     });
   }
 }
@@ -76,3 +76,17 @@ export const catchString: CatchError<string> = (e) => {
 };
 
 export const defaultError = catchString(HTTPErrorStatus.InternalServerError);
+export const errorWithCode = (code: number, message?: string) => {
+  switch (code) {
+    case 400:
+      return new BadRequestException(message);
+    case 401:
+      return new UnauthorizedException(message);
+    case 403:
+      return new ForbiddenException(message);
+    case 404:
+      return new NotFoundException(message);
+    default:
+      return new InternalServerErrorException(message);
+  }
+};

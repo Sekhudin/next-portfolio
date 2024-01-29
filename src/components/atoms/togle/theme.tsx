@@ -1,9 +1,9 @@
 'use client';
+import React from 'react';
 import { useTheme } from 'next-themes';
 import { SunIcon, MoonStarIcon } from 'lucide-react';
 import { Button } from 'src/components/ui/button';
 import { cn, PropsWithClassName } from 'src/utils';
-import React from 'react';
 
 export default function ThemeToggle({ className, ...props }: PropsWithClassName) {
   const { setTheme, theme } = useTheme();

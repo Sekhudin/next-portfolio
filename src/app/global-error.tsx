@@ -1,3 +1,3 @@
-import Rootlayout from 'src/components/shared/boundary/root-error';
+import Rootlayout from 'src/components/pages/_error/root-error';
 
 export default Rootlayout;

@@ -2,12 +2,17 @@
 import { Button } from 'src/components/ui/button';
 import { Span } from 'src/components/atoms/typography/p';
 import { cn, PropsWithClassName } from 'src/utils';
+import { toast } from 'src/components/ui/use-toast';
 
 export default function Translate({ className }: PropsWithClassName) {
   const onClickHandler = () => {
-    // eslint-disable-next-line no-alert
-    alert('Not yet available');
+    toast({
+      variant: 'info',
+      title: 'Info',
+      description: 'Not yet available',
+    });
   };
+
   return (
     <Button
       className={cn(`p-2 rounded-full`, className)}

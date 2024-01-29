@@ -1,5 +1,4 @@
 import { TypedDocumentNode, gql } from '@apollo/client';
-import { TECH_SELECTOR, REPOS_TO_HIDE } from 'src/config/projects';
 import {
   RepositoryAffiliation as Affiliation,
   RepositoryPrivacy as Privacy,
@@ -11,7 +10,10 @@ import {
   type RepositoryConnection,
   type Repository as RepositoryBase,
   type UserRepositoriesArgs,
+  Language,
+  Maybe,
 } from 'src/types/graphql/github';
+import Util, { type ReturnSplitDescription } from 'src/service/helper/util';
 
 const GET_REPOSITORIES: TypedDocumentNode<Response_REPOS, Args_REPOS> = gql`
   query REPOSITORIES(
@@ -69,33 +71,31 @@ const GET_REPOSITORIES: TypedDocumentNode<Response_REPOS, Args_REPOS> = gql`
   }
 `;
 
-namespace Repos {
-  type TechProject = {
-    tech: string | null;
-    language: SingleRepository['primaryLanguage'];
-    isHidden: boolean;
-    newDescription?: string | null;
-  };
+class Repos implements Omit<SingleRepository, 'description' | 'url' | 'createdAt'> {
+  id!: string;
+  name!: string;
+  isHidden!: boolean;
+  description!: ReturnSplitDescription;
+  url?: string;
+  homepageUrl?: string;
+  primaryLanguage?: Maybe<Language>;
+  createdAt?: string;
 
-  export const techProject = ({
-    description,
-    primaryLanguage,
-    name,
-  }: SingleRepository): TechProject => {
-    const techSplit = description?.split(TECH_SELECTOR)[1];
-    const tech: string | null = description && techSplit ? techSplit.trim() : null;
-    const newDescription: string | null | undefined = techSplit
-      ? description.replace(`${TECH_SELECTOR}${techSplit}`, '')
-      : description;
-    const language = primaryLanguage || null;
-    const isHidden: boolean = name ? REPOS_TO_HIDE.includes(name.toLowerCase().trim()) : false;
-    return { tech, language, isHidden, newDescription };
-  };
+  constructor({ description, ...v }: SingleRepository) {
+    Object.assign(this, v);
+    this.description = Util.splitDescription(description);
+    this.isHidden = Util.isRepoToHide(v.name);
+  }
 
-  export const flatten = (response: Response_REPOS) => {
+  static flatten(response: Response_REPOS) {
     const { nodes, ...result } = response.viewer.repositories;
     return { nodes, ...result };
-  };
+  }
+
+  static pageStatus(...param: Parameters<(typeof Util)['page']>): string {
+    const page = Util.page(...param);
+    return page.status;
+  }
 }
 
 type SingleRepository = Pick<

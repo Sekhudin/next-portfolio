@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
 import { Toaster, SonerToaster } from 'src/components/ui/toaster';
-import { ThemeProvider } from 'src/components/molecules/theme/provider';
+import { ThemeProvider } from 'src/components/organisms/provider/theme';
 import Header from 'src/components/organisms/header';
 import { cn } from 'src/utils';
 

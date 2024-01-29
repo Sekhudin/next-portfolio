@@ -3,7 +3,7 @@ import {
   TooltipInstagram,
   TooltipLinkedin,
   TooltipTwitter,
-} from 'src/components/molecules/anchor/tooltip-social-media';
+} from 'src/components/atoms/anchor/tooltip-social-media';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function SocialMediaSection({ className }: PropsWithClassName) {

@@ -1,19 +1,21 @@
 import { ExternalLink } from 'lucide-react';
 import { toast } from 'src/components/ui/use-toast';
+import { Separator } from 'src/components/ui/separator';
 import { Skeleton, SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
 import ICON from 'src/components/atoms/icon/hoc';
 import Avatar from 'src/components/atoms/image/async-avatar';
 import { H4 } from 'src/components/atoms/typography/h';
 import { Small, PlainAnchor } from 'src/components/atoms/typography/p';
-import { type SingleRepository, Repos } from 'src/service/github/queries/repositories';
+import { Repos, type SingleRepository } from 'src/service/github/queries/repositories';
 import { cn, hrefTo, PropsWithClassName } from 'src/utils';
+import { MouseEventHandler } from 'react';
 
 const ExternalLinkIcon = ICON(ExternalLink);
-const ProjectCard = ({ className, ...v }: PropsWithClassName<SingleRepository>) => {
-  const { tech, language, isHidden, newDescription } = Repos.techProject({ ...v });
+const ProjectCard = ({ className, ...projectValue }: PropsWithClassName<SingleRepository>) => {
+  const { primaryLanguage, description, ...repo } = new Repos(projectValue);
 
-  const anchorHandler = () => {
-    if (isHidden) {
+  const anchorHandler: MouseEventHandler<HTMLDivElement> = (e) => {
+    if (repo.isHidden) {
       toast({
         variant: 'error',
         title: 'Unreachable Link',
@@ -21,7 +23,12 @@ const ProjectCard = ({ className, ...v }: PropsWithClassName<SingleRepository>) 
       });
       return;
     }
-    hrefTo(v.url, '_blank');
+    const anchorElements = e.currentTarget.getElementsByTagName('a');
+    const anchorHomePage = anchorElements[0];
+    const anchorAPIDocs = anchorElements[1];
+    if (e.target === anchorHomePage) return;
+    if (e.target === anchorAPIDocs) return;
+    hrefTo(repo.url, '_blank');
   };
 
   return (
@@ -29,9 +36,10 @@ const ProjectCard = ({ className, ...v }: PropsWithClassName<SingleRepository>) 
       className={cn(
         `relative hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 group
         rounded-lg md:rounded-xl flex flex-col p-4 ${
-          isHidden ? 'cursor-not-allowed' : 'cursor-pointer'
+          repo.isHidden ? 'cursor-not-allowed' : 'cursor-pointer'
         }`,
-        className
+        className,
+        'border dark:border-zinc-600/50 md:border-none'
       )}
       onClick={anchorHandler}>
       <span
@@ -42,50 +50,80 @@ const ProjectCard = ({ className, ...v }: PropsWithClassName<SingleRepository>) 
       <Avatar
         className="w-12 h-12 mb-6 border dark:border-[1.5px]
         dark:border-zinc-500/50 shadow-lg"
-        alt={v.name}
+        alt={repo.name}
       />
 
-      <div className="h-40 md:h-52 xl:h-56 flex flex-col justify-between gap-y-2">
+      <div className="min-h-[10rem] md:h-52 xl:h-56 flex flex-col justify-between gap-y-2">
         <div>
-          <H4 className="first-letter:uppercase mb-4">{v.name}</H4>
-          <Small className="font-light dark:font-extralight leading-5 text-wrap truncate">
-            {newDescription}
+          <p
+            className="scroll-m-20 text-lg font-semibold tracking-tight text-zinc-800
+          dark:text-zinc-300 first-letter:uppercase mb-4">
+            {repo.name}
+          </p>
+          <Small className="font-light dark:font-extralight first-letter:uppercase leading-5 text-wrap">
+            {description.plain}
           </Small>
           <div className="mt-4 font-mono">
-            {tech && (
-              <Small className="font-bold">
-                {'Tech: '}
-                <span className="font-normal">{tech}</span>
+            {description.integration && (
+              <Small className="font-extrabold mb-2">
+                <span className="text-blue-600">{'Integration: '}</span>
+                <span className="font-extralight">{description.integration}</span>
               </Small>
             )}
-            {language && !tech && (
+
+            {description.techstack && (
+              <Small className="font-extrabold">
+                {'Tech: '}
+                <span className="font-extralight">{description.techstack}</span>
+              </Small>
+            )}
+            {!description.techstack && primaryLanguage && (
               <Small className={`font-bold`}>
                 {'Language: '}
-                <span className="font-normal" style={{ color: `${language.color}` }}>
-                  {language.name}
+                <span className="font-normal" style={{ color: `${primaryLanguage.color}` }}>
+                  {primaryLanguage.name}
                 </span>
               </Small>
             )}
           </div>
         </div>
 
-        {v.homepageUrl && (
-          <PlainAnchor
-            className="text-sm font-semibold text-zinc-500 dark:text-zinc-400
+        <div className="flex items-center">
+          {repo.homepageUrl && (
+            <PlainAnchor
+              className="relative text-sm font-semibold text-zinc-500 dark:text-zinc-400
             hover:text-zinc-700 hover:dark:text-zinc-300 duration-150 py-1"
-            href={v.homepageUrl}
-            target="_blank"
-            aria-label="Learn More to Home Page">
-            Learn More
-          </PlainAnchor>
-        )}
+              href={repo.homepageUrl}
+              target="_blank"
+              aria-label="Home Page">
+              Home page
+            </PlainAnchor>
+          )}
+          {description.apiDocs && (
+            <>
+              <Separator className="mx-2" orientation="vertical" />
+              <PlainAnchor
+                className="relative text-sm font-semibold text-zinc-500 dark:text-zinc-400
+                hover:text-zinc-700 hover:dark:text-zinc-300 duration-150 py-1"
+                href={description.apiDocs}
+                target="_blank"
+                aria-label="API Documentations">
+                Docs
+              </PlainAnchor>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export const ProjectCardFallback = ({ className }: PropsWithClassName) => (
-  <div className={cn(`rounded-lg md:rounded-xl flex flex-col p-4`, className)}>
+  <div
+    className={cn(
+      `rounded-lg md:rounded-xl flex flex-col border dark:border-zinc-600/50 md:border-none p-4`,
+      className
+    )}>
     <Skeleton
       className="w-12 h-12 rounded-full mb-6 border dark:border-[1.5px]
       dark:border-zinc-500/50 shadow-lg"
@@ -102,7 +140,11 @@ export const ProjectCardFallback = ({ className }: PropsWithClassName) => (
         </div>
       </div>
 
-      <SkeletonTextSM className="w-3/12" />
+      <div className="flex">
+        <SkeletonTextSM className="w-2/12" />
+        <Separator className="mx-2" orientation="vertical" />
+        <SkeletonTextSM className="w-1/12" />
+      </div>
     </div>
   </div>
 );

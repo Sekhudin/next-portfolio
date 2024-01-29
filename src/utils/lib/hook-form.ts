@@ -12,7 +12,7 @@ export type UseForm<T extends FieldValues> = {
   form: UseFormReturn<T>;
   onSubmit: SubmitHandler<T>;
   onInvalid: SubmitErrorHandler<Record<string, any>>;
-  loading?: boolean;
+  loading: boolean;
 };
 
 export function catchInvalidForm<T extends FieldValues>(e: any): ErrorMessage {

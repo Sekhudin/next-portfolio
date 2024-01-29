@@ -17,7 +17,6 @@ import GET_POSTS, {
   type Args_POST,
   type PostFilter,
 } from 'src/service/hashnode/queries/posts';
-import Pg from 'src/utils/pagination';
 import { cn, PropsWithClassName, PropsWithChildren } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
 
@@ -43,7 +42,7 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
   const [sortBy, setSortBy] = React.useState<PostSort>(PostSort.DatePublishedAsc);
   const [filter, setFilter] = React.useState<PostFilter>();
   const { data } = useQuery(GET_POSTS, { variables: { page, pageSize, sortBy, filter } });
-  const { nodes, pageInfo, totalDocuments, uniqueTags } = Post.flatten(data);
+  const { nodes, pageInfo, totalDocuments, tags } = Post.flatten(data);
 
   const filterHandler = <T extends keyof PostFilter>(type: T, value: PostFilter[T]): void => {
     if (value) {
@@ -71,7 +70,7 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
   const tagOnChange = (value: string | string[]) => {
     const tagsId: string[] = typeof value === 'string' ? [value] : value;
     const selectedTag = tagsId[0]
-      ? uniqueTags.filter(({ id }) => tagsId.includes(id)).map((v) => v.id)
+      ? tags.filter(({ id }) => tagsId.includes(id)).map((v) => v.id)
       : null;
     filterHandler<'tags'>('tags', selectedTag);
   };
@@ -103,9 +102,10 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
           type="multiple"
           orientation="horizontal"
           onValueChange={tagOnChange}>
-          {uniqueTags.map((tag, key) => (
+          {tags.map((tag, key) => (
             <ToggleGroupItem
-              className="text-xs font-light"
+              className={`text-xs font-light data-[state="on"]:text-zinc-50
+              data-[state="on"]:bg-indigo-700`}
               key={key}
               variant="default"
               size="fit"
@@ -135,7 +135,7 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {Pg.pageOfPage(page, pageSize, totalDocuments).text}
+              {Post.pageStatus(page, pageSize, totalDocuments)}
             </PaginationItem>
 
             <PaginationItem>
@@ -165,8 +165,9 @@ export const PostlistFallback = ({ className }: PropsWithClassName) => (
 
     <div className={cn('flex flex-col gap-y-16', className)}>
       <div className="min-h-96 flex flex-col gap-y-10 mb-12">
-        <PostCardFallback />
-        <PostCardFallback />
+        {Array.from({ length: 5 }).map((_, key) => (
+          <PostCardFallback key={key} />
+        ))}
       </div>
 
       <div className="flex justify-center space-x-4">

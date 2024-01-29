@@ -6,7 +6,10 @@ import {
   Post as PostBase,
   UserPostsSort as PostSort,
   UserPostConnectionFilter as PostFilter,
+  Maybe,
 } from 'src/types/graphql/hashnode';
+import Str from 'src/utils/string';
+import Util from 'src/service/helper/util';
 
 const GET_POSTS: TypedDocumentNode<Response_POST, UserPostsArgs> = gql`
   query POSTS(
@@ -42,28 +45,6 @@ const GET_POSTS: TypedDocumentNode<Response_POST, UserPostsArgs> = gql`
   }
 `;
 
-namespace Post {
-  const uniquePostTags = (nodes: Array<SinglePost>): Array<PostTag> => {
-    const uniqueSet = new Set<PostTag>();
-    for (const post of nodes) {
-      if (post.tags) {
-        post.tags.forEach((tag) => {
-          if (tag.id) {
-            uniqueSet.add(tag);
-          }
-        });
-      }
-    }
-    return Array.from(uniqueSet);
-  };
-
-  export const flatten = (response: Response_POST) => {
-    const { nodes, ...responseMePost } = response.me.posts;
-    const uniqueTags = uniquePostTags(nodes);
-    return { nodes, uniqueTags, ...responseMePost };
-  };
-}
-
 type PostTag = Pick<TagBase, 'id' | 'name'>;
 type SinglePost = Pick<
   PostBase,
@@ -79,6 +60,34 @@ type Response_POST = {
     };
   };
 };
+
+class Post implements Omit<SinglePost, 'publishedAt'> {
+  id!: string;
+  slug!: string;
+  title!: string;
+  brief!: string;
+  url!: string;
+  tags?: Maybe<TagBase[]>;
+  publishedAt?: string;
+
+  constructor(v: SinglePost) {
+    Object.assign(this, v);
+    if (typeof v.publishedAt === 'string') {
+      this.publishedAt = Str.toCustomDate(v.publishedAt, 'M D, Y');
+    }
+  }
+
+  static flatten(response: Response_POST) {
+    const { nodes, ...responseMePost } = response.me.posts;
+    const tags = Util.hasnodeUniqueTags(nodes);
+    return { tags, nodes, ...responseMePost };
+  }
+
+  static pageStatus(...param: Parameters<(typeof Util)['page']>): string {
+    const page = Util.page(...param);
+    return page.status;
+  }
+}
 
 export { Post, PostSort };
 export type { SinglePost, PostFilter, PostTag, Args_POST, Response_POST };

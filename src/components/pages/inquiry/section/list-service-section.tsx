@@ -4,10 +4,11 @@ import {
   BackendDevService,
   HourlyRate,
 } from 'src/components/molecules/list/work-service';
+import { cn, PropsWithClassName } from 'src/utils';
 
-const ListServiceSection = () => {
+const ListServiceSection = ({ className }: PropsWithClassName) => {
   return (
-    <div>
+    <div className={cn(``, className)}>
       <div className="mb-4">
         <HourlyRate />
       </div>

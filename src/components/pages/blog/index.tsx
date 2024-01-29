@@ -1,6 +1,6 @@
 import React from 'react';
 import { H4 } from 'src/components/atoms/typography/h';
-import HashnodeProvider from 'src/components/shared/provider/hashnode';
+import HashnodeProvider from 'src/components/organisms/provider/hashnode';
 import MeProfile, { MeProfileFallback } from 'src/components/shared/hashnode/me';
 import DescriptionSection from './section/description-section';
 import PostsSection from './section/posts-section';
@@ -18,7 +18,11 @@ const Blog = () => {
         </section>
 
         <section className="h-fit mt-6">
-          <H4 className="mb-2 text-zinc-500 dark:text-zinc-500">Word Artisan:</H4>
+          <p
+            className="scroll-m-20 text-lg font-semibold tracking-tight
+          text-zinc-500 dark:text-zinc-500 mb-2">
+            Word Artisan:
+          </p>
           <React.Suspense fallback={<MeProfileFallback />}>
             <MeProfile />
           </React.Suspense>
