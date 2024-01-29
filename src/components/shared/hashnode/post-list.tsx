@@ -104,8 +104,8 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
           onValueChange={tagOnChange}>
           {tags.map((tag, key) => (
             <ToggleGroupItem
-              className={`text-xs font-light data-[state="on"]:text-zinc-50
-              data-[state="on"]:bg-indigo-700`}
+              className={`text-xs font-light data-[state=on]:text-zinc-50
+              data-[state=on]:bg-indigo-700`}
               key={key}
               variant="default"
               size="fit"

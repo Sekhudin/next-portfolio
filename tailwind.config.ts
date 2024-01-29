@@ -10,6 +10,7 @@ const config = {
     './components/atoms/**/*.{ts,tsx}',
     './components/molecules/**/*.{ts,tsx}',
     './components/organisms/**/*.{ts,tsx}',
+    './components/shared/**/*.{ts,tsx}',
   ],
   prefix: '',
   theme: {
