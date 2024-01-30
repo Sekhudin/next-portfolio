@@ -36,9 +36,10 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
       before,
       orderBy: {
         direction: OrderDirection.Asc,
-        field: OrderField.CreatedAt,
+        field: OrderField.UpdatedAt,
       },
       privacy: Privacy.Public,
+      isFork: false,
     },
   });
   const { nodes, pageInfo, totalCount } = Repos.flatten(data);
