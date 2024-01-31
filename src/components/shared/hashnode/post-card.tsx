@@ -3,12 +3,11 @@ import { ChevronRight } from 'lucide-react';
 import { Separator } from 'src/components/ui/separator';
 import { SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
-import { H4 } from 'src/components/atoms/typography/h';
-import { Post, type SinglePost } from 'src/service/hashnode/queries/posts';
+import Post, { type SinglePost } from 'src/service/hashnode/queries/posts';
 import { cn, hrefTo, PropsWithClassName } from 'src/utils';
 
 const PostCard = ({ className, ...postValue }: PropsWithClassName<SinglePost>) => {
-  const post = new Post(postValue);
+  const post = new Post.Result(postValue);
 
   return (
     <div className={cn('grid grid-cols-12', className)}>

@@ -4,15 +4,14 @@ import { Separator } from 'src/components/ui/separator';
 import { Skeleton, SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
 import ICON from 'src/components/atoms/icon/hoc';
 import Avatar from 'src/components/atoms/image/async-avatar';
-import { H4 } from 'src/components/atoms/typography/h';
 import { Small, PlainAnchor } from 'src/components/atoms/typography/p';
-import { Repos, type SingleRepository } from 'src/service/github/queries/repositories';
+import Repos, { type SingleRepository } from 'src/service/github/queries/repositories';
 import { cn, hrefTo, PropsWithClassName } from 'src/utils';
 import { MouseEventHandler } from 'react';
 
 const ExternalLinkIcon = ICON(ExternalLink);
 const ProjectCard = ({ className, ...projectValue }: PropsWithClassName<SingleRepository>) => {
-  const { primaryLanguage, description, ...repo } = new Repos(projectValue);
+  const { primaryLanguage, description, ...repo } = new Repos.Result(projectValue);
 
   const anchorHandler: MouseEventHandler<HTMLDivElement> = (e) => {
     if (repo.isHidden) {

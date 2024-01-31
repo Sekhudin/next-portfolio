@@ -9,7 +9,7 @@ import {
   type NoInfer,
   type UseSuspenseQueryResult,
 } from '@apollo/client';
-import useError from './use-error';
+import useError from './core/use-error';
 
 const useSuspenseQuery = <TData, TVariables extends OperationVariables = OperationVariables>(
   query: DocumentNode | TypedDocumentNode<TData, TVariables>,

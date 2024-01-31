@@ -1,4 +1,5 @@
-import type {
+import {
+  useForm,
   UseFormReturn,
   SubmitHandler,
   SubmitErrorHandler,

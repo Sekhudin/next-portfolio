@@ -1,6 +1,5 @@
 'use client';
 import { Small } from 'src/components/atoms/typography/p';
-import AbsoluteLoader from 'src/components/atoms/loader/absolute';
 import {
   Form,
   FieldInput,
@@ -8,18 +7,28 @@ import {
   FieldRadioGroup,
   Submit,
 } from 'src/components/molecules/form';
-import useForm, {
-  INQUIRY_TIME_FRAME,
-  type InquiryForm,
-  type FieldName,
-  type InquiryTimeFrame,
-} from './use-form';
-import { cn, PropsWithClassName } from 'src/utils';
+// import useForm, { resolver } from 'src/hooks/use-form';
+import EmailService, { SendInquiry } from 'src/service/emailjs';
+import type { _useFormDI, _formResolverDI } from 'src/types/dependencies/hooks';
+import { cn, PropsWithClassName, ArrayItem } from 'src/utils';
 
-export default function SendForm({ className }: PropsWithClassName) {
-  const { form, onSubmit, onInvalid, loading } = useForm();
+type DI = {
+  deps: {
+    useForm: _useFormDI;
+    formResolver: _formResolverDI;
+  };
+};
 
-  const radioOnValueChange = (v: InquiryTimeFrame) => {
+export default function SendInquiryForm({ className, deps }: PropsWithClassName<DI>) {
+  const { form, onValid, onInvalid, loading, FixedLoader } = deps.useForm({
+    service: EmailService.sendInquiry,
+    resolver: deps.formResolver(SendInquiry.Schema),
+    defaultValues: SendInquiry.Default,
+    okMsg: 'Email sent successfully',
+    failMsg: 'Email failed to send',
+  });
+
+  const radioOnValueChange = (v: ArrayItem<typeof SendInquiry.TimeFrame>) => {
     form.setValue('timeFrame', v);
   };
 
@@ -28,9 +37,9 @@ export default function SendForm({ className }: PropsWithClassName) {
       <form
         className={cn(`relative w-full`, className)}
         method="POST"
-        onSubmit={form.handleSubmit(onSubmit, onInvalid)}>
-        <AbsoluteLoader loading={loading} />
-        <FieldInput<InquiryForm, FieldName>
+        onSubmit={form.handleSubmit(onValid, onInvalid)}>
+        <FixedLoader />
+        <FieldInput<SendInquiry.Form, SendInquiry.Field>
           className="lg:w-9/12"
           name="name"
           label="Your Name"
@@ -38,7 +47,7 @@ export default function SendForm({ className }: PropsWithClassName) {
           required
         />
 
-        <FieldInput<InquiryForm, FieldName>
+        <FieldInput<SendInquiry.Form, SendInquiry.Field>
           className="lg:w-9/12"
           name="email"
           label="Email Address"
@@ -46,19 +55,23 @@ export default function SendForm({ className }: PropsWithClassName) {
           required
         />
 
-        <FieldInput<InquiryForm, FieldName> className="lg:w-9/12" name="entity" label="Entity" />
+        <FieldInput<SendInquiry.Form, SendInquiry.Field>
+          className="lg:w-9/12"
+          name="entity"
+          label="Entity"
+        />
 
-        <FieldRadioGroup<InquiryForm, FieldName>
+        <FieldRadioGroup<SendInquiry.Form, SendInquiry.Field>
           className="lg:w-9/12"
           radioClassName="grid grid-cols-2 gap-6"
-          items={INQUIRY_TIME_FRAME as readonly string[]}
+          items={SendInquiry.TimeFrame as readonly string[]}
           onValueChange={radioOnValueChange}
           name="timeFrame"
           label="Time Frame"
           required
         />
 
-        <FieldTextArea<InquiryForm, FieldName>
+        <FieldTextArea<SendInquiry.Form, SendInquiry.Field>
           className="w-full"
           name="brief"
           label="Project Brief"

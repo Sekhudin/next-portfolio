@@ -4,7 +4,7 @@ import {
   INTEGRATION_REGEXP,
   API_DOCS_REGEXP,
   HIDDEN_REPO_REGEXP,
-} from 'src/config/constant';
+} from 'src/config/regexp';
 
 type HttpUrlType = 'hashnode-profile';
 export type ReturnSplitDescription = {

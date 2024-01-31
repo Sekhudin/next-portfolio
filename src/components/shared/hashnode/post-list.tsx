@@ -11,12 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from 'src/components/ui/toggle-group';
 import { SkeletonTextSM } from 'src/components/ui/skeleton';
 import { Small } from 'src/components/atoms/typography/p';
 import useQuery from 'src/hooks/use-suspense-query';
-import GET_POSTS, {
-  PostSort,
-  Post,
-  type Args_POST,
-  type PostFilter,
-} from 'src/service/hashnode/queries/posts';
+import Posts, { SortBy, type Args_POST, type PostFilter } from 'src/service/hashnode/queries/posts';
 import { cn, PropsWithClassName, PropsWithChildren } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
 
@@ -25,7 +20,7 @@ type PostListprops = PropsWithClassName<Omit<Args_POST, 'sortBy'>>;
 const args: Args_POST = {
   page: 1,
   pageSize: 1,
-  sortBy: PostSort.DatePublishedAsc,
+  sortBy: SortBy.DatePublishedAsc,
 };
 
 const PostMessage = ({ children, className }: PropsWithChildren) => (
@@ -39,10 +34,10 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
   const [beforePage, setBeforePage] = React.useState<number>(v.page);
   const [pageSize, setPageSize] = React.useState<number>(v.pageSize);
   const [beforePageSize, setBeforePageSize] = React.useState<number>(v.pageSize);
-  const [sortBy, setSortBy] = React.useState<PostSort>(PostSort.DatePublishedAsc);
+  const [sortBy, setSortBy] = React.useState<SortBy>(SortBy.DatePublishedAsc);
   const [filter, setFilter] = React.useState<PostFilter>();
-  const { data } = useQuery(GET_POSTS, { variables: { page, pageSize, sortBy, filter } });
-  const { nodes, pageInfo, totalDocuments, tags } = Post.flatten(data);
+  const { data } = useQuery(Posts.QUERY, { variables: { page, pageSize, sortBy, filter } });
+  const { nodes, pageInfo, totalDocuments, tags } = Posts.Result.flatten(data);
 
   const filterHandler = <T extends keyof PostFilter>(type: T, value: PostFilter[T]): void => {
     if (value) {
@@ -135,7 +130,7 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {Post.pageStatus(page, pageSize, totalDocuments)}
+              {Posts.Result.pageStatus(page, pageSize, totalDocuments)}
             </PaginationItem>
 
             <PaginationItem>

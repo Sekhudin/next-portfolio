@@ -1,7 +1,6 @@
-import type { BaseWorkService } from './types';
+import type { BaseWorkService, InquiryTimeFrame } from './types';
 
-type TimeFrame = '2 Weeks' | '1-3 Months' | '> 3 Months' | 'undecided';
-export const TIME_FRAME: TimeFrame[] = [
+export const TIME_FRAME: readonly [InquiryTimeFrame, ...InquiryTimeFrame[]] = [
   '2 Weeks',
   '1-3 Months',
   '> 3 Months',

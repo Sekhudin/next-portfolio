@@ -24,4 +24,5 @@ const useAsyncTask: UseAsyncTask = () => {
   };
 };
 
+export type { UseAsyncTask };
 export default useAsyncTask;

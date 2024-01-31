@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 
+export type InquiryTimeFrame = '2 Weeks' | '1-3 Months' | '> 3 Months' | 'undecided';
 export type BaseContact = BaseAnchor & { icon: LucideIcon };
 export type BaseLink = BaseAnchor;
 export type BaseSocialMedia = BaseAnchor & { icon: LucideIcon };

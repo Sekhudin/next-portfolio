@@ -9,7 +9,7 @@ import {
   type NoInfer,
   type QueryResult,
 } from '@apollo/client';
-import useError from './use-error';
+import useError from './core/use-error';
 
 const useQuery = <
   TData extends Record<string, any>,

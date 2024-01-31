@@ -4,16 +4,16 @@ import { Skeleton, SkeletonTextSM } from 'src/components/ui/skeleton';
 import { Small, XSmall } from 'src/components/atoms/typography/p';
 import Avatar from 'src/components/atoms/image/async-avatar';
 import useQuery from 'src/hooks/use-suspense-query';
-import GET_ME, { Me } from 'src/service/hashnode/queries/me';
+import Me from 'src/service/hashnode/queries/me';
 import { cn, PropsWithClassName } from 'src/utils';
 
 const MeProfile = ({ className }: PropsWithClassName) => {
-  const { data } = useQuery(GET_ME);
-  const { ...v } = Me.flatten(data);
+  const { data } = useQuery(Me.QUERY);
+  const { ...v } = Me.Result.flatten(data);
 
   return (
     <div className={cn('h-fit w-full md:max-w-sm flex gap-x-3', className)}>
-      <a href={Me.profileUrl(v.username)} aria-label="hashnode profile">
+      <a href={Me.Result.profileUrl(v.username)} aria-label="hashnode profile">
         <Avatar className="h-16 w-16" src={v.profilePicture} alt={v.name} />
       </a>
       <div className="flex flex-col justify-center gap-y-3">

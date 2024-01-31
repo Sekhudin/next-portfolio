@@ -1,5 +1,4 @@
 import React from 'react';
-import { H4 } from 'src/components/atoms/typography/h';
 import HashnodeProvider from 'src/components/organisms/provider/hashnode';
 import MeProfile, { MeProfileFallback } from 'src/components/shared/hashnode/me';
 import DescriptionSection from './section/description-section';

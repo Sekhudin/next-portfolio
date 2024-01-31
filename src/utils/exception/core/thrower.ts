@@ -1,12 +1,12 @@
 import {
   HTTPErrorCode,
+  GQLErrorStatus,
   HTTPErrorStatus,
   type HTTPError,
-  type CatchError,
-  type ErrorMessage,
+  type ErrorCode,
 } from 'src/types/error';
 
-export class HTTPException implements HTTPError {
+class HTTPException implements HTTPError {
   readonly code!: HTTPErrorCode;
   readonly title!: HTTPErrorStatus;
   readonly description!: string;
@@ -16,7 +16,7 @@ export class HTTPException implements HTTPError {
   }
 }
 
-export class BadRequestException extends HTTPException {
+class BadRequestException extends HTTPException {
   constructor(message?: string) {
     super({
       code: HTTPErrorCode.BadRequest,
@@ -26,7 +26,7 @@ export class BadRequestException extends HTTPException {
   }
 }
 
-export class UnauthorizedException extends HTTPException {
+class UnauthorizedException extends HTTPException {
   constructor(message?: string) {
     super({
       code: HTTPErrorCode.Unauthorized,
@@ -36,7 +36,7 @@ export class UnauthorizedException extends HTTPException {
   }
 }
 
-export class ForbiddenException extends HTTPException {
+class ForbiddenException extends HTTPException {
   constructor(message?: string) {
     super({
       code: HTTPErrorCode.Forbidden,
@@ -46,7 +46,7 @@ export class ForbiddenException extends HTTPException {
   }
 }
 
-export class NotFoundException extends HTTPException {
+class NotFoundException extends HTTPException {
   constructor(message?: string) {
     super({
       code: HTTPErrorCode.NotFound,
@@ -56,7 +56,7 @@ export class NotFoundException extends HTTPException {
   }
 }
 
-export class InternalServerErrorException extends HTTPException {
+class InternalServerErrorException extends HTTPException {
   constructor(message?: string) {
     super({
       code: HTTPErrorCode.InternalServerError,
@@ -66,27 +66,25 @@ export class InternalServerErrorException extends HTTPException {
   }
 }
 
-export const catchString: CatchError<string> = (e) => {
-  const errorText = e.length > 30 ? 'something was wrong' : e;
-  const { code, title, description } = new InternalServerErrorException(errorText);
-  const message: ErrorMessage = { title, description };
-  const error: HTTPError = { code, title, description };
-  const errorObject: Error = new Error(description);
-  return { error, message, errorObject };
+const errorWithCode = (code: ErrorCode, message?: string): HTTPException => {
+  if (code === GQLErrorStatus.BadRequest || code === '400' || code === 400) {
+    return new BadRequestException(message);
+  }
+
+  if (code === GQLErrorStatus.Unauthorized || code === '401' || code === 401) {
+    return new UnauthorizedException(message);
+  }
+
+  if (code === GQLErrorStatus.Forbidden || code === '403' || code === 403) {
+    return new ForbiddenException(message);
+  }
+
+  if (code === GQLErrorStatus.NotFound || code === '404' || code === 404) {
+    return new NotFoundException(message);
+  }
+
+  return new InternalServerErrorException(message);
 };
 
-export const defaultError = catchString(HTTPErrorStatus.InternalServerError);
-export const errorWithCode = (code: number, message?: string) => {
-  switch (code) {
-    case 400:
-      return new BadRequestException(message);
-    case 401:
-      return new UnauthorizedException(message);
-    case 403:
-      return new ForbiddenException(message);
-    case 404:
-      return new NotFoundException(message);
-    default:
-      return new InternalServerErrorException(message);
-  }
-};
+export { HTTPException };
+export default errorWithCode;

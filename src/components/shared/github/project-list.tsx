@@ -9,8 +9,7 @@ import {
 } from 'src/components/ui/pagination';
 import { SkeletonTextSM } from 'src/components/ui/skeleton';
 import useQuery from 'src/hooks/use-suspense-query';
-import GET_REPOSITORIES, {
-  Repos,
+import Repos, {
   OrderDirection,
   OrderField,
   Privacy,
@@ -28,7 +27,7 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
   const [last, setLast] = useState<number | null>(null);
   const [after, setAfter] = useState<string | null>(null);
   const [before, setBefore] = useState<string | null>(null);
-  const { data } = useQuery(GET_REPOSITORIES, {
+  const { data } = useQuery(Repos.QUERY, {
     variables: {
       first,
       last,
@@ -42,7 +41,7 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
       isFork: false,
     },
   });
-  const { nodes, pageInfo, totalCount } = Repos.flatten(data);
+  const { nodes, pageInfo, totalCount } = Repos.Result.flatten(data);
   const prevHandler = () => {
     if (pageInfo.startCursor) {
       setPage(page - 1);
@@ -84,7 +83,7 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {Repos.pageStatus(page, v.pageSize, totalCount)}
+              {Repos.Result.pageStatus(page, v.pageSize, totalCount)}
             </PaginationItem>
 
             <PaginationItem>

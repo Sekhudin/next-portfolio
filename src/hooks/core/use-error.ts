@@ -36,4 +36,5 @@ const useError: UseError = () => {
   };
 };
 
+export type { UseError };
 export default useError;

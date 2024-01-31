@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ShieldAlert } from 'lucide-react';
 import { Button } from 'src/components/ui/button';
 import { H3 } from 'src/components/atoms/typography/h';
-import useError from 'src/hooks/use-error';
+import useError from 'src/hooks/core/use-error';
 import { cn, type ErrorPageProps, type PropsWithClassName } from 'src/utils';
 
 const ErrorPage = ({ className, error, reset }: PropsWithClassName<ErrorPageProps>) => {
