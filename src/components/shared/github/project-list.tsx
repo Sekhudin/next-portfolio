@@ -8,40 +8,47 @@ import {
   PaginationPrev,
 } from 'src/components/ui/pagination';
 import { SkeletonTextSM } from 'src/components/ui/skeleton';
-import useQuery from 'src/hooks/use-suspense-query';
-import Repos, {
-  OrderDirection,
-  OrderField,
-  Privacy,
-} from 'src/service/github/queries/repositories';
+import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/graphql';
+import type { _GithubQueryReposDI } from 'src/types/dependencies/service';
+import type { _HrefToDI, _ToastDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 import ProjectCard, { ProjectCardFallback } from './project-card';
 
-type ProjectListProps = PropsWithClassName<{
-  pageSize: number;
-}>;
+type DI = {
+  deps: {
+    _useQuery: _UseApolloSuspenseQueryDI;
+    _service: _GithubQueryReposDI;
+    _hrefTo: _HrefToDI;
+    _toast: _ToastDI;
+  };
+};
+type Props = PropsWithClassName<
+  DI & {
+    pageSize: number;
+  }
+>;
 
-const ProjectList = ({ className, ...v }: ProjectListProps) => {
+const ProjectList = ({ className, deps, ...v }: Props) => {
   const [page, setPage] = useState<number>(1);
   const [first, setFirst] = useState<number | null>(v.pageSize);
   const [last, setLast] = useState<number | null>(null);
   const [after, setAfter] = useState<string | null>(null);
   const [before, setBefore] = useState<string | null>(null);
-  const { data } = useQuery(Repos.QUERY, {
+  const { data } = deps._useQuery(deps._service.Query, {
     variables: {
       first,
       last,
       after,
       before,
       orderBy: {
-        direction: OrderDirection.Asc,
-        field: OrderField.UpdatedAt,
+        direction: deps._service.OrderDirection.Asc,
+        field: deps._service.OrderField.UpdatedAt,
       },
-      privacy: Privacy.Public,
+      privacy: deps._service.Privacy.Public,
       isFork: false,
     },
   });
-  const { nodes, pageInfo, totalCount } = Repos.Result.flatten(data);
+  const { nodes, pageInfo, totalCount } = deps._service.Result.flatten(data);
   const prevHandler = () => {
     if (pageInfo.startCursor) {
       setPage(page - 1);
@@ -67,7 +74,12 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
       <div className="flex flex-col gap-y-16">
         <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}>
           {nodes.map((repo, key) => (
-            <ProjectCard className="" key={key} {...repo} />
+            <ProjectCard
+              className=""
+              key={key}
+              deps={{ _hrefTo: deps._hrefTo, _toast: deps._toast, _service: deps._service.Result }}
+              {...repo}
+            />
           ))}
         </div>
 
@@ -83,7 +95,7 @@ const ProjectList = ({ className, ...v }: ProjectListProps) => {
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {Repos.Result.pageStatus(page, v.pageSize, totalCount)}
+              {deps._service.Result.pageStatus(page, v.pageSize, totalCount)}
             </PaginationItem>
 
             <PaginationItem>

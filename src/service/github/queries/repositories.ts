@@ -1,11 +1,11 @@
 import { TypedDocumentNode, gql } from '@apollo/client';
 import {
-  RepositoryAffiliation as Affiliation,
-  RepositoryPrivacy as Privacy,
-  RepositoryVisibility as Visibility,
-  RepositoryOrder as Order,
-  OrderDirection,
-  RepositoryOrderField as OrderField,
+  RepositoryAffiliation,
+  RepositoryPrivacy,
+  RepositoryVisibility,
+  RepositoryOrder,
+  OrderDirection as OrderDir,
+  RepositoryOrderField,
   type User as UserBase,
   type RepositoryConnection,
   type Repository as RepositoryBase,
@@ -15,8 +15,11 @@ import {
 } from 'src/types/graphql/github';
 import Util, { type ReturnSplitDescription } from 'src/service/helper/util';
 
-namespace Repositories {
-  export const QUERY: TypedDocumentNode<Response_REPOS, Args_REPOS> = gql`
+namespace GithubQueryRepos {
+  export const Query: TypedDocumentNode<
+    _GithubQueryRepos['Response'],
+    _GithubQueryRepos['Args']
+  > = gql`
     query REPOSITORIES(
       $after: String
       $before: String
@@ -72,7 +75,9 @@ namespace Repositories {
     }
   `;
 
-  export class Result implements Omit<SingleRepository, 'description' | 'url' | 'createdAt'> {
+  export class Result
+    implements Omit<_GithubQueryRepos['Single'], 'description' | 'url' | 'createdAt'>
+  {
     id!: string;
     name!: string;
     isHidden!: boolean;
@@ -82,13 +87,13 @@ namespace Repositories {
     primaryLanguage?: Maybe<Language>;
     createdAt?: string;
 
-    constructor({ description, ...v }: SingleRepository) {
+    constructor({ description, ...v }: _GithubQueryRepos['Single']) {
       Object.assign(this, v);
       this.description = Util.splitDescription(description);
       this.isHidden = Util.isRepoToHide(v.name);
     }
 
-    static flatten(response: Response_REPOS) {
+    static flatten(response: _GithubQueryRepos['Response']) {
       const { nodes, ...result } = response.viewer.repositories;
       return { nodes, ...result };
     }
@@ -98,21 +103,44 @@ namespace Repositories {
       return page.status;
     }
   }
+
+  export const Affiliation = { ...RepositoryAffiliation };
+  export const Privacy = { ...RepositoryPrivacy };
+  export const Visibility = { ...RepositoryVisibility };
+  export const OrderDirection = { ...OrderDir };
+  export const OrderField = { ...RepositoryOrderField };
 }
 
-type SingleRepository = Pick<
-  RepositoryBase,
-  'id' | 'name' | 'description' | 'url' | 'homepageUrl' | 'primaryLanguage' | 'createdAt'
->;
-type Args_REPOS = Omit<UserRepositoriesArgs, ''>;
-type Response_REPOS = {
-  viewer: Pick<UserBase, 'id'> & {
-    repositories: Pick<RepositoryConnection, 'pageInfo' | 'totalCount'> & {
-      nodes: Array<SingleRepository>;
+type _GithubQueryRepos = {
+  Single: Pick<
+    RepositoryBase,
+    'id' | 'name' | 'description' | 'url' | 'homepageUrl' | 'primaryLanguage' | 'createdAt'
+  >;
+  Args: Omit<UserRepositoriesArgs, ''>;
+  Response: {
+    viewer: Pick<UserBase, 'id'> & {
+      repositories: Pick<RepositoryConnection, 'pageInfo' | 'totalCount'> & {
+        nodes: Array<_GithubQueryRepos['Single']>;
+      };
     };
   };
+  Order: RepositoryOrder;
+  Afifiliation: (typeof GithubQueryRepos)['Affiliation'][keyof (typeof GithubQueryRepos)['Affiliation']];
+  Privacy: (typeof GithubQueryRepos)['Privacy'][keyof (typeof GithubQueryRepos)['Privacy']];
+  Visibility: (typeof GithubQueryRepos)['Visibility'][keyof (typeof GithubQueryRepos)['Visibility']];
+  OrderDirection: (typeof GithubQueryRepos)['OrderDirection'][keyof (typeof GithubQueryRepos)['OrderDirection']];
+  OrderField: (typeof GithubQueryRepos)['OrderField'][keyof (typeof GithubQueryRepos)['OrderField']];
 };
 
-export { Affiliation, Privacy, Visibility, OrderDirection, OrderField };
-export type { Args_REPOS, Response_REPOS, SingleRepository, Order };
-export default Repositories;
+type _GithubQueryReposDI = {
+  Query: typeof GithubQueryRepos.Query;
+  Result: typeof GithubQueryRepos.Result;
+  Affiliation: (typeof GithubQueryRepos)['Affiliation'];
+  Privacy: (typeof GithubQueryRepos)['Privacy'];
+  Visibility: (typeof GithubQueryRepos)['Visibility'];
+  OrderDirection: (typeof GithubQueryRepos)['OrderDirection'];
+  OrderField: (typeof GithubQueryRepos)['OrderField'];
+};
+
+export type { _GithubQueryRepos, _GithubQueryReposDI };
+export default GithubQueryRepos;

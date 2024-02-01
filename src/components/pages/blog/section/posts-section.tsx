@@ -1,7 +1,7 @@
 import React from 'react';
 import { Separator } from 'src/components/ui/separator';
 import PostList, { PostlistFallback } from 'src/components/shared/hashnode/post-list';
-import { cn, PropsWithClassName, PropsWithChildren } from 'src/utils';
+import { cn, PropsWithClassName, PropsWithChildren, Deps } from 'src/utils';
 
 const WithSeparator = ({ children, className }: PropsWithChildren) => (
   <div className={cn(`grow flex`, className)}>
@@ -10,7 +10,8 @@ const WithSeparator = ({ children, className }: PropsWithChildren) => (
   </div>
 );
 
-const PostsSection = ({ className }: PropsWithClassName) => {
+type Props = PropsWithClassName<Deps<'deps', typeof PostList>>;
+const PostsSection = ({ className, deps }: Props) => {
   return (
     <React.Suspense
       fallback={
@@ -19,7 +20,7 @@ const PostsSection = ({ className }: PropsWithClassName) => {
         </WithSeparator>
       }>
       <WithSeparator className={cn(className)}>
-        <PostList className="md:max-w-2xl xl:max-w-3xl" page={1} pageSize={5} />
+        <PostList className="md:max-w-2xl xl:max-w-3xl" page={1} pageSize={2} deps={deps} />
       </WithSeparator>
     </React.Suspense>
   );

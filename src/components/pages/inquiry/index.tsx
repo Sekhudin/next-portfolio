@@ -1,6 +1,7 @@
 import TitleSection from './section/title-section';
 import ListServiceSection from './section/list-service-section';
-import FormSection from './section/form-section';
+import FormSection from './section/form-inquiry-section';
+import { inquiryFormDeps } from './@section-deps';
 
 const Inquiry = () => {
   return (
@@ -15,7 +16,7 @@ const Inquiry = () => {
         </section>
 
         <section className="md:w-[60%]">
-          <FormSection />
+          <FormSection deps={inquiryFormDeps} />
         </section>
       </div>
     </main>

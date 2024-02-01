@@ -1,8 +1,8 @@
 import mail from '@emailjs/browser';
-import SendInquiry from './form/send-inquiry';
+import type { _SendInquiry } from './form/send-inquiry';
 
-namespace Email {
-  export async function sendInquiry(form: SendInquiry.Form) {
+namespace EmailService {
+  async function send<T extends Record<string, any>>(form: T) {
     return await mail.send(
       `${process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID}`,
       `${process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID}`,
@@ -10,7 +10,15 @@ namespace Email {
       `${process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY}`
     );
   }
+
+  export async function sendInquiry(form: _SendInquiry['Form']) {
+    return await send(form);
+  }
 }
 
-export { SendInquiry };
-export default Email;
+type _EmailServiceDI = {
+  sendInquiry: typeof EmailService.sendInquiry;
+};
+
+export type { _EmailServiceDI };
+export default EmailService;

@@ -3,11 +3,21 @@ import { ChevronRight } from 'lucide-react';
 import { Separator } from 'src/components/ui/separator';
 import { SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
-import Post, { type SinglePost } from 'src/service/hashnode/queries/posts';
-import { cn, hrefTo, PropsWithClassName } from 'src/utils';
+import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/graphql';
+import type { _HashnodeQueryPostsDI, _HashnodeQueryPosts } from 'src/types/dependencies/service';
+import type { _HrefToDI } from 'src/types/dependencies/util';
+import { cn, PropsWithClassName } from 'src/utils';
 
-const PostCard = ({ className, ...postValue }: PropsWithClassName<SinglePost>) => {
-  const post = new Post.Result(postValue);
+type DI = {
+  deps: {
+    _Result: _HashnodeQueryPostsDI['Result'];
+    _hrefTo: _HrefToDI;
+  };
+} & _HashnodeQueryPosts['Single'];
+
+type Props = PropsWithClassName<DI>;
+const PostCard = ({ className, deps, ...postValue }: Props) => {
+  const post = new deps._Result(postValue);
 
   return (
     <div className={cn('grid grid-cols-12', className)}>
@@ -25,7 +35,7 @@ const PostCard = ({ className, ...postValue }: PropsWithClassName<SinglePost>) =
       <div
         className="col-span-12 md:col-span-8 cursor-pointer rounded-lg md:rounded-xl group
         hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 p-4 md:p-6 xl:p-8"
-        onClick={() => hrefTo(post.url)}>
+        onClick={() => deps._hrefTo(post.url)}>
         <div className="flex flex-col space-y-4">
           <p
             className="md:w-10/12 scroll-m-20 text-lg font-semibold

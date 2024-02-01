@@ -3,13 +3,21 @@ import { Separator } from 'src/components/ui/separator';
 import { Skeleton, SkeletonTextSM } from 'src/components/ui/skeleton';
 import { Small, XSmall } from 'src/components/atoms/typography/p';
 import Avatar from 'src/components/atoms/image/async-avatar';
-import useQuery from 'src/hooks/use-suspense-query';
-import Me from 'src/service/github/queries/me';
-import { cn, PropsWithClassName } from 'src/utils';
+import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/graphql';
+import type { _GithubQueryMeDI } from 'src/types/dependencies/service';
+import { cn, PropsWithClassName, Deps } from 'src/utils';
 
-const MeProfile = ({ className }: PropsWithClassName) => {
-  const { data } = useQuery(Me.QUERY);
-  const { profile: v, followers, following } = Me.Result.flatten(data);
+type DI = {
+  deps: {
+    _useQuery: _UseApolloSuspenseQueryDI;
+    _service: _GithubQueryMeDI;
+  };
+};
+
+type Props = PropsWithClassName<DI>;
+const MeProfile = ({ className, deps }: Props) => {
+  const { data } = deps._useQuery(deps._service.Query);
+  const { profile: v, followers, following } = deps._service.Result.flatten(data);
 
   return (
     <div className={cn('h-fit w-full md:max-w-sm flex gap-x-3', className)}>

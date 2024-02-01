@@ -7,28 +7,39 @@ import {
   FieldRadioGroup,
   Submit,
 } from 'src/components/molecules/form';
-// import useForm, { resolver } from 'src/hooks/use-form';
-import EmailService, { SendInquiry } from 'src/service/emailjs';
-import type { _useFormDI, _formResolverDI } from 'src/types/dependencies/hooks';
-import { cn, PropsWithClassName, ArrayItem } from 'src/utils';
+import type {
+  _UseFormDI,
+  _FormResolverDI,
+  _SendInquiryDI,
+  _SendInquiry,
+} from 'src/types/dependencies/form';
+import type { _EmailServiceDI } from 'src/types/dependencies/service';
+import { cn, PropsWithClassName } from 'src/utils';
 
 type DI = {
   deps: {
-    useForm: _useFormDI;
-    formResolver: _formResolverDI;
+    _useForm: _UseFormDI;
+    _formResolver: _FormResolverDI;
+    _form: _SendInquiryDI;
+    _service: _EmailServiceDI['sendInquiry'];
   };
 };
 
-export default function SendInquiryForm({ className, deps }: PropsWithClassName<DI>) {
-  const { form, onValid, onInvalid, loading, FixedLoader } = deps.useForm({
-    service: EmailService.sendInquiry,
-    resolver: deps.formResolver(SendInquiry.Schema),
-    defaultValues: SendInquiry.Default,
+type Props = PropsWithClassName<DI>;
+export default function SendInquiryForm({ className, deps }: Props) {
+  type InquiryForm = _SendInquiry['Form'];
+  type InquiryField = _SendInquiry['Field'];
+  type TimeFrame = _SendInquiry['ItemTimeFrame'];
+
+  const { form, onValid, onInvalid, loading, FixedLoader } = deps._useForm({
+    service: deps._service,
+    resolver: deps._formResolver(deps._form.Schema),
+    defaultValues: deps._form.Default,
     okMsg: 'Email sent successfully',
     failMsg: 'Email failed to send',
   });
 
-  const radioOnValueChange = (v: ArrayItem<typeof SendInquiry.TimeFrame>) => {
+  const radioOnValueChange = (v: TimeFrame) => {
     form.setValue('timeFrame', v);
   };
 
@@ -39,7 +50,7 @@ export default function SendInquiryForm({ className, deps }: PropsWithClassName<
         method="POST"
         onSubmit={form.handleSubmit(onValid, onInvalid)}>
         <FixedLoader />
-        <FieldInput<SendInquiry.Form, SendInquiry.Field>
+        <FieldInput<InquiryForm, InquiryField>
           className="lg:w-9/12"
           name="name"
           label="Your Name"
@@ -47,7 +58,7 @@ export default function SendInquiryForm({ className, deps }: PropsWithClassName<
           required
         />
 
-        <FieldInput<SendInquiry.Form, SendInquiry.Field>
+        <FieldInput<InquiryForm, InquiryField>
           className="lg:w-9/12"
           name="email"
           label="Email Address"
@@ -55,23 +66,19 @@ export default function SendInquiryForm({ className, deps }: PropsWithClassName<
           required
         />
 
-        <FieldInput<SendInquiry.Form, SendInquiry.Field>
-          className="lg:w-9/12"
-          name="entity"
-          label="Entity"
-        />
+        <FieldInput<InquiryForm, InquiryField> className="lg:w-9/12" name="entity" label="Entity" />
 
-        <FieldRadioGroup<SendInquiry.Form, SendInquiry.Field>
+        <FieldRadioGroup<InquiryForm, InquiryField>
           className="lg:w-9/12"
           radioClassName="grid grid-cols-2 gap-6"
-          items={SendInquiry.TimeFrame as readonly string[]}
+          items={deps._form.TimeFrame}
           onValueChange={radioOnValueChange}
           name="timeFrame"
           label="Time Frame"
           required
         />
 
-        <FieldTextArea<SendInquiry.Form, SendInquiry.Field>
+        <FieldTextArea<InquiryForm, InquiryField>
           className="w-full"
           name="brief"
           label="Project Brief"

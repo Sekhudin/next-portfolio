@@ -16,3 +16,11 @@ export type ErrorPageProps = {
   error: Error & { digest?: string };
   reset: () => void;
 };
+
+export type Deps<K extends string, T extends (...args: any) => any> = {
+  [X in K]: Parameters<T>[0]['deps'];
+};
+
+export type PickDeps<T extends (...args: any) => any, K extends keyof Parameters<T>[0]['deps']> = {
+  [X in K]: Parameters<T>[0]['deps'][K];
+};

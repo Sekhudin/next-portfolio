@@ -27,4 +27,6 @@ const useSuspenseQuery = <TData, TVariables extends OperationVariables = Operati
   return { data, error, ...other };
 };
 
+export type _UseApolloSuspenseQueryDI = typeof useSuspenseQuery;
+
 export default useSuspenseQuery;

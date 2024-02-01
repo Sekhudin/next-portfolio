@@ -3,6 +3,7 @@ import HashnodeProvider from 'src/components/organisms/provider/hashnode';
 import MeProfile, { MeProfileFallback } from 'src/components/shared/hashnode/me';
 import DescriptionSection from './section/description-section';
 import PostsSection from './section/posts-section';
+import { hashnodeQueryMeDeps, hashnodeQueryPostsDeps } from './@section-deps';
 
 const Blog = () => {
   return (
@@ -13,7 +14,7 @@ const Blog = () => {
         </section>
 
         <section className="grow flex">
-          <PostsSection />
+          <PostsSection deps={hashnodeQueryPostsDeps} />
         </section>
 
         <section className="h-fit mt-6">
@@ -23,7 +24,7 @@ const Blog = () => {
             Word Artisan:
           </p>
           <React.Suspense fallback={<MeProfileFallback />}>
-            <MeProfile />
+            <MeProfile deps={hashnodeQueryMeDeps} />
           </React.Suspense>
         </section>
       </main>

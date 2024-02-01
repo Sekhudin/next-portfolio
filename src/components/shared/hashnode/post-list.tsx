@@ -10,18 +10,10 @@ import {
 import { ToggleGroup, ToggleGroupItem } from 'src/components/ui/toggle-group';
 import { SkeletonTextSM } from 'src/components/ui/skeleton';
 import { Small } from 'src/components/atoms/typography/p';
-import useQuery from 'src/hooks/use-suspense-query';
-import Posts, { SortBy, type Args_POST, type PostFilter } from 'src/service/hashnode/queries/posts';
-import { cn, PropsWithClassName, PropsWithChildren } from 'src/utils';
+import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/graphql';
+import type { _HashnodeQueryPostsDI, _HashnodeQueryPosts } from 'src/types/dependencies/service';
+import { cn, PropsWithClassName, PropsWithChildren, Deps, PickDeps } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
-
-type PostListprops = PropsWithClassName<Omit<Args_POST, 'sortBy'>>;
-
-const args: Args_POST = {
-  page: 1,
-  pageSize: 1,
-  sortBy: SortBy.DatePublishedAsc,
-};
 
 const PostMessage = ({ children, className }: PropsWithChildren) => (
   <div className={cn(`grow min-h-48 flex justify-center items-center`, className)}>
@@ -29,31 +21,37 @@ const PostMessage = ({ children, className }: PropsWithChildren) => (
   </div>
 );
 
-const PostList = ({ className, ...v }: PostListprops = { className: '', ...args }) => {
+type DI = {
+  deps: {
+    _useQuery: _UseApolloSuspenseQueryDI;
+    _service: _HashnodeQueryPostsDI;
+  } & PickDeps<typeof PostCard, '_hrefTo'>;
+};
+
+type Props = PropsWithClassName<DI & Omit<_HashnodeQueryPosts['Args'], 'sortBy'>>;
+
+const PostList = ({ className, deps, ...v }: Props) => {
   const [page, setPage] = React.useState<number>(v.page);
-  const [beforePage, setBeforePage] = React.useState<number>(v.page);
   const [pageSize, setPageSize] = React.useState<number>(v.pageSize);
-  const [beforePageSize, setBeforePageSize] = React.useState<number>(v.pageSize);
-  const [sortBy, setSortBy] = React.useState<SortBy>(SortBy.DatePublishedAsc);
-  const [filter, setFilter] = React.useState<PostFilter>();
-  const { data } = useQuery(Posts.QUERY, { variables: { page, pageSize, sortBy, filter } });
-  const { nodes, pageInfo, totalDocuments, tags } = Posts.Result.flatten(data);
+  const [sortBy, setSortBy] = React.useState<_HashnodeQueryPosts['SortBy']>(
+    deps._service.SortBy.DatePublishedDesc
+  );
+  const [filter, setFilter] = React.useState<_HashnodeQueryPosts['Filter']>();
+  const { data } = deps._useQuery(deps._service.Query, {
+    variables: { page, pageSize, sortBy, filter },
+  });
+  const { nodes, pageInfo, totalDocuments, tags } = deps._service.Result.flatten(data);
 
-  const filterHandler = <T extends keyof PostFilter>(type: T, value: PostFilter[T]): void => {
+  const filterHandler = <T extends keyof _HashnodeQueryPosts['Filter']>(
+    type: T,
+    value: _HashnodeQueryPosts['Filter'][T]
+  ): void => {
     if (value) {
-      setPage(v.page);
-      setPageSize(v.pageSize);
-      setBeforePage(page);
-      setBeforePageSize(pageSize);
-    }
-
-    if (!value) {
-      setPage(beforePage);
-      setPageSize(beforePageSize);
+      setPage(1);
     }
 
     if (type === 'tags') {
-      const tags = value as PostFilter['tags'];
+      const tags = value as _HashnodeQueryPosts['Filter']['tags'];
       setFilter({
         ...filter,
         tags,
@@ -114,7 +112,12 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
       <div className={cn('flex flex-col gap-y-16')}>
         <div className="min-h-96 flex flex-col gap-y-10 mb-12">
           {nodes.map((v, key) => (
-            <PostCard className="" key={key} {...v} />
+            <PostCard
+              className=""
+              key={key}
+              deps={{ _Result: deps._service.Result, _hrefTo: deps._hrefTo }}
+              {...v}
+            />
           ))}
         </div>
 
@@ -130,7 +133,7 @@ const PostList = ({ className, ...v }: PostListprops = { className: '', ...args 
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {Posts.Result.pageStatus(page, pageSize, totalDocuments)}
+              {deps._service.Result.pageStatus(page, pageSize, totalDocuments)}
             </PaginationItem>
 
             <PaginationItem>

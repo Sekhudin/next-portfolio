@@ -1,9 +1,9 @@
 import React from 'react';
-import { H4 } from 'src/components/atoms/typography/h';
 import GithubProvider from 'src/components/organisms/provider/github';
 import MeProfile, { MeProfileFallback } from 'src/components/shared/github/me';
 import DescriptionSection from './section/description-section';
 import ProjectSection from './section/projects-section';
+import { githubQueryMeDeps, githubQueryReposDeps } from './@section-deps';
 
 const Projects = () => {
   return (
@@ -14,7 +14,7 @@ const Projects = () => {
         </section>
 
         <section>
-          <ProjectSection />
+          <ProjectSection deps={githubQueryReposDeps} />
         </section>
 
         <section className="h-fit mt-6">
@@ -24,7 +24,7 @@ const Projects = () => {
             Follow on Github:
           </p>
           <React.Suspense fallback={<MeProfileFallback />}>
-            <MeProfile />
+            <MeProfile deps={githubQueryMeDeps} />
           </React.Suspense>
         </section>
       </main>

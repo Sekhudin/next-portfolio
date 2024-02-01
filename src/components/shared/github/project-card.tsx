@@ -1,21 +1,30 @@
+import { MouseEventHandler } from 'react';
 import { ExternalLink } from 'lucide-react';
-import { toast } from 'src/components/ui/use-toast';
 import { Separator } from 'src/components/ui/separator';
 import { Skeleton, SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
 import ICON from 'src/components/atoms/icon/hoc';
 import Avatar from 'src/components/atoms/image/async-avatar';
 import { Small, PlainAnchor } from 'src/components/atoms/typography/p';
-import Repos, { type SingleRepository } from 'src/service/github/queries/repositories';
-import { cn, hrefTo, PropsWithClassName } from 'src/utils';
-import { MouseEventHandler } from 'react';
+import type { _GithubQueryReposDI, _GithubQueryRepos } from 'src/types/dependencies/service';
+import type { _HrefToDI, _ToastDI } from 'src/types/dependencies/util';
+import { cn, PropsWithClassName } from 'src/utils';
+
+type DI = {
+  deps: {
+    _service: _GithubQueryReposDI['Result'];
+    _hrefTo: _HrefToDI;
+    _toast: _ToastDI;
+  };
+};
+type Props = PropsWithClassName<DI & _GithubQueryRepos['Single']>;
 
 const ExternalLinkIcon = ICON(ExternalLink);
-const ProjectCard = ({ className, ...projectValue }: PropsWithClassName<SingleRepository>) => {
-  const { primaryLanguage, description, ...repo } = new Repos.Result(projectValue);
+const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
+  const { primaryLanguage, description, ...repo } = new deps._service(projectValue);
 
   const anchorHandler: MouseEventHandler<HTMLDivElement> = (e) => {
     if (repo.isHidden) {
-      toast({
+      deps._toast({
         variant: 'error',
         title: 'Unreachable Link',
         description: 'Link inaccessible. Retry later.',
@@ -27,7 +36,7 @@ const ProjectCard = ({ className, ...projectValue }: PropsWithClassName<SingleRe
     const anchorAPIDocs = anchorElements[1];
     if (e.target === anchorHomePage) return;
     if (e.target === anchorAPIDocs) return;
-    hrefTo(repo.url, '_blank');
+    deps._hrefTo(repo.url, '_blank');
   };
 
   return (

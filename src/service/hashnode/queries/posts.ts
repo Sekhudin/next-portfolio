@@ -1,18 +1,22 @@
 import { gql, type TypedDocumentNode } from '@apollo/client';
 import {
-  UserPostsSort as SortBy,
+  UserPostsSort,
   type MyUser,
   type Maybe,
+  type InputMaybe,
   type UserPostsArgs,
-  type Tag as TagBase,
-  type Post as PostBase,
-  type UserPostConnectionFilter as PostFilter,
+  type Tag,
+  type Post,
+  type UserPostConnectionFilter,
 } from 'src/types/graphql/hashnode';
 import Str from 'src/utils/string';
 import Util from 'src/service/helper/util';
 
-namespace Posts {
-  export const QUERY: TypedDocumentNode<Response_POST, UserPostsArgs> = gql`
+namespace HashnodeQueryPost {
+  export const Query: TypedDocumentNode<
+    _HashnodeQueryPosts['Response'],
+    _HashnodeQueryPosts['Args']
+  > = gql`
     query POSTS(
       $page: Int!
       $pageSize: Int!
@@ -46,23 +50,27 @@ namespace Posts {
     }
   `;
 
-  export class Result implements Omit<SinglePost, 'publishedAt'> {
+  export const SortBy = {
+    ...UserPostsSort,
+  };
+
+  export class Result implements Omit<_HashnodeQueryPosts['Single'], 'publishedAt'> {
     id!: string;
     slug!: string;
     title!: string;
     brief!: string;
     url!: string;
-    tags?: Maybe<TagBase[]>;
+    tags?: Maybe<Tag[]>;
     publishedAt?: string;
 
-    constructor(v: SinglePost) {
+    constructor(v: _HashnodeQueryPosts['Single']) {
       Object.assign(this, v);
       if (typeof v.publishedAt === 'string') {
         this.publishedAt = Str.toCustomDate(v.publishedAt, 'M D, Y');
       }
     }
 
-    static flatten(response: Response_POST) {
+    static flatten(response: _HashnodeQueryPosts['Response']) {
       const { nodes, ...responseMePost } = response.me.posts;
       const tags = Util.hasnodeUniqueTags(nodes);
       return { tags, nodes, ...responseMePost };
@@ -75,22 +83,28 @@ namespace Posts {
   }
 }
 
-type PostTag = Pick<TagBase, 'id' | 'name'>;
-type SinglePost = Pick<
-  PostBase,
-  'id' | 'title' | 'brief' | 'url' | 'slug' | 'tags' | 'publishedAt'
->;
-type Args_POST = Omit<UserPostsArgs, 'sortBy' | 'filter'> & {
-  sortBy: SortBy;
-};
-type Response_POST = {
-  me: {
-    posts: Pick<MyUser['posts'], 'pageInfo' | 'totalDocuments'> & {
-      nodes: Array<SinglePost>;
+type _HashnodeQueryPosts = {
+  Args: Omit<UserPostsArgs, 'sortBy'> & {
+    sortBy?: InputMaybe<UserPostsSort>;
+  };
+  Response: {
+    me: {
+      posts: Pick<MyUser['posts'], 'pageInfo' | 'totalDocuments'> & {
+        nodes: Array<_HashnodeQueryPosts['Single']>;
+      };
     };
   };
+  Tag: Pick<Tag, 'id' | 'name'>;
+  Filter: UserPostConnectionFilter;
+  SortBy: (typeof HashnodeQueryPost)['SortBy'][keyof (typeof HashnodeQueryPost)['SortBy']];
+  Single: Pick<Post, 'id' | 'title' | 'brief' | 'url' | 'slug' | 'tags' | 'publishedAt'>;
 };
 
-export { SortBy };
-export type { SinglePost, PostFilter, PostTag, Args_POST, Response_POST };
-export default Posts;
+type _HashnodeQueryPostsDI = {
+  Query: typeof HashnodeQueryPost.Query;
+  Result: typeof HashnodeQueryPost.Result;
+  SortBy: (typeof HashnodeQueryPost)['SortBy'];
+};
+
+export type { _HashnodeQueryPosts, _HashnodeQueryPostsDI };
+export default HashnodeQueryPost;

@@ -30,4 +30,6 @@ const useQuery = <
   return { data, loading, ...other };
 };
 
+export type _UseApolloQueryDI = typeof useQuery;
+
 export default useQuery;

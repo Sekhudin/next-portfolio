@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import {
   useForm as useHookForm,
   type UseFormProps,
@@ -86,10 +86,10 @@ const useForm = <
 
   const AbsoluteLoader: LoaderElement = () => AbsoluteLoaderComponent({ loading: loading });
   const FixedLoader: LoaderElement = () => FixedLoaderComponent({ loading: loading });
-  const onValid: SubmitHandler<TFieldValues> = async (formValue, ev) => {
+  const onValid: SubmitHandler<TFieldValues> = async (value, ev) => {
     try {
       setLoading(true);
-      const result = await service(formValue);
+      const result = await service(value);
       const message = toastMessage('OK', 'Successfull', okMsg);
       toast({ variant: 'success', ...message });
       let resetValue: DefaultValues<TFieldValues> | TFieldValues | null = null;
@@ -128,6 +128,9 @@ const useForm = <
 
   return { form, onValid, onInvalid, loading, AbsoluteLoader, FixedLoader };
 };
+
+export type _UseFormDI = typeof useForm;
+export type _FormResolverDI = typeof formResolver;
 
 export const formResolver = zodResolver;
 export default useForm;
