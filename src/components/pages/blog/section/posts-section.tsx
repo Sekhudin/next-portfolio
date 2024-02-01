@@ -20,7 +20,7 @@ const PostsSection = ({ className, deps }: Props) => {
         </WithSeparator>
       }>
       <WithSeparator className={cn(className)}>
-        <PostList className="md:max-w-2xl xl:max-w-3xl" page={1} pageSize={2} deps={deps} />
+        <PostList className="md:max-w-2xl xl:max-w-3xl" page={1} pageSize={5} deps={deps} />
       </WithSeparator>
     </React.Suspense>
   );
