@@ -1,11 +1,11 @@
 'use client';
 import useApollosSuspenseQuery from 'src/hooks/use-suspense-query';
-import HashnodeMeProfile from 'src/components/shared/hashnode/me';
-import HashnodePostList from 'src/components/shared/hashnode/post-list';
-
 import HashnodeQueryMe from 'src/service/hashnode/queries/me';
 import HashnodeQueryPosts from 'src/service/hashnode/queries/posts';
 import { hrefTo } from 'src/utils/component';
+
+import type HashnodeMeProfile from 'src/components/shared/hashnode/me';
+import type HashnodePostList from 'src/components/shared/hashnode/post-list';
 import type { Deps } from 'src/utils';
 
 export const { hashnodeQueryMeDeps }: Deps<'hashnodeQueryMeDeps', typeof HashnodeMeProfile> = {

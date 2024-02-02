@@ -1,12 +1,11 @@
 'use client';
 import useApollosSuspenseQuery from 'src/hooks/use-suspense-query';
-import GithubMeProfile from 'src/components/shared/github/me';
-import GithubRepoList from 'src/components/shared/github/project-list';
-
-
 import GithubQueryMe from 'src/service/github/queries/me';
 import GithubQueryRepos from 'src/service/github/queries/repositories';
 import { hrefTo, toast } from 'src/utils/component';
+
+import type GithubMeProfile from 'src/components/shared/github/me';
+import type GithubRepoList from 'src/components/shared/github/project-list';
 import type { Deps } from 'src/utils';
 
 export const { githubQueryMeDeps }: Deps<'githubQueryMeDeps', typeof GithubMeProfile> = {

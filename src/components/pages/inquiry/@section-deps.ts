@@ -1,8 +1,9 @@
 'use client';
 import useForm, { formResolver } from 'src/hooks/use-form';
-import SendInquiryForm from 'src/components/organisms/form/inquiry/send';
 import SendInquiry from 'src/service/emailjs/form/send-inquiry';
 import EmailService from 'src/service/emailjs';
+
+import type SendInquiryForm from 'src/components/organisms/form/inquiry/send';
 import type { Deps } from 'src/utils';
 
 export const { inquiryFormDeps }: Deps<'inquiryFormDeps', typeof SendInquiryForm> = {
