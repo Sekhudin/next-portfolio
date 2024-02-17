@@ -41,7 +41,7 @@ const ProjectList = ({ className, deps, ...v }: Props) => {
       after,
       before,
       orderBy: {
-        direction: deps._service.OrderDirection.Asc,
+        direction: deps._service.OrderDirection.Desc,
         field: deps._service.OrderField.UpdatedAt,
       },
       privacy: deps._service.Privacy.Public,

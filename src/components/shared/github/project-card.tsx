@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import type { MouseEventHandler } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Separator } from 'src/components/ui/separator';
 import { Skeleton, SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
@@ -21,7 +21,6 @@ type Props = PropsWithClassName<DI & _GithubQueryRepos['Single']>;
 const ExternalLinkIcon = ICON(ExternalLink);
 const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
   const { primaryLanguage, description, ...repo } = new deps._service(projectValue);
-
   const anchorHandler: MouseEventHandler<HTMLDivElement> = (e) => {
     if (repo.isHidden) {
       deps._toast({
@@ -55,11 +54,24 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
         group-hover:opacity-100 duration-150 delay-100">
         <ExternalLinkIcon className="h-5 w-5" />
       </span>
-      <Avatar
-        className="w-12 h-12 mb-6 border dark:border-[1.5px]
+
+      {repo.iconApp ? (
+        <div
+          className="w-12 h-12 flex justify-center items-center mb-6
+        bg-zinc-50 border dark:border-[1.5px] rounded-full
         dark:border-zinc-500/50 shadow-lg"
-        alt={repo.name}
-      />
+          style={{
+            borderColor: `${primaryLanguage?.color}`,
+          }}>
+          <repo.iconApp style={{ stroke: `${primaryLanguage?.color}` }} />
+        </div>
+      ) : (
+        <Avatar
+          className="w-12 h-12 mb-6 border dark:border-[1.5px]
+        dark:border-zinc-500/50 shadow-lg"
+          alt={repo.name}
+        />
+      )}
 
       <div className="min-h-[10rem] md:h-52 xl:h-56 flex flex-col justify-between gap-y-2">
         <div>
@@ -71,27 +83,28 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
           <Small className="font-light dark:font-extralight first-letter:uppercase leading-5 text-wrap">
             {description.plain}
           </Small>
-          <div className="mt-4 font-mono">
-            {description.integration && (
-              <Small className="font-extrabold mb-2">
-                <span className="text-blue-600">{'Integration: '}</span>
-                <span className="font-extralight">{description.integration}</span>
-              </Small>
-            )}
 
-            {description.techstack && (
-              <Small className="font-extrabold">
-                {'Tech: '}
-                <span className="font-extralight">{description.techstack}</span>
-              </Small>
+          <div className="mt-10 font-mono">
+            {description.techstack && description.techstack.length && (
+              <div className="flex flex-wrap gap-2">
+                {description.techstack.map((tech, id) => (
+                  <div
+                    className={`bg-indigo-700 dark:bg-indigo-700/50 text-xs dark:border
+                    dark:border-indigo-700 rounded-full text-white dark:text-zinc-300 p-1 py-0.5`}
+                    key={id}>
+                    {tech}
+                  </div>
+                ))}
+              </div>
             )}
             {!description.techstack && primaryLanguage && (
-              <Small className={`font-bold`}>
-                {'Language: '}
-                <span className="font-normal" style={{ color: `${primaryLanguage.color}` }}>
-                  {primaryLanguage.name}
-                </span>
-              </Small>
+              <div className={`flex items-center space-x-1`}>
+                <span
+                  className="h-4 w-4 rounded-full"
+                  style={{ backgroundColor: `${primaryLanguage.color}` }}
+                />
+                <span className="text-xs">{primaryLanguage.name}</span>
+              </div>
             )}
           </div>
         </div>

@@ -81,7 +81,8 @@ namespace GithubQueryRepos {
     id!: string;
     name!: string;
     isHidden!: boolean;
-    description!: ReturnSplitDescription;
+    description!: Omit<ReturnSplitDescription, 'appIcon'>;
+    iconApp?: ReturnType<(typeof Util)['analyzeDescription']>['appIcon'];
     url?: string;
     homepageUrl?: string;
     primaryLanguage?: Maybe<Language>;
@@ -89,8 +90,10 @@ namespace GithubQueryRepos {
 
     constructor({ description, ...v }: _GithubQueryRepos['Single']) {
       Object.assign(this, v);
-      this.description = Util.splitDescription(description);
+      const { appIcon, ...newDescription } = Util.analyzeDescription(description);
+      this.description = newDescription;
       this.isHidden = Util.isRepoToHide(v.name);
+      this.iconApp = appIcon;
     }
 
     static flatten(response: _GithubQueryRepos['Response']) {
