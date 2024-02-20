@@ -27,7 +27,7 @@ const SeriesCover = ({ className, series, uniqueTags }: Props) => {
             alt={v.name}
           />
         )}
-        <div className="absolute bottom-2 left-2 bg-indigo-700 px-2 py-1 rounded-lg text-zinc-50">
+        <div className="absolute bottom-2 right-2 bg-indigo-700 px-2 py-1 rounded-lg text-zinc-50">
           <p className="text-xs text-zinc-50">{`${v.posts.totalDocuments} Articles`}</p>
         </div>
       </div>

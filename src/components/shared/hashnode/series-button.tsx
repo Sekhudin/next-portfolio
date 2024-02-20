@@ -3,14 +3,15 @@ import { SkeletonText } from 'src/components/ui/skeleton';
 import { cn, PropsWithChildren, PropsWithClassName } from 'src/utils';
 
 const SeriesButton = ({ className, children }: PropsWithChildren) => (
-  <LinkComponent
-    className={cn(
-      `px-3 py-1.5 text-sm text-zinc-50 dark:text-zinc-300
-    bg-indigo-700 hover:bg-indigo-700/90 hover:shadow-md duration-300 rounded-full`,
-      className
-    )}
-    href={'/blog/series'}>
-    {children}
+  <LinkComponent className='block w-fit' href={'/blog/series'}>
+    <div
+      className={cn(
+        `w-fit px-3 py-1.5 text-sm text-zinc-50 dark:text-zinc-300 rounded-full
+      bg-indigo-700 hover:bg-indigo-700/90 hover:shadow-md duration-300`,
+        className
+      )}>
+      {children}
+    </div>
   </LinkComponent>
 );
 

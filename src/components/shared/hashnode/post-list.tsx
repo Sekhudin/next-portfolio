@@ -90,7 +90,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
 
   return (
     <div className={cn(`grow`, className)}>
-      <div className="md:w-10/12 mb-6 flex gap-x-2">
+      <div className="md:w-10/12 flex gap-x-2">
         <div className="py-1">
           <Small className="font-semibold mb-4">Tags:</Small>
         </div>
@@ -129,7 +129,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
         </ToggleGroup>
       </div>
 
-      <SeriesButton>Series</SeriesButton>
+      <SeriesButton className='my-6'>Series</SeriesButton>
 
       <div className={cn('flex flex-col gap-y-16')}>
         <div className="min-h-96 flex flex-col gap-y-10 mb-12">
@@ -178,11 +178,11 @@ const PostList = ({ className, deps, ...v }: Props) => {
 
 export const PostlistFallback = ({ className }: PropsWithClassName) => (
   <div className="grow">
-    <div className="md:w-10/12 mb-6 flex space-x-2">
+    <div className="md:w-10/12 flex space-x-2">
       <Small className="font-semibold py-1">Tags:</Small>
       <TogleGroupFallback childClassName="rounded-full" size="xs" />
     </div>
-    <SeriesButtonFallback className='w-20' />
+    <SeriesButtonFallback className='w-20 my-6' />
 
     <div className={cn('flex flex-col gap-y-16', className)}>
       <div className="min-h-96 flex flex-col gap-y-10 mb-12">
