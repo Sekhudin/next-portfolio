@@ -1,6 +1,7 @@
-import React from 'react';
+'use client';
 import { Separator } from 'src/components/ui/separator';
 import PostList, { PostlistFallback } from 'src/components/shared/hashnode/post-list';
+import type { _SuspenseComponentDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName, PropsWithChildren, Deps } from 'src/utils';
 
 const WithSeparator = ({ children, className }: PropsWithChildren) => (
@@ -10,10 +11,14 @@ const WithSeparator = ({ children, className }: PropsWithChildren) => (
   </div>
 );
 
-type Props = PropsWithClassName<Deps<'deps', typeof PostList>>;
+type Props = PropsWithClassName<{
+  deps: Deps<'deps', typeof PostList>['deps'] & {
+    SuspenseComponent: _SuspenseComponentDI;
+  };
+}>;
 const PostsSection = ({ className, deps }: Props) => {
   return (
-    <React.Suspense
+    <deps.SuspenseComponent
       fallback={
         <WithSeparator className={cn(className)}>
           <PostlistFallback className="md:max-w-2xl xl:max-w-3xl" />
@@ -22,7 +27,7 @@ const PostsSection = ({ className, deps }: Props) => {
       <WithSeparator className={cn(className)}>
         <PostList className="md:max-w-2xl xl:max-w-3xl" page={1} pageSize={5} deps={deps} />
       </WithSeparator>
-    </React.Suspense>
+    </deps.SuspenseComponent>
   );
 };
 

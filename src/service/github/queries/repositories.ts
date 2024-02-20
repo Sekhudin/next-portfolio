@@ -3,23 +3,18 @@ import {
   RepositoryAffiliation,
   RepositoryPrivacy,
   RepositoryVisibility,
-  RepositoryOrder,
   OrderDirection as OrderDir,
   RepositoryOrderField,
-  type User as UserBase,
-  type RepositoryConnection,
-  type Repository as RepositoryBase,
-  type UserRepositoriesArgs,
-  Language,
-  Maybe,
 } from 'src/types/graphql/github';
-import Util, { type ReturnSplitDescription } from 'src/service/helper/util';
+import type {
+  QueryRepositoriesArgs,
+  QueryRepositoriesResponse,
+} from 'src/types/graphql/github-type';
+import Util from 'src/service/helper/util';
 
-namespace GithubQueryRepos {
-  export const Query: TypedDocumentNode<
-    _GithubQueryRepos['Response'],
-    _GithubQueryRepos['Args']
-  > = gql`
+export type _GithubQueryRepositoriesDI = typeof GithubQueryRepositories;
+namespace GithubQueryRepositories {
+  export const Query: TypedDocumentNode<QueryRepositoriesResponse, QueryRepositoriesArgs> = gql`
     query REPOSITORIES(
       $after: String
       $before: String
@@ -75,75 +70,20 @@ namespace GithubQueryRepos {
     }
   `;
 
-  export class Result
-    implements Omit<_GithubQueryRepos['Single'], 'description' | 'url' | 'createdAt'>
-  {
-    id!: string;
-    name!: string;
-    isHidden!: boolean;
-    description!: Omit<ReturnSplitDescription, 'appIcon'>;
-    iconApp?: ReturnType<(typeof Util)['analyzeDescription']>['appIcon'];
-    url?: string;
-    homepageUrl?: string;
-    primaryLanguage?: Maybe<Language>;
-    createdAt?: string;
-
-    constructor({ description, ...v }: _GithubQueryRepos['Single']) {
-      Object.assign(this, v);
-      const { appIcon, ...newDescription } = Util.analyzeDescription(description);
-      this.description = newDescription;
-      this.isHidden = Util.isRepoToHide(v.name);
-      this.iconApp = appIcon;
-    }
-
-    static flatten(response: _GithubQueryRepos['Response']) {
-      const { nodes, ...result } = response.viewer.repositories;
-      return { nodes, ...result };
-    }
-
-    static pageStatus(...param: Parameters<(typeof Util)['page']>): string {
-      const page = Util.page(...param);
-      return page.status;
-    }
+  export function flatten(response: QueryRepositoriesResponse) {
+    const { nodes, ...result } = response.viewer.repositories;
+    return { nodes, ...result };
   }
 
-  export const Affiliation = { ...RepositoryAffiliation };
-  export const Privacy = { ...RepositoryPrivacy };
-  export const Visibility = { ...RepositoryVisibility };
-  export const OrderDirection = { ...OrderDir };
-  export const OrderField = { ...RepositoryOrderField };
+  export function pageStatus(...param: Parameters<(typeof Util)['page']>): string {
+    const page = Util.page(...param);
+    return page.status;
+  }
+
+  export const Affiliation = RepositoryAffiliation;
+  export const Privacy = RepositoryPrivacy;
+  export const Visibility = RepositoryVisibility;
+  export const OrderDirection = OrderDir;
+  export const OrderField = RepositoryOrderField;
 }
-
-type _GithubQueryRepos = {
-  Single: Pick<
-    RepositoryBase,
-    'id' | 'name' | 'description' | 'url' | 'homepageUrl' | 'primaryLanguage' | 'createdAt'
-  >;
-  Args: Omit<UserRepositoriesArgs, ''>;
-  Response: {
-    viewer: Pick<UserBase, 'id'> & {
-      repositories: Pick<RepositoryConnection, 'pageInfo' | 'totalCount'> & {
-        nodes: Array<_GithubQueryRepos['Single']>;
-      };
-    };
-  };
-  Order: RepositoryOrder;
-  Afifiliation: (typeof GithubQueryRepos)['Affiliation'][keyof (typeof GithubQueryRepos)['Affiliation']];
-  Privacy: (typeof GithubQueryRepos)['Privacy'][keyof (typeof GithubQueryRepos)['Privacy']];
-  Visibility: (typeof GithubQueryRepos)['Visibility'][keyof (typeof GithubQueryRepos)['Visibility']];
-  OrderDirection: (typeof GithubQueryRepos)['OrderDirection'][keyof (typeof GithubQueryRepos)['OrderDirection']];
-  OrderField: (typeof GithubQueryRepos)['OrderField'][keyof (typeof GithubQueryRepos)['OrderField']];
-};
-
-type _GithubQueryReposDI = {
-  Query: typeof GithubQueryRepos.Query;
-  Result: typeof GithubQueryRepos.Result;
-  Affiliation: (typeof GithubQueryRepos)['Affiliation'];
-  Privacy: (typeof GithubQueryRepos)['Privacy'];
-  Visibility: (typeof GithubQueryRepos)['Visibility'];
-  OrderDirection: (typeof GithubQueryRepos)['OrderDirection'];
-  OrderField: (typeof GithubQueryRepos)['OrderField'];
-};
-
-export type { _GithubQueryRepos, _GithubQueryReposDI };
-export default GithubQueryRepos;
+export default GithubQueryRepositories;

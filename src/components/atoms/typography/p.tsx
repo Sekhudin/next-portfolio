@@ -108,8 +108,8 @@ export const Anchor = React.forwardRef<HTMLAnchorElement, AnchorProps>(
     return (
       <a
         className={cn(
-          `w-fit text-indigo-700 hover:lg:underline group-hover:lg:underline
-          lg:underline-offset-2 cursor-pointer font-semibold dark:font-medium`,
+          `w-fit text-indigo-700 hover:lg:underline lg:underline-offset-2
+          cursor-pointer font-semibold dark:font-medium`,
           className
         )}
         {...props}>

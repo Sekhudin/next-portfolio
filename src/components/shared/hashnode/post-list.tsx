@@ -1,19 +1,21 @@
 'use client';
-import React from 'react';
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationNext,
   PaginationPrev,
+  PaginationFallback,
 } from 'src/components/ui/pagination';
-import { ToggleGroup, ToggleGroupItem } from 'src/components/ui/toggle-group';
-import { SkeletonTextSM } from 'src/components/ui/skeleton';
+import { ToggleGroup, ToggleGroupItem, TogleGroupFallback } from 'src/components/ui/toggle-group';
 import { Small } from 'src/components/atoms/typography/p';
-import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/graphql';
-import type { _HashnodeQueryPostsDI, _HashnodeQueryPosts } from 'src/types/dependencies/service';
-import { cn, PropsWithClassName, PropsWithChildren, Deps, PickDeps } from 'src/utils';
+import type { QueryPostsArgs, PostSortBy, PostFilter } from 'src/types/graphql/hashnode-type';
+import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
+import type { _HashnodeQueryPostsDI } from 'src/types/dependencies/service';
+import type { _LinkComponentDI } from 'src/types/dependencies/util';
+import { cn, PropsWithClassName, PropsWithChildren, PickDeps } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
+import SeriesButton, { SeriesButtonFallback } from './series-button';
 
 const PostMessage = ({ children, className }: PropsWithChildren) => (
   <div className={cn(`grow min-h-48 flex justify-center items-center`, className)}>
@@ -24,34 +26,32 @@ const PostMessage = ({ children, className }: PropsWithChildren) => (
 type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
+    _useState: _UseStateDI;
     _service: _HashnodeQueryPostsDI;
+    LinkComponent: _LinkComponentDI;
   } & PickDeps<typeof PostCard, '_hrefTo'>;
 };
 
-type Props = PropsWithClassName<DI & Omit<_HashnodeQueryPosts['Args'], 'sortBy'>>;
+type Props = PropsWithClassName<DI & Omit<QueryPostsArgs, 'sortBy'>>;
 
 const PostList = ({ className, deps, ...v }: Props) => {
-  const [page, setPage] = React.useState<number>(v.page);
-  const [pageSize, setPageSize] = React.useState<number>(v.pageSize);
-  const [sortBy, setSortBy] = React.useState<_HashnodeQueryPosts['SortBy']>(
-    deps._service.SortBy.DatePublishedDesc
-  );
-  const [filter, setFilter] = React.useState<_HashnodeQueryPosts['Filter']>();
+  const [page, setPage] = deps._useState<number>(v.page);
+  const [pageSize, setPageSize] = deps._useState<number>(v.pageSize);
+  const [sortBy, setSortBy] = deps._useState<PostSortBy>(deps._service.SortBy.DatePublishedDesc);
+  const [filter, setFilter] = deps._useState<PostFilter>();
+  const [selectedTag, setSelectedTag] = deps._useState<string | null>(null);
   const { data } = deps._useQuery(deps._service.Query, {
     variables: { page, pageSize, sortBy, filter },
   });
-  const { nodes, pageInfo, totalDocuments, tags } = deps._service.Result.flatten(data);
+  const { nodes, pageInfo, totalDocuments, tags } = deps._service.flatten(data);
 
-  const filterHandler = <T extends keyof _HashnodeQueryPosts['Filter']>(
-    type: T,
-    value: _HashnodeQueryPosts['Filter'][T]
-  ): void => {
+  const filterHandler = <T extends keyof PostFilter>(type: T, value: PostFilter[T]): void => {
     if (value) {
       setPage(1);
     }
 
     if (type === 'tags') {
-      const tags = value as _HashnodeQueryPosts['Filter']['tags'];
+      const tags = value as PostFilter['tags'];
       setFilter({
         ...filter,
         tags,
@@ -60,12 +60,16 @@ const PostList = ({ className, deps, ...v }: Props) => {
     }
   };
 
-  const tagOnChange = (value: string | string[]) => {
-    const tagsId: string[] = typeof value === 'string' ? [value] : value;
-    const selectedTag = tagsId[0]
-      ? tags.filter(({ id }) => tagsId.includes(id)).map((v) => v.id)
-      : null;
-    filterHandler<'tags'>('tags', selectedTag);
+  const tagOnChange = (value: string) => {
+    const selected = value ? tags.filter(({ id }) => value === id)[0] : null;
+    if (value && selected) {
+      filterHandler<'tags'>('tags', [value]);
+      setSelectedTag(selected.name);
+      return;
+    }
+    setSelectedTag(null);
+    filterHandler<'tags'>('tags', null);
+    return;
   };
 
   const prevHandler = () => {
@@ -86,28 +90,46 @@ const PostList = ({ className, deps, ...v }: Props) => {
 
   return (
     <div className={cn(`grow`, className)}>
-      <div className="md:w-10/12 mb-10 flex gap-x-2">
+      <div className="md:w-10/12 mb-6 flex gap-x-2">
         <div className="py-1">
           <Small className="font-semibold mb-4">Tags:</Small>
         </div>
         <ToggleGroup
-          className="grow justify-start items-start"
-          type="multiple"
+          className="grow flex-wrap justify-start items-start gap-x-1 gap-y-2"
+          type="single"
           orientation="horizontal"
           onValueChange={tagOnChange}>
-          {tags.map((tag, key) => (
-            <ToggleGroupItem
-              className={`text-xs font-light data-[state=on]:text-zinc-50
-              data-[state=on]:bg-indigo-700`}
-              key={key}
-              variant="default"
-              size="fit"
-              value={tag.id}>
-              <p className="first-letter:uppercase">{tag.name}</p>
-            </ToggleGroupItem>
-          ))}
+          {tags.map((tag, key) => {
+            if (!selectedTag)
+              return (
+                <ToggleGroupItem
+                  className={`text-xs font-light data-[state=on]:text-zinc-50
+                  data-[state=on]:bg-indigo-700`}
+                  key={key}
+                  variant="rounded"
+                  size="fit-sm"
+                  value={tag.id}>
+                  {tag.name}
+                </ToggleGroupItem>
+              );
+
+            if (selectedTag && tag.name === selectedTag)
+              return (
+                <ToggleGroupItem
+                  className={`text-xs font-light data-[state=on]:text-zinc-50
+                  data-[state=on]:bg-indigo-700`}
+                  key={key}
+                  variant="rounded"
+                  size="fit-sm"
+                  value={tag.id}>
+                  {tag.name}
+                </ToggleGroupItem>
+              );
+          })}
         </ToggleGroup>
       </div>
+
+      <SeriesButton>Series</SeriesButton>
 
       <div className={cn('flex flex-col gap-y-16')}>
         <div className="min-h-96 flex flex-col gap-y-10 mb-12">
@@ -115,7 +137,10 @@ const PostList = ({ className, deps, ...v }: Props) => {
             <PostCard
               className=""
               key={key}
-              deps={{ _Result: deps._service.Result, _hrefTo: deps._hrefTo }}
+              deps={{
+                _hrefTo: deps._hrefTo,
+                LinkComponent: deps.LinkComponent,
+              }}
               {...v}
             />
           ))}
@@ -133,7 +158,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {deps._service.Result.pageStatus(page, pageSize, totalDocuments)}
+              {deps._service.pageStatus(page, pageSize, totalDocuments)}
             </PaginationItem>
 
             <PaginationItem>
@@ -153,26 +178,18 @@ const PostList = ({ className, deps, ...v }: Props) => {
 
 export const PostlistFallback = ({ className }: PropsWithClassName) => (
   <div className="grow">
-    <div className="md:w-10/12 mb-10 flex space-x-2">
-      <Small className="font-semibold mb-4 py-1">Tags:</Small>
-      <div className="grow flex justify-start items-start space-x-1">
-        <SkeletonTextSM className="w-10 px-2 py-1" />
-        <SkeletonTextSM className="w-12 px-2 py-1" />
-      </div>
+    <div className="md:w-10/12 mb-6 flex space-x-2">
+      <Small className="font-semibold py-1">Tags:</Small>
+      <TogleGroupFallback childClassName="rounded-full" size="xs" />
     </div>
+    <SeriesButtonFallback className='w-20' />
 
     <div className={cn('flex flex-col gap-y-16', className)}>
       <div className="min-h-96 flex flex-col gap-y-10 mb-12">
-        {Array.from({ length: 5 }).map((_, key) => (
-          <PostCardFallback key={key} />
-        ))}
+        <PostCardFallback n={5} />
       </div>
 
-      <div className="flex justify-center space-x-4">
-        <SkeletonTextSM className="w-16" />
-        <SkeletonTextSM className="w-12" />
-        <SkeletonTextSM className="w-16" />
-      </div>
+      <PaginationFallback />
     </div>
   </div>
 );

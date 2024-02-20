@@ -1,15 +1,14 @@
 'use client';
-import React, { useState } from 'react';
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationNext,
   PaginationPrev,
+  PaginationFallback,
 } from 'src/components/ui/pagination';
-import { SkeletonTextSM } from 'src/components/ui/skeleton';
-import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/graphql';
-import type { _GithubQueryReposDI } from 'src/types/dependencies/service';
+import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
+import type { _GithubQueryRepositoriesDI } from 'src/types/dependencies/service';
 import type { _HrefToDI, _ToastDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 import ProjectCard, { ProjectCardFallback } from './project-card';
@@ -17,7 +16,8 @@ import ProjectCard, { ProjectCardFallback } from './project-card';
 type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
-    _service: _GithubQueryReposDI;
+    _useState: _UseStateDI;
+    _service: _GithubQueryRepositoriesDI;
     _hrefTo: _HrefToDI;
     _toast: _ToastDI;
   };
@@ -29,11 +29,11 @@ type Props = PropsWithClassName<
 >;
 
 const ProjectList = ({ className, deps, ...v }: Props) => {
-  const [page, setPage] = useState<number>(1);
-  const [first, setFirst] = useState<number | null>(v.pageSize);
-  const [last, setLast] = useState<number | null>(null);
-  const [after, setAfter] = useState<string | null>(null);
-  const [before, setBefore] = useState<string | null>(null);
+  const [page, setPage] = deps._useState<number>(1);
+  const [first, setFirst] = deps._useState<number | null>(v.pageSize);
+  const [last, setLast] = deps._useState<number | null>(null);
+  const [after, setAfter] = deps._useState<string | null>(null);
+  const [before, setBefore] = deps._useState<string | null>(null);
   const { data } = deps._useQuery(deps._service.Query, {
     variables: {
       first,
@@ -48,7 +48,7 @@ const ProjectList = ({ className, deps, ...v }: Props) => {
       isFork: false,
     },
   });
-  const { nodes, pageInfo, totalCount } = deps._service.Result.flatten(data);
+  const { nodes, pageInfo, totalCount } = deps._service.flatten(data);
   const prevHandler = () => {
     if (pageInfo.startCursor) {
       setPage(page - 1);
@@ -77,7 +77,7 @@ const ProjectList = ({ className, deps, ...v }: Props) => {
             <ProjectCard
               className=""
               key={key}
-              deps={{ _hrefTo: deps._hrefTo, _toast: deps._toast, _service: deps._service.Result }}
+              deps={{ _hrefTo: deps._hrefTo, _toast: deps._toast }}
               {...repo}
             />
           ))}
@@ -95,7 +95,7 @@ const ProjectList = ({ className, deps, ...v }: Props) => {
             </PaginationItem>
 
             <PaginationItem className="text-sm mx-1">
-              {deps._service.Result.pageStatus(page, v.pageSize, totalCount)}
+              {deps._service.pageStatus(page, v.pageSize, totalCount)}
             </PaginationItem>
 
             <PaginationItem>
@@ -122,11 +122,7 @@ export const ProjectListFallback = () => (
         ))}
       </div>
 
-      <div className="flex justify-center space-x-4 mt-4">
-        <SkeletonTextSM className="w-16" />
-        <SkeletonTextSM className="w-12" />
-        <SkeletonTextSM className="w-16" />
-      </div>
+      <PaginationFallback />
     </div>
   </div>
 );

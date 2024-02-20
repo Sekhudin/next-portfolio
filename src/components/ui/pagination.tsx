@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 
-import { cn } from 'src/utils';
+import { cn, PropsWithClassName } from 'src/utils';
 import { ButtonProps, buttonVariants } from 'src/components/ui/button';
+import { SkeletonText } from './skeleton';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
@@ -107,6 +108,14 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'
 );
 PaginationEllipsis.displayName = 'PaginationEllipsis';
 
+const PaginationFallback = ({ className }: PropsWithClassName) => (
+  <div className={cn('flex justify-center space-x-4', className)}>
+    <SkeletonText className="w-16" size="sm" />
+    <SkeletonText className="w-12" size="sm" />
+    <SkeletonText className="w-16" size="sm" />
+  </div>
+);
+
 export {
   Pagination,
   PaginationContent,
@@ -115,4 +124,5 @@ export {
   PaginationPrev,
   PaginationNext,
   PaginationEllipsis,
+  PaginationFallback,
 };

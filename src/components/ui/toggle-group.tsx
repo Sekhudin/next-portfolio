@@ -4,8 +4,9 @@ import * as React from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { VariantProps } from 'class-variance-authority';
 
-import { cn } from 'src/utils';
+import { PropsWithClassName, cn } from 'src/utils';
 import { toggleVariants } from 'src/components/ui/toggle';
+import { SkeletonText, SkeletonVariant } from './skeleton';
 
 const ToggleGroupContext = React.createContext<VariantProps<typeof toggleVariants>>({
   size: 'default',
@@ -42,8 +43,6 @@ const ToggleGroupItem = React.forwardRef<
           variant: context.variant || variant,
           size: context.size || size,
         }),
-        `data-[state=on]:dark:bg-indigo-700/10 data-[state=on]:dark:text-indigo-700
-        data-[state=on]:font-semibold`,
         className
       )}
       {...props}>
@@ -54,4 +53,17 @@ const ToggleGroupItem = React.forwardRef<
 
 ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName;
 
-export { ToggleGroup, ToggleGroupItem };
+const TogleGroupFallback = ({
+  className,
+  childClassName,
+  ...props
+}: PropsWithClassName<SkeletonVariant & { childClassName?: string }>) => (
+  <div className={cn('grow flex justify-start items-center space-x-1', className)}>
+    <SkeletonText className={cn('w-10 px-2 py-0.5', childClassName)} {...props} />
+    <SkeletonText className={cn('w-10 px-2 py-0.5', childClassName)} {...props} />
+    <SkeletonText className={cn('w-8 px-2 py-0.5', childClassName)} {...props} />
+    <SkeletonText className={cn('w-14 px-2 py-0.5', childClassName)} {...props} />
+  </div>
+);
+
+export { ToggleGroup, ToggleGroupItem, TogleGroupFallback };

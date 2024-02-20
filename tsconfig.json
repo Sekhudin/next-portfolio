@@ -24,6 +24,6 @@
     },
     // add by me
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/codegen/hashnode.ts", "src/components/pages/inquiry/@section-deps.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/codegen/hashnode.ts", "src/components/pages/inquiry/@index.ts"],
   "exclude": ["node_modules"]
 }

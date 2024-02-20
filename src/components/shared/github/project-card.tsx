@@ -1,26 +1,24 @@
-import type { MouseEventHandler } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Separator } from 'src/components/ui/separator';
-import { Skeleton, SkeletonTextSM, SkeletonTextXL } from 'src/components/ui/skeleton';
+import { Skeleton, SkeletonText, SkeletonParagraph } from 'src/components/ui/skeleton';
 import ICON from 'src/components/atoms/icon/hoc';
 import Avatar from 'src/components/atoms/image/async-avatar';
 import { Small, PlainAnchor } from 'src/components/atoms/typography/p';
-import type { _GithubQueryReposDI, _GithubQueryRepos } from 'src/types/dependencies/service';
+import Entity, { Repository } from 'src/service/github/entity/repository';
 import type { _HrefToDI, _ToastDI } from 'src/types/dependencies/util';
-import { cn, PropsWithClassName } from 'src/utils';
+import { cn, PropsWithClassName, MouseEventHandler } from 'src/utils';
 
 type DI = {
   deps: {
-    _service: _GithubQueryReposDI['Result'];
     _hrefTo: _HrefToDI;
     _toast: _ToastDI;
   };
 };
-type Props = PropsWithClassName<DI & _GithubQueryRepos['Single']>;
+type Props = PropsWithClassName<DI & Repository>;
 
 const ExternalLinkIcon = ICON(ExternalLink);
 const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
-  const { primaryLanguage, description, ...repo } = new deps._service(projectValue);
+  const { primaryLanguage, description, ...repo } = new Entity(projectValue);
   const anchorHandler: MouseEventHandler<HTMLDivElement> = (e) => {
     if (repo.isHidden) {
       deps._toast({
@@ -152,19 +150,20 @@ export const ProjectCardFallback = ({ className }: PropsWithClassName) => (
 
     <div className="h-40 md:h-52 xl:h-56 flex flex-col justify-between gap-y-2">
       <div>
-        <SkeletonTextXL className="w-1/2 mb-4" />
-        <SkeletonTextSM className="w-full" />
-        <SkeletonTextSM className="w-3/4 mt-2" />
-        <div className="flex gap-x-2">
-          <SkeletonTextSM className="w-2/12 mt-4" />
-          <SkeletonTextSM className="w-7/12 mt-4" />
-        </div>
+        <SkeletonText className="w-1/2 mb-6" size="lg" />
+        <SkeletonParagraph n={2} diffLast />
+        <SkeletonParagraph
+          className="mt-6 flex-row gap-y-0 gap-x-1"
+          childClassName="w-12"
+          rounded="full"
+          n={4}
+        />
       </div>
 
       <div className="flex">
-        <SkeletonTextSM className="w-2/12" />
+        <SkeletonText className="w-3/12" />
         <Separator className="mx-2" orientation="vertical" />
-        <SkeletonTextSM className="w-1/12" />
+        <SkeletonText className="w-2/12" />
       </div>
     </div>
   </div>

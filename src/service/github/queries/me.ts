@@ -1,9 +1,10 @@
 import { TypedDocumentNode, gql } from '@apollo/client';
-import { User as UserBase } from 'src/types/graphql/github';
+import { QueryMeResponse } from 'src/types/graphql/github-type';
 
+export type _GithubQueryMeDI = typeof GithubQueryMe;
 namespace GithubQueryMe {
-  export const Query: TypedDocumentNode<_GithubQueryMe['Response']> = gql`
-    query Me {
+  export const Query: TypedDocumentNode<QueryMeResponse> = gql`
+    query ME {
       viewer {
         id
         name
@@ -23,36 +24,9 @@ namespace GithubQueryMe {
     }
   `;
 
-  export class Result {
-    static flatten(response: _GithubQueryMe['Response']) {
-      const { followers, following, ...profile } = response.viewer;
-      return { profile, followers, following };
-    }
+  export function flatten(response: QueryMeResponse) {
+    const { followers, following, ...profile } = response.viewer;
+    return { profile, followers, following };
   }
 }
-
-type _GithubQueryMe = {
-  Response: {
-    viewer: Pick<
-      UserBase,
-      | 'id'
-      | 'name'
-      | 'pronouns'
-      | 'avatarUrl'
-      | 'email'
-      | 'bio'
-      | 'location'
-      | 'url'
-      | 'followers'
-      | 'following'
-    >;
-  };
-};
-
-type _GithubQueryMeDI = {
-  Query: typeof GithubQueryMe.Query;
-  Result: typeof GithubQueryMe.Result;
-};
-
-export type { _GithubQueryMe, _GithubQueryMeDI };
 export default GithubQueryMe;

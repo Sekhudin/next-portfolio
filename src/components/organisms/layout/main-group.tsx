@@ -1,9 +1,9 @@
 import { ScrollArea } from 'src/components/ui/scroll-area';
 import Container from 'src/components/molecules/container/page';
 import { HeaderGap } from 'src/components/organisms/header';
-import { cn } from 'src/utils';
+import { cn, PropsWithChildren} from 'src/utils';
 
-const Layout = ({ children }: React.PropsWithChildren) => (
+const Layout = ({ children }: Omit<PropsWithChildren, 'className'>) => (
   <ScrollArea type="scroll" className={cn(`h-screen w-screen overflow-x-hidden`)}>
     <main className="h-screen w-screen overflow-hidden flex flex-col">
       <Container header={<HeaderGap />}>

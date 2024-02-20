@@ -1,19 +1,10 @@
 import Image, { type ImageProps, type StaticImageData } from 'next/image';
-import { cn } from 'src/utils';
+import { cn, OmitParameter } from 'src/utils';
 
-const ImageBase = ({ className, src, alt, ...props }: ImageProps) => (
+type Props = OmitParameter<typeof Image, ''>;
+const ImageBase = ({ className, src, alt, ...props }: Props) => (
   <div className={cn(`relative overflow-hidden`, className)}>
-    {src && alt && (
-      <Image
-        src={src}
-        alt={alt}
-        className="object-cover"
-        sizes="width: 700px; heigh: 700px"
-        priority
-        fill
-        {...props}
-      />
-    )}
+    {src && alt && <Image src={src} alt={alt} className="object-cover" priority fill {...props} />}
   </div>
 );
 
