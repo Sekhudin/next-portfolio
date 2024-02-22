@@ -2,6 +2,7 @@ import z from 'zod';
 import { TIME_FRAME } from 'src/config/work-service';
 import Str from 'src/utils/string';
 
+export type _SendInquiryDI = typeof SendInquiry;
 namespace SendInquiry {
   export const Schema = z.object({
     name: z.string().min(1, { message: 'required' }).transform(Str.toTitleCase),
@@ -11,7 +12,7 @@ namespace SendInquiry {
     brief: z.string().min(20).transform(Str.toCapitalFirst),
   });
 
-  export const Default: _SendInquiry['Form'] = {
+  export const Default: z.infer<typeof Schema> = {
     name: '',
     email: '',
     entity: '',
@@ -22,17 +23,4 @@ namespace SendInquiry {
   export const TimeFrame = TIME_FRAME;
 }
 
-type _SendInquiry = {
-  Form: z.infer<typeof SendInquiry.Schema>;
-  Field: keyof _SendInquiry['Form'];
-  ItemTimeFrame: _SendInquiryDI['TimeFrame'][number];
-};
-
-type _SendInquiryDI = {
-  Schema: typeof SendInquiry.Schema;
-  Default: typeof SendInquiry.Default;
-  TimeFrame: typeof SendInquiry.TimeFrame;
-};
-
-export type { _SendInquiry, _SendInquiryDI };
 export default SendInquiry;

@@ -7,3 +7,4 @@ export type _UseRouterDI = typeof useRouter;
 
 export type * from 'src/hooks/use-query';
 export type * from 'src/hooks/use-suspense-query';
+export type * from 'src/hooks/use-intersection';

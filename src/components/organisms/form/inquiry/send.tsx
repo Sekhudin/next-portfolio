@@ -7,12 +7,7 @@ import {
   FieldRadioGroup,
   Submit,
 } from 'src/components/molecules/form';
-import type {
-  _UseFormDI,
-  _FormResolverDI,
-  _SendInquiryDI,
-  _SendInquiry,
-} from 'src/types/dependencies/form';
+import type { _UseFormDI, _FormResolverDI, _SendInquiryDI } from 'src/types/dependencies/form';
 import type { _EmailServiceDI } from 'src/types/dependencies/service';
 import { cn, PropsWithClassName } from 'src/utils';
 
@@ -27,9 +22,9 @@ type DI = {
 
 type Props = PropsWithClassName<DI>;
 export default function SendInquiryForm({ className, deps }: Props) {
-  type InquiryForm = _SendInquiry['Form'];
-  type InquiryField = _SendInquiry['Field'];
-  type TimeFrame = _SendInquiry['ItemTimeFrame'];
+  type InquiryForm = _SendInquiryDI['Default'];
+  type InquiryField = keyof _SendInquiryDI['Default'];
+  type TimeFrame = _SendInquiryDI['TimeFrame'][number];
 
   const { form, onValid, onInvalid, loading, FixedLoader } = deps._useForm({
     service: deps._service,

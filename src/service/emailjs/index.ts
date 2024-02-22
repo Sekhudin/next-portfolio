@@ -1,5 +1,5 @@
 import mail from '@emailjs/browser';
-import type { _SendInquiry } from './form/send-inquiry';
+import type { _SendInquiryDI } from './form/send-inquiry';
 
 namespace EmailService {
   async function send<T extends Record<string, any>>(form: T) {
@@ -11,7 +11,7 @@ namespace EmailService {
     );
   }
 
-  export async function sendInquiry(form: _SendInquiry['Form']) {
+  export async function sendInquiry(form: _SendInquiryDI['Default']) {
     return await send(form);
   }
 }
