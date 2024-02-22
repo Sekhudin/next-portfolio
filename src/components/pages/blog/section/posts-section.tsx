@@ -25,7 +25,18 @@ const PostsSection = ({ className, deps }: Props) => {
         </WithSeparator>
       }>
       <WithSeparator className={cn(className)}>
-        <PostList className="md:max-w-2xl xl:max-w-3xl" page={1} pageSize={5} deps={deps} />
+        <PostList
+          className="md:max-w-2xl xl:max-w-3xl"
+          page={1}
+          pageSize={5}
+          deps={{
+            _useQuery: deps._useQuery,
+            _useState: deps._useState,
+            _useRouter: deps._useRouter,
+            _service: deps._service,
+            _hrefTo: deps._hrefTo,
+          }}
+        />
       </WithSeparator>
     </deps.SuspenseComponent>
   );

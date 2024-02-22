@@ -14,13 +14,15 @@ const skeletonVariant = cva('w-28 h-fit animate-pulse bg-primary/10 text-transpa
       h2: 'text-2xl font-semibold',
     },
     rounded: {
-      default: 'rounded-md',
+      rounded: 'rounded',
+      sm: 'rounded-sm',
+      md: 'rounded-md',
       full: 'rounded-full',
     },
   },
   defaultVariants: {
     size: 'sm',
-    rounded: 'default',
+    rounded: 'md',
   },
 });
 

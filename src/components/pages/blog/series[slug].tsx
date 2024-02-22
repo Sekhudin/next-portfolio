@@ -7,9 +7,9 @@ type Props = PagePropsParams<'slug'>;
 const SeriesSlug = ({ params }: Props) => {
   return (
     <HashnodeProvider>
-      <div>
+      <main>
         <SeriesPostsSection className="" slug={params.slug} deps={seriesPostsSectionDeps} />
-      </div>
+      </main>
     </HashnodeProvider>
   );
 };

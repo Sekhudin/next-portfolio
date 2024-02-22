@@ -1,5 +1,4 @@
 import type {
-  MyUser,
   UserPostConnection,
   UserPostsArgs,
   UserPostsSort,
@@ -9,7 +8,10 @@ import type {
   QueryPublicationArgs,
   PublicationSeriesArgs,
   SeriesPostsArgs,
+  PublicationSeriesListArgs,
   Publication,
+  SeriesConnection,
+  SeriesEdge,
 } from './hashnode';
 import type { SingleMe, SinglePost, SingleSeries } from './hashnode-interface';
 
@@ -32,11 +34,21 @@ export type PostTag = Pick<Tag, 'id' | 'name'>;
 export type PostFilter = UserPostConnectionFilter;
 export type PostSortBy = UserPostsSort;
 
-export type QueryPostSeriesArgs = PublicationSeriesArgs &
+export type QueryPostsSeriesArgs = PublicationSeriesArgs &
   Pick<QueryPublicationArgs, 'host'> &
   SeriesPostsArgs;
-export type QueryPostSeriesResponse = {
+export type QueryPostsSeriesResponse = {
   publication: Pick<Publication, 'id' | 'title' | 'url' | 'about'> & {
     series: SingleSeries;
+  };
+};
+
+export type QueryPostsSeriesListArgs = PublicationSeriesListArgs &
+  Pick<QueryPublicationArgs, 'host'>;
+export type QueryPostsSeriesListResponse = {
+  publication: Pick<Publication, 'id' | 'title' | 'url' | 'about'> & {
+    seriesList: Pick<SeriesConnection, 'pageInfo' | 'totalDocuments'> & {
+      edges: Array<Pick<SeriesEdge, 'cursor'> & { node: SingleSeries }>;
+    };
   };
 };

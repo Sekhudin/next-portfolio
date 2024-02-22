@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import LinkComponent from 'next/link';
+import { useRouter } from 'next/navigation';
 import useApollosSuspenseQuery from 'src/hooks/use-suspense-query';
-import HashnodeQueryPublicationSeries from 'src/service/hashnode/queries/posts-series';
+import HashnodeQueryPostsSeries from 'src/service/hashnode/queries/posts-series';
 import { hrefTo } from 'src/utils/component';
 
 import SeriesPostsSection from './series[slug]-section/series-posts-section';
@@ -13,9 +13,9 @@ export const { seriesPostsSectionDeps }: Deps<'seriesPostsSectionDeps', typeof S
     seriesPostsSectionDeps: {
       _useQuery: useApollosSuspenseQuery,
       _useState: React.useState,
-      _service: HashnodeQueryPublicationSeries,
+      _useRouter: useRouter,
+      _service: HashnodeQueryPostsSeries,
       _hrefTo: hrefTo,
       SuspenseComponent: React.Suspense,
-      LinkComponent,
     },
   };

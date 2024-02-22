@@ -1,10 +1,15 @@
+import SeriesListSection from './series-section/series-list-section';
+import HashnodeProvider from 'src/components/organisms/provider/hashnode';
+import { seriesListSectionDeps } from './@series';
+
 const Series = () => {
   return (
-    <div>
-      <div>Series</div>
-    </div>
+    <HashnodeProvider>
+      <main>
+        <SeriesListSection deps={seriesListSectionDeps} />
+      </main>
+    </HashnodeProvider>
   );
 };
-
 
 export default Series;

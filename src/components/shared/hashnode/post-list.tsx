@@ -10,9 +10,12 @@ import {
 import { ToggleGroup, ToggleGroupItem, TogleGroupFallback } from 'src/components/ui/toggle-group';
 import { Small } from 'src/components/atoms/typography/p';
 import type { QueryPostsArgs, PostSortBy, PostFilter } from 'src/types/graphql/hashnode-type';
-import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
+import type {
+  _UseApolloSuspenseQueryDI,
+  _UseStateDI,
+  _UseRouterDI,
+} from 'src/types/dependencies/hooks';
 import type { _HashnodeQueryPostsDI } from 'src/types/dependencies/service';
-import type { _LinkComponentDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName, PropsWithChildren, PickDeps } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
 import SeriesButton, { SeriesButtonFallback } from './series-button';
@@ -27,8 +30,8 @@ type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
+    _useRouter: _UseRouterDI;
     _service: _HashnodeQueryPostsDI;
-    LinkComponent: _LinkComponentDI;
   } & PickDeps<typeof PostCard, '_hrefTo'>;
 };
 
@@ -44,6 +47,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
     variables: { page, pageSize, sortBy, filter },
   });
   const { nodes, pageInfo, totalDocuments, tags } = deps._service.flatten(data);
+  const router = deps._useRouter();
 
   const filterHandler = <T extends keyof PostFilter>(type: T, value: PostFilter[T]): void => {
     if (value) {
@@ -129,7 +133,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
         </ToggleGroup>
       </div>
 
-      <SeriesButton className='my-6'>Series</SeriesButton>
+      <SeriesButton className="my-6">Series</SeriesButton>
 
       <div className={cn('flex flex-col gap-y-16')}>
         <div className="min-h-96 flex flex-col gap-y-10 mb-12">
@@ -139,7 +143,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
               key={key}
               deps={{
                 _hrefTo: deps._hrefTo,
-                LinkComponent: deps.LinkComponent,
+                _router: router,
               }}
               {...v}
             />
@@ -182,7 +186,7 @@ export const PostlistFallback = ({ className }: PropsWithClassName) => (
       <Small className="font-semibold py-1">Tags:</Small>
       <TogleGroupFallback childClassName="rounded-full" size="xs" />
     </div>
-    <SeriesButtonFallback className='w-20 my-6' />
+    <SeriesButtonFallback className="w-20 my-6" />
 
     <div className={cn('flex flex-col gap-y-16', className)}>
       <div className="min-h-96 flex flex-col gap-y-10 mb-12">

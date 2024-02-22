@@ -1,25 +1,20 @@
 'use client';
-import SeriesPostsList, {
-  SeriesPostListFallBack,
-} from 'src/components/shared/hashnode/series-posts-list';
+import SeriesList, { SeriesListFallback } from 'src/components/shared/hashnode/series-list';
 import type { _SuspenseComponentDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName, Deps } from 'src/utils';
 
 type Props = PropsWithClassName<{
-  deps: Deps<'deps', typeof SeriesPostsList>['deps'] & {
+  deps: Deps<'deps', typeof SeriesList>['deps'] & {
     SuspenseComponent: _SuspenseComponentDI;
   };
-  slug: string;
 }>;
 
-const SeriesPostsSection = ({ className, slug, deps }: Props) => {
+const SeriesListSection = ({ className, deps }: Props) => {
   return (
     <>
-      <deps.SuspenseComponent fallback={<SeriesPostListFallBack />}>
-        <SeriesPostsList
+      <deps.SuspenseComponent fallback={<SeriesListFallback />}>
+        <SeriesList
           className={cn('', className)}
-          slug={slug}
-          pageSize={10}
           deps={{
             _useQuery: deps._useQuery,
             _useState: deps._useState,
@@ -33,4 +28,4 @@ const SeriesPostsSection = ({ className, slug, deps }: Props) => {
   );
 };
 
-export default SeriesPostsSection;
+export default SeriesListSection;

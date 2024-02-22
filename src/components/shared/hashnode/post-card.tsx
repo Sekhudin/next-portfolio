@@ -5,13 +5,13 @@ import { Anchor, Small } from 'src/components/atoms/typography/p';
 import Entity, { Post as PostInterface } from 'src/service/hashnode/entity/post';
 import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/hooks';
 import type { _HashnodeQueryPostsDI } from 'src/types/dependencies/service';
-import type { _HrefToDI, _LinkComponentDI } from 'src/types/dependencies/util';
+import type { _HrefToDI, _RouteDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName, ParameterAs } from 'src/utils';
 
 type DI = {
   deps: {
+    _router: _RouteDI;
     _hrefTo: _HrefToDI;
-    LinkComponent: _LinkComponentDI;
   };
 };
 
@@ -61,16 +61,16 @@ const PostCard = ({ className, deps, ...postValue }: Props) => {
             </Anchor>
 
             {post.series && (
-              <deps.LinkComponent
+              <div
                 className="flex flex-wrap space-x-1 font-medium text-sm group/series"
-                href={`/blog/series/${post.series.slug}`}>
+                onClick={() => deps._router.push(`/blog/series/${post.series?.slug}`)}>
                 <span className="dark:text-zinc-300">Series:</span>
                 <span
                   className="text-indigo-700 group-hover/series:text-zinc-50 group-hover/series:dark:text-zinc-300
                   group-hover/series:bg-indigo-700 rounded-md text-xs px-1 py-0.5 delay-100 duration-100">
                   {post.series.name}
                 </span>
-              </deps.LinkComponent>
+              </div>
             )}
           </div>
         </div>
@@ -110,6 +110,12 @@ export const PostCardFallback = ({ className, n }: PropsWithClassName<{ n?: numb
       <Fallback className={className} />
     )}
   </>
+);
+
+export const NoPostArticleYet = ({ className }: PropsWithClassName) => (
+  <div className={cn('w-full h-96 flex items-center justify-center', className)}>
+    No articles yet
+  </div>
 );
 
 export default PostCard;

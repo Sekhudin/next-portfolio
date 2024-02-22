@@ -9,6 +9,6 @@ export interface SinglePost
 }
 
 export interface SingleSeries
-  extends Pick<Series, 'id' | 'name' | 'coverImage' | 'description' | 'createdAt' | 'posts'> {
+  extends Pick<Series, 'id' | 'name' | 'coverImage' | 'description' | 'slug' | 'createdAt' | 'posts'> {
   author: SingleMe;
 }

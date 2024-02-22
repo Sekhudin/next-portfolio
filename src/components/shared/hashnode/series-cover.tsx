@@ -3,13 +3,12 @@ import { Separator } from 'src/components/ui/separator';
 import Image from 'src/components/atoms/image/base-image';
 import { H1 } from 'src/components/atoms/typography/h';
 import { P } from 'src/components/atoms/typography/p';
-import { _LinkComponentDI } from 'src/types/dependencies/util';
 import Entity, { Series, UniqueSeriesTags } from 'src/service/hashnode/entity/series';
 import { cn, PropsWithClassName } from 'src/utils';
 import SeriesButton, { SeriesButtonFallback } from './series-button';
 
-type Props = PropsWithClassName<{ series: Series; uniqueTags: UniqueSeriesTags[] }>;
-const SeriesCover = ({ className, series, uniqueTags }: Props) => {
+type Props = PropsWithClassName<{ uniqueTags: UniqueSeriesTags[] } & Series>;
+const SeriesCover = ({ className, uniqueTags, ...series }: Props) => {
   const v = new Entity(series);
 
   return (

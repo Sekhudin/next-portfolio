@@ -1,9 +1,10 @@
+'use client';
 import LinkComponent from 'next/link';
 import { SkeletonText } from 'src/components/ui/skeleton';
 import { cn, PropsWithChildren, PropsWithClassName } from 'src/utils';
 
 const SeriesButton = ({ className, children }: PropsWithChildren) => (
-  <LinkComponent className='block w-fit' href={'/blog/series'}>
+  <LinkComponent className="block w-fit" href={'/blog/series'}>
     <div
       className={cn(
         `w-fit px-3 py-1.5 text-sm text-zinc-50 dark:text-zinc-300 rounded-full

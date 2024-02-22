@@ -1,12 +1,11 @@
 import { gql, type TypedDocumentNode } from '@apollo/client';
-import type { QueryPostSeriesArgs, QueryPostSeriesResponse } from 'src/types/graphql/hashnode-type';
+import type { QueryPostsSeriesArgs, QueryPostsSeriesResponse } from 'src/types/graphql/hashnode-type';
 import Hashnode from 'src/service/helper/hashnode';
-import Util from 'src/service/helper/util';
 
 export type _HashnodeQueryPostsSeriesDI = typeof HashnodeQueryPostsSeries;
 namespace HashnodeQueryPostsSeries {
-  export const Query: TypedDocumentNode<QueryPostSeriesResponse, QueryPostSeriesArgs> = gql`
-    query PUBLICATION_SERIES($slug: String!, $first: Int!, $host: String, $after: String) {
+  export const Query: TypedDocumentNode<QueryPostsSeriesResponse, QueryPostsSeriesArgs> = gql`
+    query PUBLICATION_SERIES($slug: String!, $first: Int!, $after: String, $host: String) {
       publication(host: $host) {
         id
         title
@@ -19,6 +18,7 @@ namespace HashnodeQueryPostsSeries {
         series(slug: $slug) {
           id
           name
+          slug
           coverImage
           createdAt
           description {
@@ -64,15 +64,10 @@ namespace HashnodeQueryPostsSeries {
     }
   `;
 
-  export function flatten(response: QueryPostSeriesResponse) {
+  export function flatten(response: QueryPostsSeriesResponse) {
     const { series, ...flat } = response.publication;
     const uniqueTags = Hashnode.postEdgeUniqueTags(series.posts.edges).slice(0, 15);
     return { uniqueTags, series, ...flat };
-  }
-
-  export function pageStatus(...param: Parameters<(typeof Util)['page']>): string {
-    const page = Util.page(...param);
-    return page.status;
   }
 }
 export default HashnodeQueryPostsSeries;

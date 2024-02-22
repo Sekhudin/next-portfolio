@@ -1,5 +1,5 @@
-import Image, { type ImageProps, type StaticImageData } from 'next/image';
-import { cn, OmitParameter } from 'src/utils';
+import Image, { type StaticImageData } from 'next/image';
+import { cn, OmitParameter, PropsWithClassName } from 'src/utils';
 
 type Props = OmitParameter<typeof Image, ''>;
 const ImageBase = ({ className, src, alt, ...props }: Props) => (
@@ -8,5 +8,8 @@ const ImageBase = ({ className, src, alt, ...props }: Props) => (
   </div>
 );
 
+export const NoImage = ({ className }: PropsWithClassName) => (
+  <div className={cn('flex items-center justify-center bg-primary/10', className)}>No Image</div>
+);
 export type { StaticImageData };
 export default ImageBase;

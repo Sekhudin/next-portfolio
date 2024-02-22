@@ -1,20 +1,24 @@
 'use client';
 import { SkeletonText } from 'src/components/ui/skeleton';
 import { Button } from 'src/components/ui/button';
-import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
+import type {
+  _UseApolloSuspenseQueryDI,
+  _UseStateDI,
+  _UseRouterDI,
+} from 'src/types/dependencies/hooks';
 import type { _HashnodeQueryPostsSeriesDI } from 'src/types/dependencies/service';
-import type { _HrefToDI, _LinkComponentDI } from 'src/types/dependencies/util';
+import type { _HrefToDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 import SeriesCover, { SeriesCoverFallback } from './series-cover';
-import PostCard, { PostCardFallback, PostCardValue } from './post-card';
+import PostCard, { NoPostArticleYet, PostCardFallback, PostCardValue } from './post-card';
 
 type Deps = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
+    _useRouter: _UseRouterDI;
     _service: _HashnodeQueryPostsSeriesDI;
     _hrefTo: _HrefToDI;
-    LinkComponent: _LinkComponentDI;
   };
 };
 
@@ -30,6 +34,7 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
     variables: { first, after, slug, host: `${process.env.NEXT_PUBLIC_HASHNODE_MY_HOST}` },
   });
   const { series, uniqueTags, ...v } = deps._service.flatten(data);
+  const router = deps._useRouter();
 
   const showAllArticlesHandler = () => {
     if (series.posts.totalDocuments) {
@@ -39,17 +44,17 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
 
   return (
     <div className={cn(``, className)}>
-      <SeriesCover series={series} uniqueTags={uniqueTags} />
+      <SeriesCover uniqueTags={uniqueTags} {...series} />
 
       <div className="grow flex flex-col gap-y-16">
         <div className="flex flex-col gap-y-10">
-          {series.posts.edges.map(({ node }: PostCardValue<'node'>, key) => (
-            <PostCard
-              key={key}
-              deps={{ _hrefTo: deps._hrefTo, LinkComponent: deps.LinkComponent }}
-              {...node}
-            />
-          ))}
+          {series.posts.edges.length ? (
+            series.posts.edges.map(({ node }: PostCardValue<'node'>, key) => (
+              <PostCard key={key} deps={{ _hrefTo: deps._hrefTo, _router: router }} {...node} />
+            ))
+          ) : (
+            <NoPostArticleYet />
+          )}
         </div>
 
         {first < series.posts.totalDocuments ? (

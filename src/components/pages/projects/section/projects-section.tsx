@@ -11,7 +11,17 @@ type Props = PropsWithClassName<{
 const ProjectSection = ({ className, deps }: Props) => (
   <>
     <deps.SuspenseComponent fallback={<ProjectListFallback />}>
-      <ProjectList className={cn(``, className)} pageSize={10} deps={deps} />
+      <ProjectList
+        className={cn(``, className)}
+        pageSize={10}
+        deps={{
+          _useQuery: deps._useQuery,
+          _useState: deps._useState,
+          _service: deps._service,
+          _hrefTo: deps._hrefTo,
+          _toast: deps._toast,
+        }}
+      />
     </deps.SuspenseComponent>
   </>
 );

@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import LinkComponent from 'next/link';
+import { useRouter } from 'next/navigation';
 import useApollosSuspenseQuery from 'src/hooks/use-suspense-query';
 import HashnodeQueryMe from 'src/service/hashnode/queries/me';
 import HashnodeQueryPosts from 'src/service/hashnode/queries/posts';
@@ -22,9 +22,9 @@ export const { postSectionDeps }: Deps<'postSectionDeps', typeof PostSection> = 
   postSectionDeps: {
     _useQuery: useApollosSuspenseQuery,
     _useState: React.useState,
+    _useRouter: useRouter,
     _service: HashnodeQueryPosts,
     _hrefTo: hrefTo,
     SuspenseComponent: React.Suspense,
-    LinkComponent,
   },
 };
