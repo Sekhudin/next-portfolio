@@ -71,7 +71,7 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
         />
       )}
 
-      <div className="min-h-[10rem] md:h-52 xl:h-56 flex flex-col justify-between gap-y-2">
+      <div className="min-h-[10rem] flex flex-col justify-between gap-y-2">
         <div>
           <p
             className="scroll-m-20 text-lg font-semibold tracking-tight text-zinc-800
@@ -148,10 +148,10 @@ export const ProjectCardFallback = ({ className }: PropsWithClassName) => (
       dark:border-zinc-500/50 shadow-lg"
     />
 
-    <div className="h-40 md:h-52 xl:h-56 flex flex-col justify-between gap-y-2">
+    <div className="min-h-[10rem] flex flex-col justify-between gap-y-2">
       <div>
         <SkeletonText className="w-1/2 mb-6" size="lg" />
-        <SkeletonParagraph n={2} diffLast />
+        <SkeletonParagraph n={1} diffLast />
         <SkeletonParagraph
           className="mt-6 flex-row gap-y-0 gap-x-1"
           childClassName="w-12"
