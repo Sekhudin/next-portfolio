@@ -15,6 +15,7 @@ const SeriesListSection = ({ className, deps }: Props) => {
       <deps.SuspenseComponent fallback={<SeriesListFallback />}>
         <SeriesList
           className={cn('', className)}
+          pageSize={10}
           deps={{
             _useQuery: deps._useQuery,
             _useState: deps._useState,

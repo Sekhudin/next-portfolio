@@ -1,4 +1,5 @@
 'use client';
+import { Button } from 'src/components/ui/button';
 import { Separator } from 'src/components/ui/separator';
 import { SkeletonText, SkeletonParagraph } from 'src/components/ui/skeleton';
 import { H1 } from 'src/components/atoms/typography/h';
@@ -39,6 +40,12 @@ const SeriesList = ({ className, pageSize, deps }: Props) => {
   const { seriesList, uniqueTagsList, pageInfo, totalDocuments, ...v } =
     deps._service.flatten(data);
 
+  const showAllArticlesHandler = () => {
+    if (first < totalDocuments) {
+      setFirst(totalDocuments);
+    }
+  };
+
   return (
     <div className={cn('', className)}>
       <H1 className="md:w-10/12 lg:w-9/12 flex space-x-1">{v.title}</H1>
@@ -56,6 +63,17 @@ const SeriesList = ({ className, pageSize, deps }: Props) => {
           />
         ))}
       </div>
+
+      {first < totalDocuments ? (
+        <div className="flex justify-center mt-10">
+          <Button
+            className="flex flex-col justify-center rounded-full"
+            variant="ghost"
+            onClick={showAllArticlesHandler}>
+            Tampilkan Semua
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };

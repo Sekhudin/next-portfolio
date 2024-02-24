@@ -1,4 +1,5 @@
 import { type RefObject, useEffect, useState } from 'react';
+import Loader from 'src/components/atoms/loader/insection';
 
 interface Args extends IntersectionObserverInit {
   freeZeOnceVisible?: boolean;
@@ -34,7 +35,8 @@ const useIntersection = (ref: RefObject<Element>, args: Args = defaultArgs) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref?.current, JSON.stringify(threshold), root, rootMargin, frozen]);
-  return entry;
+
+  return { entry, Loader };
 };
 
 export type _UseInsterSectionDI = typeof useIntersection;

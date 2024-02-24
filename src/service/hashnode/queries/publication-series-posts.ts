@@ -11,7 +11,7 @@ namespace HashnodeQueryPublicationSeriesPosts {
     QueryPublicationSeriesPostsResponse,
     QueryPublicationSeriesPostsArgs
   > = gql`
-    query PUBLICATION_SERIES($slug: String!, $first: Int!, $after: String, $host: String) {
+    query PUBLICATION_SERIES_POSTS($slug: String!, $first: Int!, $after: String, $host: String) {
       publication(host: $host) {
         id
         title
@@ -71,7 +71,7 @@ namespace HashnodeQueryPublicationSeriesPosts {
   `;
 
   export function flatten(response: QueryPublicationSeriesPostsResponse) {
-    const { series, ...flat } = response.publication;
+    const { series,  ...flat } = response.publication;
     const uniqueTags = Hashnode.postEdgeUniqueTags(series.posts.edges).slice(0, 15);
     return { uniqueTags, series, ...flat };
   }

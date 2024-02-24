@@ -37,7 +37,7 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
   const router = deps._useRouter();
 
   const showAllArticlesHandler = () => {
-    if (series.posts.totalDocuments) {
+    if (first < series.posts.totalDocuments) {
       setFirst(series.posts.totalDocuments);
     }
   };
@@ -67,6 +67,7 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
             </Button>
           </div>
         ) : null}
+
       </div>
     </div>
   );

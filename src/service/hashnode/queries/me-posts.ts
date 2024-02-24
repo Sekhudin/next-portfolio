@@ -7,7 +7,7 @@ import Util from 'src/service/helper/util';
 export type _HashnodeQueryMePostsDI = typeof HashnodeQueryMePosts;
 namespace HashnodeQueryMePosts {
   export const Query: TypedDocumentNode<QueryMePostsResponse, QueryMePostsArgs> = gql`
-    query POSTS(
+    query ME_POSTS(
       $page: Int!
       $pageSize: Int!
       $sortBy: UserPostsSort
