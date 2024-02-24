@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import useApollosSuspenseQuery from 'src/hooks/use-suspense-query';
 import HashnodeQueryMe from 'src/service/hashnode/queries/me';
-import HashnodeQueryPosts from 'src/service/hashnode/queries/posts';
+import HashnodeQueryMePosts from 'src/service/hashnode/queries/me-posts';
 import { hrefTo } from 'src/utils/component';
 
 import type ProfileSection from './section/profile-section';
@@ -23,7 +23,7 @@ export const { postSectionDeps }: Deps<'postSectionDeps', typeof PostSection> = 
     _useQuery: useApollosSuspenseQuery,
     _useState: React.useState,
     _useRouter: useRouter,
-    _service: HashnodeQueryPosts,
+    _service: HashnodeQueryMePosts,
     _hrefTo: hrefTo,
     SuspenseComponent: React.Suspense,
   },

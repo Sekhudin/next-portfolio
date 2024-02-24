@@ -1,12 +1,12 @@
 import { gql, type TypedDocumentNode } from '@apollo/client';
 import { UserPostsSort } from 'src/types/graphql/hashnode';
-import type { QueryPostsArgs, QueryPostsResponse } from 'src/types/graphql/hashnode-type';
+import type { QueryMePostsArgs, QueryMePostsResponse } from 'src/types/graphql/hashnode-type';
 import Hashnode from 'src/service/helper/hashnode';
 import Util from 'src/service/helper/util';
 
-export type _HashnodeQueryPostsDI = typeof HashnodeQueryPost;
-namespace HashnodeQueryPost {
-  export const Query: TypedDocumentNode<QueryPostsResponse, QueryPostsArgs> = gql`
+export type _HashnodeQueryMePostsDI = typeof HashnodeQueryMePosts;
+namespace HashnodeQueryMePosts {
+  export const Query: TypedDocumentNode<QueryMePostsResponse, QueryMePostsArgs> = gql`
     query POSTS(
       $page: Int!
       $pageSize: Int!
@@ -33,7 +33,6 @@ namespace HashnodeQueryPost {
             }
             tags {
               id
-              logo
               name
             }
           }
@@ -50,7 +49,7 @@ namespace HashnodeQueryPost {
   `;
 
   export const SortBy = UserPostsSort;
-  export function flatten(response: QueryPostsResponse) {
+  export function flatten(response: QueryMePostsResponse) {
     const { nodes, ...responseMePost } = response.me.posts;
     const tags = Hashnode.postUniqueTags(nodes).slice(0, 20);
     return { tags, nodes, ...responseMePost };
@@ -61,4 +60,4 @@ namespace HashnodeQueryPost {
     return page.status;
   }
 }
-export default HashnodeQueryPost;
+export default HashnodeQueryMePosts;

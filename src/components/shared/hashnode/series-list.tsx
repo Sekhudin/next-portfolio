@@ -8,7 +8,7 @@ import type {
   _UseStateDI,
   _UseRouterDI,
 } from 'src/types/dependencies/hooks';
-import type { _HashnodeQueryPostSeriesListDI } from 'src/types/dependencies/service';
+import type { _HashnodeQueryPublicationSeriesListDI } from 'src/types/dependencies/service';
 import type { _HrefToDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 import SeriesCard, { SeriesCardFallback } from './series-card';
@@ -19,7 +19,7 @@ type Deps = {
     _useState: _UseStateDI;
     _useRouter: _UseRouterDI;
     _hrefTo: _HrefToDI;
-    _service: _HashnodeQueryPostSeriesListDI;
+    _service: _HashnodeQueryPublicationSeriesListDI;
   };
 };
 

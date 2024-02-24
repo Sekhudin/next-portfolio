@@ -10,7 +10,7 @@ import type {
 } from './github';
 import type { Repository } from './github-interface';
 
-export type QueryMeResponse = {
+export type QueryMeViewerResponse = {
   viewer: Pick<
     User,
     | 'id'
@@ -26,8 +26,8 @@ export type QueryMeResponse = {
   >;
 };
 
-export type QueryRepositoriesArgs = UserRepositoriesArgs;
-export type QueryRepositoriesResponse = {
+export type QueryViewerRepositoriesArgs = UserRepositoriesArgs;
+export type QueryViewerRepositoriesResponse = {
   viewer: Pick<User, 'id'> & {
     repositories: Pick<RepositoryConnection, 'pageInfo' | 'totalCount'> & {
       nodes: Array<Repository>;

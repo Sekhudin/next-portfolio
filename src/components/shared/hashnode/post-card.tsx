@@ -3,8 +3,6 @@ import { Separator } from 'src/components/ui/separator';
 import { SkeletonText, SkeletonParagraph } from 'src/components/ui/skeleton';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
 import Entity, { Post as PostInterface } from 'src/service/hashnode/entity/post';
-import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/hooks';
-import type { _HashnodeQueryPostsDI } from 'src/types/dependencies/service';
 import type { _HrefToDI, _RouteDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName, ParameterAs } from 'src/utils';
 

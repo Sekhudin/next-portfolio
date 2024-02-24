@@ -9,13 +9,13 @@ import {
 } from 'src/components/ui/pagination';
 import { ToggleGroup, ToggleGroupItem, TogleGroupFallback } from 'src/components/ui/toggle-group';
 import { Small } from 'src/components/atoms/typography/p';
-import type { QueryPostsArgs, PostSortBy, PostFilter } from 'src/types/graphql/hashnode-type';
+import type { QueryMePostsArgs, PostSortBy, PostFilter } from 'src/types/graphql/hashnode-type';
 import type {
   _UseApolloSuspenseQueryDI,
   _UseStateDI,
   _UseRouterDI,
 } from 'src/types/dependencies/hooks';
-import type { _HashnodeQueryPostsDI } from 'src/types/dependencies/service';
+import type { _HashnodeQueryMePostsDI } from 'src/types/dependencies/service';
 import { cn, PropsWithClassName, PropsWithChildren, PickDeps } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
 import SeriesButton, { SeriesButtonFallback } from './series-button';
@@ -31,11 +31,11 @@ type DI = {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
     _useRouter: _UseRouterDI;
-    _service: _HashnodeQueryPostsDI;
+    _service: _HashnodeQueryMePostsDI;
   } & PickDeps<typeof PostCard, '_hrefTo'>;
 };
 
-type Props = PropsWithClassName<DI & Omit<QueryPostsArgs, 'sortBy'>>;
+type Props = PropsWithClassName<DI & Omit<QueryMePostsArgs, 'sortBy'>>;
 
 const PostList = ({ className, deps, ...v }: Props) => {
   const [page, setPage] = deps._useState<number>(v.page);

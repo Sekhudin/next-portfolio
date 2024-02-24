@@ -1,8 +1,8 @@
-import type { SinglePost as Post } from 'src/types/graphql/hashnode-interface';
+import type { Post as PostInterface } from 'src/types/graphql/hashnode-interface';
 import Str from 'src/utils/string';
 
-export type { Post };
-export default class PostEntity implements Post {
+export type Post = PostInterface;
+export default class PostEntity implements PostInterface {
   id!: string;
   title!: string;
   brief!: string;

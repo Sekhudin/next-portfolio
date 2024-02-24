@@ -1,9 +1,9 @@
 import { TypedDocumentNode, gql } from '@apollo/client';
-import { QueryMeResponse } from 'src/types/graphql/github-type';
+import { QueryMeViewerResponse } from 'src/types/graphql/github-type';
 
-export type _GithubQueryMeDI = typeof GithubQueryMe;
-namespace GithubQueryMe {
-  export const Query: TypedDocumentNode<QueryMeResponse> = gql`
+export type _GithubQueryMeViewerDI = typeof GithubQueryMeViewer;
+namespace GithubQueryMeViewer {
+  export const Query: TypedDocumentNode<QueryMeViewerResponse> = gql`
     query ME {
       viewer {
         id
@@ -24,9 +24,9 @@ namespace GithubQueryMe {
     }
   `;
 
-  export function flatten(response: QueryMeResponse) {
+  export function flatten(response: QueryMeViewerResponse) {
     const { followers, following, ...profile } = response.viewer;
     return { profile, followers, following };
   }
 }
-export default GithubQueryMe;
+export default GithubQueryMeViewer;

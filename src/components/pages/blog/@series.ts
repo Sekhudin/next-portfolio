@@ -2,7 +2,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import useApollosSuspenseQuery from 'src/hooks/use-suspense-query';
-import HashnodeQueryPostsSeriesList from 'src/service/hashnode/queries/posts-series-list';
+import HashnodeQueryPublicationSeriesList from 'src/service/hashnode/queries/publication-series-list';
 import { hrefTo } from 'src/utils/component';
 
 import SeriesListSection from './series-section/series-list-section';
@@ -14,7 +14,7 @@ export const { seriesListSectionDeps }: Deps<'seriesListSectionDeps', typeof Ser
     _useState: React.useState,
     _useRouter: useRouter,
     _hrefTo: hrefTo,
-    _service: HashnodeQueryPostsSeriesList,
+    _service: HashnodeQueryPublicationSeriesList,
     SuspenseComponent: React.Suspense,
   },
 };

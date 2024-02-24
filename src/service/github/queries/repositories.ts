@@ -7,14 +7,17 @@ import {
   RepositoryOrderField,
 } from 'src/types/graphql/github';
 import type {
-  QueryRepositoriesArgs,
-  QueryRepositoriesResponse,
+  QueryViewerRepositoriesArgs,
+  QueryViewerRepositoriesResponse,
 } from 'src/types/graphql/github-type';
 import Util from 'src/service/helper/util';
 
-export type _GithubQueryRepositoriesDI = typeof GithubQueryRepositories;
-namespace GithubQueryRepositories {
-  export const Query: TypedDocumentNode<QueryRepositoriesResponse, QueryRepositoriesArgs> = gql`
+export type _GithubQueryViewerRepositoriesDI = typeof GithubQueryViewerRepositories;
+namespace GithubQueryViewerRepositories {
+  export const Query: TypedDocumentNode<
+    QueryViewerRepositoriesResponse,
+    QueryViewerRepositoriesArgs
+  > = gql`
     query REPOSITORIES(
       $after: String
       $before: String
@@ -70,7 +73,7 @@ namespace GithubQueryRepositories {
     }
   `;
 
-  export function flatten(response: QueryRepositoriesResponse) {
+  export function flatten(response: QueryViewerRepositoriesResponse) {
     const { nodes, ...result } = response.viewer.repositories;
     return { nodes, ...result };
   }
@@ -86,4 +89,4 @@ namespace GithubQueryRepositories {
   export const OrderDirection = OrderDir;
   export const OrderField = RepositoryOrderField;
 }
-export default GithubQueryRepositories;
+export default GithubQueryViewerRepositories;

@@ -6,7 +6,7 @@ import type {
   _UseStateDI,
   _UseRouterDI,
 } from 'src/types/dependencies/hooks';
-import type { _HashnodeQueryPostsSeriesDI } from 'src/types/dependencies/service';
+import type { _HashnodeQueryPublicationSeriesPostsDI } from 'src/types/dependencies/service';
 import type { _HrefToDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 import SeriesCover, { SeriesCoverFallback } from './series-cover';
@@ -17,7 +17,7 @@ type Deps = {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
     _useRouter: _UseRouterDI;
-    _service: _HashnodeQueryPostsSeriesDI;
+    _service: _HashnodeQueryPublicationSeriesPostsDI;
     _hrefTo: _HrefToDI;
   };
 };

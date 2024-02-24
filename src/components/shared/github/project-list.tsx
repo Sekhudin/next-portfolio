@@ -8,7 +8,7 @@ import {
   PaginationFallback,
 } from 'src/components/ui/pagination';
 import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
-import type { _GithubQueryRepositoriesDI } from 'src/types/dependencies/service';
+import type { _GithubQueryViewerRepositoriesDI } from 'src/types/dependencies/service';
 import type { _HrefToDI, _ToastDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 import ProjectCard, { ProjectCardFallback } from './project-card';
@@ -17,7 +17,7 @@ type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
-    _service: _GithubQueryRepositoriesDI;
+    _service: _GithubQueryViewerRepositoriesDI;
     _hrefTo: _HrefToDI;
     _toast: _ToastDI;
   };

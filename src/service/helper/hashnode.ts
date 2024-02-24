@@ -1,4 +1,5 @@
-import type { Tag, Post, Edge, PostEdge } from 'src/types/graphql/hashnode';
+import type { Edge, PostEdge } from 'src/types/graphql/hashnode-type';
+import type { Tag, Post } from 'src/types/graphql/hashnode-interface';
 
 type HttpUrlType = 'hashnode-profile';
 
@@ -8,7 +9,7 @@ namespace UtilHashnode {
     return '/';
   }
 
-  export function postUniqueTags(posts: Array<Pick<Post, 'tags'>>) {
+  export function postUniqueTags(posts: Array<Post>) {
     const uniqueSet = new Set<Tag>();
 
     for (let i = 0; i < posts.length; i++) {

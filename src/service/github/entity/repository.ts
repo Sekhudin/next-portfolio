@@ -1,7 +1,7 @@
-import type { Repository } from 'src/types/graphql/github-interface';
+import type { Repository as RepositoryInterface } from 'src/types/graphql/github-interface';
 import Github, { type ReturnSplitDescription } from 'src/service/helper/github';
 
-export type { Repository };
+export type Repository = RepositoryInterface;
 export default class RepositoryEntity
   implements Omit<Repository, 'description' | 'url' | 'createdAt'>
 {

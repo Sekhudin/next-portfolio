@@ -3,7 +3,6 @@ import type {
   UserPostsArgs,
   UserPostsSort,
   UserPostConnectionFilter,
-  Tag,
   InputMaybe,
   QueryPublicationArgs,
   PublicationSeriesArgs,
@@ -12,20 +11,27 @@ import type {
   Publication,
   SeriesConnection,
   SeriesEdge,
+  PostEdge as PostEdgeBase,
+  Edge as EdgeBase,
 } from './hashnode';
-import type { SingleMe, SinglePost, SingleSeries } from './hashnode-interface';
+import type { Post, Series, User, Tag } from './hashnode-interface';
+
+export type Edge = EdgeBase;
+export type PostEdge = Pick<PostEdgeBase, 'cursor'> & {
+  node: Post;
+};
 
 export type QueryMeResponse = {
-  me: SingleMe;
+  me: User;
 };
 
-export type QueryPostsArgs = Omit<UserPostsArgs, 'sortBy'> & {
+export type QueryMePostsArgs = Omit<UserPostsArgs, 'sortBy'> & {
   sortBy?: InputMaybe<UserPostsSort>;
 };
-export type QueryPostsResponse = {
+export type QueryMePostsResponse = {
   me: {
     posts: Pick<UserPostConnection, 'pageInfo' | 'totalDocuments'> & {
-      nodes: Array<SinglePost>;
+      nodes: Array<Post>;
     };
   };
 };
@@ -34,21 +40,21 @@ export type PostTag = Pick<Tag, 'id' | 'name'>;
 export type PostFilter = UserPostConnectionFilter;
 export type PostSortBy = UserPostsSort;
 
-export type QueryPostsSeriesArgs = PublicationSeriesArgs &
+export type QueryPublicationSeriesPostsArgs = PublicationSeriesArgs &
   Pick<QueryPublicationArgs, 'host'> &
   SeriesPostsArgs;
-export type QueryPostsSeriesResponse = {
+export type QueryPublicationSeriesPostsResponse = {
   publication: Pick<Publication, 'id' | 'title' | 'url' | 'about'> & {
-    series: SingleSeries;
+    series: Series;
   };
 };
 
-export type QueryPostsSeriesListArgs = PublicationSeriesListArgs &
+export type QueryPublicationSeriesListArgs = PublicationSeriesListArgs &
   Pick<QueryPublicationArgs, 'host'>;
-export type QueryPostsSeriesListResponse = {
+export type QueryPublicationSeriesListResponse = {
   publication: Pick<Publication, 'id' | 'title' | 'url' | 'about'> & {
     seriesList: Pick<SeriesConnection, 'pageInfo' | 'totalDocuments'> & {
-      edges: Array<Pick<SeriesEdge, 'cursor'> & { node: SingleSeries }>;
+      edges: Array<Pick<SeriesEdge, 'cursor'> & { node: Series }>;
     };
   };
 };

@@ -1,9 +1,10 @@
-import type { SingleSeries as Series } from 'src/types/graphql/hashnode-interface';
-import type { PostTag as UniqueSeriesTags } from 'src/types/graphql/hashnode-type';
+import type { Series as SeriesInterface } from 'src/types/graphql/hashnode-interface';
+import type { PostTag } from 'src/types/graphql/hashnode-type';
 import Str from 'src/utils/string';
 
-export type { Series, UniqueSeriesTags };
-export default class SeriesEntity implements Series {
+export type Series = SeriesInterface;
+export type UniqueSeriesTags = PostTag;
+export default class SeriesEntity implements SeriesInterface {
   id!: string;
   name!: string;
   posts!: Series['posts'];

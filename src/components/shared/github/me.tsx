@@ -4,13 +4,13 @@ import { Skeleton, SkeletonText, SkeletonParagraph } from 'src/components/ui/ske
 import { Small, XSmall } from 'src/components/atoms/typography/p';
 import Avatar from 'src/components/atoms/image/async-avatar';
 import type { _UseApolloSuspenseQueryDI } from 'src/types/dependencies/hooks';
-import type { _GithubQueryMeDI } from 'src/types/dependencies/service';
+import type { _GithubQueryMeViewerDI } from 'src/types/dependencies/service';
 import { cn, PropsWithClassName } from 'src/utils';
 
 type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
-    _service: _GithubQueryMeDI;
+    _service: _GithubQueryMeViewerDI;
   };
 };
 

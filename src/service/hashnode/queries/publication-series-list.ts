@@ -1,15 +1,15 @@
 import { gql, type TypedDocumentNode } from '@apollo/client';
 import type {
-  QueryPostsSeriesListArgs,
-  QueryPostsSeriesListResponse,
+  QueryPublicationSeriesListArgs,
+  QueryPublicationSeriesListResponse,
 } from 'src/types/graphql/hashnode-type';
 import Hashnode from 'src/service/helper/hashnode';
 
-export type _HashnodeQueryPostSeriesListDI = typeof HashnodeQueryPostSeriesList;
-namespace HashnodeQueryPostSeriesList {
+export type _HashnodeQueryPublicationSeriesListDI = typeof HashnodeQueryPublicationSeriesList;
+namespace HashnodeQueryPublicationSeriesList {
   export const Query: TypedDocumentNode<
-    QueryPostsSeriesListResponse,
-    QueryPostsSeriesListArgs
+    QueryPublicationSeriesListResponse,
+    QueryPublicationSeriesListArgs
   > = gql`
     query PUBLICATION_SERIES_LIST($first: Int!, $after: String, $host: String) {
       publication(host: $host) {
@@ -67,7 +67,7 @@ namespace HashnodeQueryPostSeriesList {
     }
   `;
 
-  export function flatten(response: QueryPostsSeriesListResponse) {
+  export function flatten(response: QueryPublicationSeriesListResponse) {
     const { seriesList: seriesListBase, ...flatten } = response.publication;
     const { pageInfo, totalDocuments, edges: seriesList } = seriesListBase;
     const uniqueTagsList: Array<ReturnType<(typeof Hashnode)['postEdgeUniqueTags']>> = [];
@@ -80,4 +80,4 @@ namespace HashnodeQueryPostSeriesList {
   }
 }
 
-export default HashnodeQueryPostSeriesList;
+export default HashnodeQueryPublicationSeriesList;
