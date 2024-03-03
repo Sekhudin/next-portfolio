@@ -15,7 +15,7 @@ const email: EmailFunc = (display) => {
   return { display, href, contact };
 };
 
-const wa = whatsapp('+62 818 0220 3863');
+const wa = whatsapp(`${process.env.NEXT_PUBLIC_CONTACT_WHATSAPP}`);
 export const WA: BaseContact = {
   display: wa.display,
   href: wa.href,
@@ -24,7 +24,7 @@ export const WA: BaseContact = {
   icon: MessageCircleMoreIcon,
 };
 
-const gmail = email('sekhudinpbg3@gmail.com');
+const gmail = email(`${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`);
 export const GMAIL: BaseContact = {
   display: gmail.display,
   href: gmail.href,

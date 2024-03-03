@@ -3,7 +3,7 @@ import type { BaseSocialMedia } from './types';
 
 export const GITHUB: BaseSocialMedia = {
   display: 'Github',
-  href: 'https://github.com/Sekhudin',
+  href: `https://github.com/${process.env.NEXT_PUBLIC_GITHUB}`,
   tooltip: 'Sekhudin',
   ariaLabel: 'Follow on Github',
   icon: GithubIcon,
@@ -11,7 +11,7 @@ export const GITHUB: BaseSocialMedia = {
 
 export const LINKEDIN: BaseSocialMedia = {
   display: 'Linkedin',
-  href: 'https://www.linkedin.com/in/sekhudin/',
+  href: `https://www.linkedin.com/in/${process.env.NEXT_PUBLIC_LINKEDIN}`,
   tooltip: 'Sekhudin',
   ariaLabel: 'Follow on Linkedin',
   icon: LinkedinIcon,
@@ -19,7 +19,7 @@ export const LINKEDIN: BaseSocialMedia = {
 
 export const TWITTER: BaseSocialMedia = {
   display: 'Twitter',
-  href: 'https://twitter.com/sekhudin_y',
+  href: `https://twitter.com/${process.env.NEXT_PUBLIC_TWITTER}`,
   tooltip: 'Sekhudin_y',
   ariaLabel: 'Follow on Twitter',
   icon: TwitterIcon,
@@ -27,7 +27,7 @@ export const TWITTER: BaseSocialMedia = {
 
 export const IG: BaseSocialMedia = {
   display: 'Instagram',
-  href: 'https://www.instagram.com/sekhudin_y/',
+  href: `https://www.instagram.com/${process.env.NEXT_PUBLIC_INSTAGRAM}`,
   tooltip: 'Sekhudin_y',
   ariaLabel: 'Follow on IG',
   icon: InstagramIcon,

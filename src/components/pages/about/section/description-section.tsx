@@ -1,9 +1,6 @@
 import { H1 } from 'src/components/atoms/typography/h';
 import { SpanPoint, P } from 'src/components/atoms/typography/p';
-import {
-  AnchorKampurMerdeka,
-  AnchorOrbitFutureAcademy,
-} from 'src/components/atoms/anchor/anchor';
+import { AnchorKampurMerdeka, AnchorOrbitFutureAcademy } from 'src/components/atoms/anchor/anchor';
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function DescriptionSection({ className }: PropsWithClassName) {
@@ -16,16 +13,14 @@ export default function DescriptionSection({ className }: PropsWithClassName) {
         {`As a software engineer, I bring `}
         <SpanPoint>{`a year of freelance`}</SpanPoint>
         {` experience in software development and a total of `}
-        <SpanPoint>{`three years of personal programming`}</SpanPoint>
+        <SpanPoint>{`two years of personal programming`}</SpanPoint>
         {` exploration. Armed with a `}
         <SpanPoint>{`Bachelor's degree in Computer Science,`}</SpanPoint>
         {` I am devoted to constantly refining my skills and staying abreast of the dynamic tech landscape.`}
       </P>
 
       <P className="leading-7">
-        {`In addition to my journey, I have `}
-        <SpanPoint>{`actively explored various bootcamps`}</SpanPoint>
-        {` and dedicated `}
+        {`In addition to my journey, I have actively explored various bootcamps and dedicated `}
         <SpanPoint>{`six months to the enriching `}</SpanPoint>
         <AnchorKampurMerdeka target="_blank" />
         {` program at `}

@@ -44,7 +44,7 @@ export default function NavigationMain({ children, className }: PropsWithChildre
       </DialogTrigger>
       <DialogPortal>
         <DialogOverlay
-          className={cn(`bg-white/10 dark:bg-zinc-90/10 backdrop-blur-sm`, className)}
+          className={cn(`bg-white/5 dark:bg-zinc-90/5 backdrop-blur-sm`, className)}
         />
         <DialogRootContent
           className="md:hidden h-fit fixed top-6 inset-4 z-50
