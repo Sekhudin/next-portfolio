@@ -53,49 +53,56 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
         <ExternalLinkIcon className="h-5 w-5" />
       </span>
 
-      {repo.iconApp ? (
-        <div
-          className="w-12 h-12 flex justify-center items-center mb-6
-        bg-zinc-50 border dark:border-[1.5px] rounded-full
-        dark:border-zinc-500/50 shadow-lg"
-          style={{
-            borderColor: `${primaryLanguage?.color}`,
-          }}>
-          <repo.iconApp style={{ stroke: `${primaryLanguage?.color}` }} />
-        </div>
-      ) : (
-        <Avatar
-          className="w-12 h-12 mb-6 border dark:border-[1.5px]
-        dark:border-zinc-500/50 shadow-lg"
-          alt={repo.name}
-        />
-      )}
+      <div className="flex items-end justify-between mb-6">
+        {repo.iconApp ? (
+          <div
+            className="w-12 h-12 flex justify-center items-center border dark:border-[1.5px] rounded-full
+            bg-zinc-100 dark:bg-indigo-700/20 dark:border-zinc-500/50 shadow-lg">
+            <repo.iconApp className="stroke-zinc-700 dark:stroke-indigo-700" />
+          </div>
+        ) : (
+          <Avatar
+            className="w-12 h-12 border dark:border-[1.5px]
+          dark:border-zinc-500/50 shadow-lg"
+            alt={repo.name}
+          />
+        )}
 
-      <div className="min-h-[10rem] flex flex-col justify-between gap-y-2">
-        <div>
-          <p
-            className="scroll-m-20 text-lg font-semibold tracking-tight text-zinc-800
-          dark:text-zinc-300 first-letter:uppercase mb-4">
-            {repo.name}
-          </p>
-          <Small className="font-light dark:font-extralight first-letter:uppercase leading-5 text-wrap">
-            {description.plain}
-          </Small>
+        {description.isPackage && (
+          <div
+            className={`w-fit h-fit bg-indigo-700 rounded text-xs text-white dark:text-zinc-300 p-1 py-0.5`}>
+            package
+          </div>
+        )}
+      </div>
 
-          <div className="mt-10 font-mono">
-            {description.techstack && description.techstack.length && (
+      <div className="min-h-[10rem] grow flex flex-col justify-between gap-y-2">
+        <div className="h-full flex flex-col md:justify-between">
+          <div>
+            <p
+              className="scroll-m-20 text-lg font-semibold tracking-tight text-zinc-800
+              dark:text-zinc-300 first-letter:uppercase mb-4">
+              {repo.name}
+            </p>
+            <Small className="font-light dark:font-extralight first-letter:uppercase leading-5 text-wrap">
+              {description.plain}
+            </Small>
+          </div>
+
+          <div className="grow flex items-end mt-10 font-mono">
+            {description.tags && description.tags.length && (
               <div className="flex flex-wrap gap-2">
-                {description.techstack.map((tech, id) => (
+                {description.tags.map((tag, id) => (
                   <div
-                    className={`bg-indigo-700 dark:bg-indigo-700/50 text-xs dark:border
-                    dark:border-indigo-700 rounded-full text-white dark:text-zinc-300 p-1 py-0.5`}
+                    className={`bg-zinc-700/10 dark:bg-indigo-700/50 dark:border dark:border-indigo-700
+                    rounded text-xs text-zinc-700 dark:text-zinc-300 p-1 py-0.5`}
                     key={id}>
-                    {tech}
+                    {tag}
                   </div>
                 ))}
               </div>
             )}
-            {!description.techstack && primaryLanguage && (
+            {!description.tags && primaryLanguage && (
               <div className={`flex items-center space-x-1`}>
                 <span
                   className="h-4 w-4 rounded-full"
@@ -115,16 +122,16 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
               href={repo.homepageUrl}
               target="_blank"
               aria-label="Home Page">
-              Home page
+              {description.isPackage ? 'NPM' : 'Home Page'}
             </PlainAnchor>
           )}
-          {description.apiDocs && (
+          {description.api_url && (
             <>
               <Separator className="mx-2" orientation="vertical" />
               <PlainAnchor
                 className="relative text-sm font-semibold text-zinc-500 dark:text-zinc-400
                 hover:text-zinc-700 hover:dark:text-zinc-300 duration-150 py-1"
-                href={description.apiDocs}
+                href={description.api_url}
                 target="_blank"
                 aria-label="API Documentations">
                 Docs

@@ -1,5 +1,5 @@
 import type { Repository as RepositoryInterface } from 'src/types/graphql/github-interface';
-import Github, { type ReturnSplitDescription } from 'src/service/helper/github';
+import Github, { type ReturnDescription } from 'src/service/helper/github';
 
 export type Repository = RepositoryInterface;
 export default class RepositoryEntity
@@ -8,8 +8,8 @@ export default class RepositoryEntity
   id!: string;
   name!: string;
   isHidden!: boolean;
-  description!: Omit<ReturnSplitDescription, 'appIcon'>;
-  iconApp?: ReturnType<(typeof Github)['analyzeDescription']>['appIcon'];
+  description!: Omit<ReturnDescription, 'icon'>;
+  iconApp?: ReturnType<(typeof Github)['analyzeDescription']>['icon'];
   url?: string;
   homepageUrl?: string;
   primaryLanguage?: Repository['primaryLanguage'];
@@ -17,9 +17,9 @@ export default class RepositoryEntity
 
   constructor({ description, ...v }: Repository) {
     Object.assign(this, v);
-    const { appIcon, ...newDescription } = Github.analyzeDescription(description);
+    const { icon, ...newDescription } = Github.analyzeDescription(description);
     this.description = newDescription;
     this.isHidden = Github.isRepoToHide(v.name);
-    this.iconApp = appIcon;
+    this.iconApp = icon;
   }
 }
