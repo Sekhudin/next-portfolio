@@ -42,17 +42,19 @@ const PostCard = ({ className, deps, postValue, showCover }: Props) => {
         hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 p-4 md:p-6 xl:p-8">
         <div className="flex flex-col space-y-4">
           <div onClick={() => deps._hrefTo(post.url)}>
-            {showCover && post.coverImage?.url ? (
+            {showCover ? (
               <div className="relative md:hidden rounded overflow-hidden">
-                <Image
-                  className="w-full h-dvh min-h-48 max-h-48"
-                  src={post.coverImage.url}
-                  alt={post.title}
-                />
+                {post.coverImage?.url ? (
+                  <Image
+                    className="w-full h-dvh min-h-48 max-h-48"
+                    src={post.coverImage.url}
+                    alt={post.title}
+                  />
+                ) : (
+                  <NoImage className="w-full h-dvh min-h-48 max-h-48 rounded" />
+                )}
               </div>
-            ) : (
-              <NoImage className="w-full h-dvh min-h-48 max-h-48" />
-            )}
+            ) : null}
             <p
               className="scroll-m-20 text-lg font-semibold tracking-tight
               text-zinc-800 dark:text-zinc-300 mb-2">
