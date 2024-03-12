@@ -8,7 +8,7 @@ export default function NavigationItem({
   ...props
 }: PropsWithChildren<LinkProps>) {
   return (
-    <Link {...props} scroll>
+    <Link {...props}>
       <div
         className={cn(
           `text-sm font-semibold first-letter:uppercase text-zinc-800 dark:text-zinc-300 duration-300`,

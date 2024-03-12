@@ -19,9 +19,12 @@ const ScrollArea = React.forwardRef<
     if (scrollCaptureY) {
       scrollCaptureY(top, currentTop);
     }
-    setTop(currentTop);
+    const tresholdMatch = top - currentTop <= -10 || top - currentTop >= 10 || currentTop === 0;
+    if (tresholdMatch) {
+      setTop(currentTop);
+    }
   };
-  
+
   return (
     <ScrollAreaPrimitive.Root
       ref={ref}

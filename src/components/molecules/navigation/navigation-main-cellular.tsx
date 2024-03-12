@@ -20,14 +20,14 @@ export default function NavigationMain({ children, className }: PropsWithChildre
   const pathName = usePathname();
   const isMatch = (v: string) => pathName.includes(v);
 
-  const closeHndler = () => {
+  const closeHandler = () => {
     setOpen(false);
   };
 
   React.useEffect(() => {
     const evenListener = () => {
       if (open) {
-        closeHndler();
+        closeHandler();
         return;
       }
     };
@@ -56,7 +56,7 @@ export default function NavigationMain({ children, className }: PropsWithChildre
               <NavigationItem
                 key={key}
                 href={v.href}
-                onClick={closeHndler}
+                onClick={closeHandler}
                 className={cn(
                   `hover:bg-indigo-700/10 hover:text-indigo-700 rounded-md px-2 py-1.5`,
                   `${
