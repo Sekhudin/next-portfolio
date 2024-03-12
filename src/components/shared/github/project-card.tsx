@@ -4,6 +4,7 @@ import { Skeleton, SkeletonText, SkeletonParagraph } from 'src/components/ui/ske
 import ICON from 'src/components/atoms/icon/hoc';
 import Avatar from 'src/components/atoms/image/async-avatar';
 import { Small, PlainAnchor } from 'src/components/atoms/typography/p';
+import LabelTag from 'src/components/atoms/tag/label';
 import Entity, { Repository } from 'src/service/github/entity/repository';
 import type { _HrefToDI, _ToastDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName, MouseEventHandler } from 'src/utils';
@@ -93,12 +94,7 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
             {description.tags && description.tags.length && (
               <div className="flex flex-wrap gap-2">
                 {description.tags.map((tag, id) => (
-                  <div
-                    className={`bg-zinc-700/10 dark:bg-indigo-700/50 dark:border dark:border-indigo-700
-                    rounded text-xs text-zinc-700 dark:text-zinc-300 p-1 py-0.5`}
-                    key={id}>
-                    {tag}
-                  </div>
+                  <LabelTag key={id}>{tag}</LabelTag>
                 ))}
               </div>
             )}

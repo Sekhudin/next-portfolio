@@ -7,7 +7,7 @@ const SeriesButton = ({ className, children }: PropsWithChildren) => (
   <LinkComponent className="block w-fit" href={'/blog/series'}>
     <div
       className={cn(
-        `w-fit px-3 py-1.5 text-sm text-zinc-50 dark:text-zinc-300 rounded-full
+        `w-fit px-3 py-1.5 text-sm text-zinc-50 dark:text-zinc-300 rounded-lg
       bg-indigo-700 hover:bg-indigo-700/90 hover:shadow-md duration-300`,
         className
       )}>
@@ -17,7 +17,7 @@ const SeriesButton = ({ className, children }: PropsWithChildren) => (
 );
 
 export const SeriesButtonFallback = ({ className }: PropsWithClassName) => (
-  <SkeletonText className={cn('w-32 px-2 py-1', className)} size="base" rounded="full" />
+  <SkeletonText className={cn('w-32 px-2 py-1 rounded-lg', className)} size="base" rounded="full" />
 );
 
 export default SeriesButton;

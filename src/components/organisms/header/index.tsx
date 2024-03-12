@@ -7,9 +7,9 @@ import { cn, PropsWithClassName } from 'src/utils';
 export default function Header({ className }: PropsWithClassName) {
   return (
     <header
+      id="main-header"
       className={cn(
-        `h-16 sm:h-[70px] fixed top-0 inset-x-0 z-10 bg-white/20
-        dark:bg-zinc-900/20 backdrop-blur-sm`,
+        `h-16 sm:h-[70px] fixed top-0 inset-x-0 z-10 bg-transparent duration-300 transition-all`,
         className
       )}>
       <div className="w-full h-full flex items-center justify-center px-4 sm:px-16 lg:px-28">

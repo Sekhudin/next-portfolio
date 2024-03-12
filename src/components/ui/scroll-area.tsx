@@ -7,19 +7,36 @@ import { cn } from 'src/utils';
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & { VPClassName?: string }
->(({ className, children, VPClassName, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root
-    ref={ref}
-    className={cn('relative overflow-hidden', className)}
-    {...props}>
-    <ScrollAreaPrimitive.Viewport className={cn('h-full w-full rounded-lg', VPClassName)}>
-      {children}
-    </ScrollAreaPrimitive.Viewport>
-    <ScrollBar />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
-));
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
+    scrollCaptureY?: (lastTop: number, currentTop: number) => void;
+    VPClassName?: string;
+  }
+>(({ className, children, VPClassName, scrollCaptureY, ...props }, ref) => {
+  const [top, setTop] = React.useState<number>(0);
+
+  const scrollYHandler = (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    const currentTop: number = event.currentTarget.scrollTop;
+    if (scrollCaptureY) {
+      scrollCaptureY(top, currentTop);
+    }
+    setTop(currentTop);
+  };
+  
+  return (
+    <ScrollAreaPrimitive.Root
+      ref={ref}
+      className={cn('relative overflow-hidden', className)}
+      {...props}>
+      <ScrollAreaPrimitive.Viewport
+        className={cn('h-full w-full rounded-lg', VPClassName)}
+        onScrollCapture={scrollYHandler}>
+        {children}
+      </ScrollAreaPrimitive.Viewport>
+      <ScrollBar />
+      <ScrollAreaPrimitive.Corner />
+    </ScrollAreaPrimitive.Root>
+  );
+});
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
 
 const ScrollBar = React.forwardRef<

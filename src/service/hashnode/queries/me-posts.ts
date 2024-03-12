@@ -51,8 +51,7 @@ namespace HashnodeQueryMePosts {
   export const SortBy = UserPostsSort;
   export function flatten(response: QueryMePostsResponse) {
     const { nodes, ...responseMePost } = response.me.posts;
-    const tags = Hashnode.postUniqueTags(nodes).slice(0, 20);
-    return { tags, nodes, ...responseMePost };
+    return { nodes, ...responseMePost };
   }
 
   export function pageStatus(...param: Parameters<(typeof Util)['page']>): string {

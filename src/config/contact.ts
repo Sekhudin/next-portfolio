@@ -17,18 +17,20 @@ const email: EmailFunc = (display) => {
 
 const wa = whatsapp(`${process.env.NEXT_PUBLIC_CONTACT_WHATSAPP}`);
 export const WA: BaseContact = {
+  icon: MessageCircleMoreIcon,
+  contact: wa.contact,
   display: wa.display,
   href: wa.href,
   tooltip: 'Sekhudin',
   ariaLabel: 'Send Message',
-  icon: MessageCircleMoreIcon,
 };
 
 const gmail = email(`${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`);
 export const GMAIL: BaseContact = {
+  icon: MailIcon,
+  contact: gmail.contact,
   display: gmail.display,
   href: gmail.href,
   tooltip: 'sekhudinpbg3@gmail.com',
   ariaLabel: 'Send Mail',
-  icon: MailIcon,
 };

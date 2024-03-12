@@ -1,6 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 import { Separator } from 'src/components/ui/separator';
 import { SkeletonText, SkeletonParagraph } from 'src/components/ui/skeleton';
+import Image, { NoImage } from 'src/components/atoms/image/base-image';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
 import Entity, { Post as PostInterface } from 'src/service/hashnode/entity/post';
 import type { _HrefToDI, _RouteDI } from 'src/types/dependencies/util';
@@ -13,12 +14,14 @@ type DI = {
   };
 };
 
-type Props = PropsWithClassName<DI & PostInterface>;
-export type PostCardValue<T extends string | number = number> = ParameterAs<
-  Omit<Props, 'className' | 'deps'>,
-  T
+type Props = PropsWithClassName<
+  DI & {
+    postValue: PostInterface;
+    showCover?: boolean;
+  }
 >;
-const PostCard = ({ className, deps, ...postValue }: Props) => {
+export type PostValueAs<T extends string | number = number> = ParameterAs<Props['postValue'], T>;
+const PostCard = ({ className, deps, postValue, showCover }: Props) => {
   const post = new Entity(postValue);
 
   return (
@@ -39,6 +42,15 @@ const PostCard = ({ className, deps, ...postValue }: Props) => {
         hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 p-4 md:p-6 xl:p-8">
         <div className="flex flex-col space-y-4">
           <div onClick={() => deps._hrefTo(post.url)}>
+            {showCover && post.coverImage?.url ? (
+              <div className="relative md:hidden rounded overflow-hidden">
+                <Image
+                  className="w-full h-dvh min-h-48 max-h-48"
+                  src={post.coverImage.url}
+                  alt={post.title}
+                />
+              </div>
+            ) : null}
             <p
               className="scroll-m-20 text-lg font-semibold tracking-tight
               text-zinc-800 dark:text-zinc-300 mb-2">

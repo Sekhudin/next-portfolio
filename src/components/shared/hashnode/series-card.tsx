@@ -2,6 +2,7 @@ import { Skeleton, SkeletonText, SkeletonParagraph } from 'src/components/ui/ske
 import { Separator } from 'src/components/ui/separator';
 import Image, { NoImage } from 'src/components/atoms/image/base-image';
 import { Small } from 'src/components/atoms/typography/p';
+import LabelTag from 'src/components/atoms/tag/label';
 import Entity, { Series, UniqueSeriesTags } from 'src/service/hashnode/entity/series';
 import type { _RouteDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
@@ -62,12 +63,7 @@ const SeriesCard = ({ className, uniqueTags, deps, ...series }: Props) => {
           {uniqueTags.length ? (
             <div className="flex flex-wrap gap-x-1 gap-y-2 mt-2">
               {uniqueTags.map((tag, key) => (
-                <p
-                  className="h-fit w-fit text-xs text-indigo-700 dark:text-zinc-300 dark:font-thin
-                  bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full text-nowrap"
-                  key={key}>
-                  {`#${tag.name}`}
-                </p>
+                <LabelTag key={key}>{`#${tag.name}`}</LabelTag>
               ))}
             </div>
           ) : null}
@@ -97,7 +93,7 @@ const Fallback = ({ className }: PropsWithClassName) => (
         <SkeletonParagraph
           className="flex-row gap-y-0 gap-x-1"
           childClassName="w-16"
-          rounded="full"
+          rounded="md"
           n={3}
         />
       </div>

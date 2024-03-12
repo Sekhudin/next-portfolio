@@ -46,35 +46,8 @@ const PostList = ({ className, deps, ...v }: Props) => {
   const { data } = deps._useQuery(deps._service.Query, {
     variables: { page, pageSize, sortBy, filter },
   });
-  const { nodes, pageInfo, totalDocuments, tags } = deps._service.flatten(data);
+  const { nodes, pageInfo, totalDocuments } = deps._service.flatten(data);
   const router = deps._useRouter();
-
-  const filterHandler = <T extends keyof PostFilter>(type: T, value: PostFilter[T]): void => {
-    if (value) {
-      setPage(1);
-    }
-
-    if (type === 'tags') {
-      const tags = value as PostFilter['tags'];
-      setFilter({
-        ...filter,
-        tags,
-      });
-      return;
-    }
-  };
-
-  const tagOnChange = (value: string) => {
-    const selected = value ? tags.filter(({ id }) => value === id)[0] : null;
-    if (value && selected) {
-      filterHandler<'tags'>('tags', [value]);
-      setSelectedTag(selected.name);
-      return;
-    }
-    setSelectedTag(null);
-    filterHandler<'tags'>('tags', null);
-    return;
-  };
 
   const prevHandler = () => {
     if (pageInfo.previousPage) {
@@ -94,45 +67,6 @@ const PostList = ({ className, deps, ...v }: Props) => {
 
   return (
     <div className={cn(`grow`, className)}>
-      <div className="md:w-10/12 flex gap-x-2">
-        <div className="py-1">
-          <Small className="font-semibold mb-4">Tags:</Small>
-        </div>
-        <ToggleGroup
-          className="grow flex-wrap justify-start items-start gap-x-1 gap-y-2"
-          type="single"
-          orientation="horizontal"
-          onValueChange={tagOnChange}>
-          {tags.map((tag, key) => {
-            if (!selectedTag)
-              return (
-                <ToggleGroupItem
-                  className={`text-xs font-light data-[state=on]:text-zinc-50
-                  data-[state=on]:bg-indigo-700`}
-                  key={key}
-                  variant="rounded"
-                  size="fit-sm"
-                  value={tag.id}>
-                  {tag.name}
-                </ToggleGroupItem>
-              );
-
-            if (selectedTag && tag.name === selectedTag)
-              return (
-                <ToggleGroupItem
-                  className={`text-xs font-light data-[state=on]:text-zinc-50
-                  data-[state=on]:bg-indigo-700`}
-                  key={key}
-                  variant="rounded"
-                  size="fit-sm"
-                  value={tag.id}>
-                  {tag.name}
-                </ToggleGroupItem>
-              );
-          })}
-        </ToggleGroup>
-      </div>
-
       <SeriesButton className="my-6">Series</SeriesButton>
 
       <div className={cn('flex flex-col gap-y-16')}>
@@ -141,11 +75,12 @@ const PostList = ({ className, deps, ...v }: Props) => {
             <PostCard
               className=""
               key={key}
+              postValue={v}
+              showCover
               deps={{
                 _hrefTo: deps._hrefTo,
                 _router: router,
               }}
-              {...v}
             />
           ))}
         </div>
@@ -182,10 +117,6 @@ const PostList = ({ className, deps, ...v }: Props) => {
 
 export const PostlistFallback = ({ className }: PropsWithClassName) => (
   <div className="grow">
-    <div className="md:w-10/12 flex space-x-2">
-      <Small className="font-semibold py-1">Tags:</Small>
-      <TogleGroupFallback childClassName="rounded-full" size="xs" />
-    </div>
     <SeriesButtonFallback className="w-20 my-6" />
 
     <div className={cn('flex flex-col gap-y-16', className)}>

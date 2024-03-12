@@ -72,7 +72,7 @@ namespace HashnodeQueryPublicationSeriesPosts {
 
   export function flatten(response: QueryPublicationSeriesPostsResponse) {
     const { series, ...flat } = response.publication;
-    const uniqueTags = Hashnode.postEdgeUniqueTags(series.posts.edges).slice(0, 15);
+    const uniqueTags = Hashnode.postEdgeUniqueTags(series.posts.edges).slice(0, 8);
     return { series, uniqueTags, ...flat };
   }
 }

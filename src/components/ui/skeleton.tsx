@@ -17,6 +17,7 @@ const skeletonVariant = cva('w-28 h-fit animate-pulse bg-primary/10 text-transpa
       rounded: 'rounded',
       sm: 'rounded-sm',
       md: 'rounded-md',
+      lg: 'rounded-lg',
       full: 'rounded-full',
     },
   },

@@ -1,3 +1,3 @@
-import Rootlayout from 'src/components/pages/_error/root-error';
+import GlobalError from 'src/components/pages/_error/root-error';
 
-export default Rootlayout;
+export default GlobalError;

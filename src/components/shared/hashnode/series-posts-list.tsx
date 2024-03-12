@@ -10,7 +10,7 @@ import type { _HashnodeQueryPublicationSeriesPostsDI } from 'src/types/dependenc
 import type { _HrefToDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 import SeriesCover, { SeriesCoverFallback } from './series-cover';
-import PostCard, { NoPostArticleYet, PostCardFallback, PostCardValue } from './post-card';
+import PostCard, { NoPostArticleYet, PostCardFallback, PostValueAs } from './post-card';
 
 type Deps = {
   deps: {
@@ -49,8 +49,12 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
       <div className="grow flex flex-col gap-y-16">
         <div className="flex flex-col gap-y-10">
           {series.posts.edges.length ? (
-            series.posts.edges.map(({ node }: PostCardValue<'node'>, key) => (
-              <PostCard key={key} deps={{ _hrefTo: deps._hrefTo, _router: router }} {...node} />
+            series.posts.edges.map(({ node }: PostValueAs<'node'>, key) => (
+              <PostCard
+                key={key}
+                deps={{ _hrefTo: deps._hrefTo, _router: router }}
+                postValue={node}
+              />
             ))
           ) : (
             <NoPostArticleYet />
@@ -67,7 +71,6 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
             </Button>
           </div>
         ) : null}
-
       </div>
     </div>
   );
