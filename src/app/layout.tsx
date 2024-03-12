@@ -5,7 +5,7 @@ import { GMAIL } from 'src/config/contact';
 import { ogMain } from 'src/components/shared/static-file';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(`http://localhost:${process.env.PORT || 3000}`),
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
   applicationName: "Sekhudin's Portfolio",
   title: 'Sekhudin | Software Engineer',
   description: 'No errors, just pure functionalities',
