@@ -1,7 +1,7 @@
 import type { BaseAnchor } from './types';
 export const HASHNODE: BaseAnchor = {
   display: 'Hashnode',
-  href: `${process.env.NEXT_PUBLIC_HASHNODE_MY_HOST}`,
+  href: `https://${process.env.NEXT_PUBLIC_HASHNODE_MY_HOST}/`,
   tooltip: '',
   ariaLabel: 'Sekhudin Hashnode Platform',
 };
