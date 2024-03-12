@@ -1,6 +1,6 @@
 import { ChevronRight } from 'lucide-react';
 import { Separator } from 'src/components/ui/separator';
-import { SkeletonText, SkeletonParagraph } from 'src/components/ui/skeleton';
+import { Skeleton, SkeletonText, SkeletonParagraph } from 'src/components/ui/skeleton';
 import Image, { NoImage } from 'src/components/atoms/image/base-image';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
 import Entity, { Post as PostInterface } from 'src/service/hashnode/entity/post';
@@ -50,7 +50,9 @@ const PostCard = ({ className, deps, postValue, showCover }: Props) => {
                   alt={post.title}
                 />
               </div>
-            ) : null}
+            ) : (
+              <NoImage className="w-full h-dvh min-h-48 max-h-48" />
+            )}
             <p
               className="scroll-m-20 text-lg font-semibold tracking-tight
               text-zinc-800 dark:text-zinc-300 mb-2">
@@ -100,6 +102,7 @@ const Fallback = ({ className }: PropsWithClassName) => (
 
     <span className="col-span-12 md:col-span-8 p-2 md:p-6 xl:p-8">
       <div className="grow flex flex-col gap-y-4 mb-4">
+        <Skeleton className="w-full h-dvh min-h-48 max-h-48 md:hidden rounded" />
         <SkeletonText className="w-3/4" size="lg" />
         <SkeletonParagraph n={2} diffLast />
       </div>
