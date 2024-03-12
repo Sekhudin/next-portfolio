@@ -1,28 +1,23 @@
 'use client';
 import { SkeletonText } from 'src/components/ui/skeleton';
 import { Button } from 'src/components/ui/button';
-import type {
-  _UseApolloSuspenseQueryDI,
-  _UseStateDI,
-  _UseRouterDI,
-} from 'src/types/dependencies/hooks';
+import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
 import type { _HashnodeQueryPublicationSeriesPostsDI } from 'src/types/dependencies/service';
 import type { _HrefToDI } from 'src/types/dependencies/util';
-import { cn, PropsWithClassName } from 'src/utils';
+import { cn, PropsWithClassName, Deps } from 'src/utils';
 import SeriesCover, { SeriesCoverFallback } from './series-cover';
 import PostCard, { NoPostArticleYet, PostCardFallback, PostValueAs } from './post-card';
 
-type Deps = {
+type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
-    _useRouter: _UseRouterDI;
     _service: _HashnodeQueryPublicationSeriesPostsDI;
     _hrefTo: _HrefToDI;
-  };
+  } & Deps<'deps', typeof PostCard>['deps'];
 };
 
-type Props = PropsWithClassName<Deps> & {
+type Props = PropsWithClassName<DI> & {
   slug: string;
   pageSize?: number;
 };
@@ -34,7 +29,6 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
     variables: { first, after, slug, host: `${process.env.NEXT_PUBLIC_HASHNODE_MY_HOST}` },
   });
   const { series, uniqueTags, ...v } = deps._service.flatten(data);
-  const router = deps._useRouter();
 
   const showAllArticlesHandler = () => {
     if (first < series.posts.totalDocuments) {
@@ -52,7 +46,7 @@ const SeriesPostsList = ({ className, slug, pageSize, deps }: Props) => {
             series.posts.edges.map(({ node }: PostValueAs<'node'>, key) => (
               <PostCard
                 key={key}
-                deps={{ _hrefTo: deps._hrefTo, _router: router }}
+                deps={{ LinkComponent: deps.LinkComponent, _hrefTo: deps._hrefTo }}
                 postValue={node}
               />
             ))

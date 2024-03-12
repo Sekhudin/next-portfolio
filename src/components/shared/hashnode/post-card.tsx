@@ -4,12 +4,12 @@ import { Skeleton, SkeletonText, SkeletonParagraph } from 'src/components/ui/ske
 import Image, { NoImage } from 'src/components/atoms/image/base-image';
 import { Anchor, Small } from 'src/components/atoms/typography/p';
 import Entity, { Post as PostInterface } from 'src/service/hashnode/entity/post';
-import type { _HrefToDI, _RouteDI } from 'src/types/dependencies/util';
+import type { _HrefToDI, _LinkComponentDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName, ParameterAs } from 'src/utils';
 
 type DI = {
   deps: {
-    _router: _RouteDI;
+    LinkComponent: _LinkComponentDI;
     _hrefTo: _HrefToDI;
   };
 };
@@ -75,16 +75,16 @@ const PostCard = ({ className, deps, postValue, showCover }: Props) => {
             </Anchor>
 
             {post.series && (
-              <div
+              <deps.LinkComponent
                 className="flex flex-wrap space-x-1 font-medium text-sm group/series"
-                onClick={() => deps._router.push(`/blog/series/${post.series?.slug}`)}>
+                href={`/blog/series/${post.series?.slug}`}>
                 <span className="dark:text-zinc-300">Series:</span>
                 <span
                   className="text-indigo-700 group-hover/series:text-zinc-50 group-hover/series:dark:text-zinc-300
                   group-hover/series:bg-indigo-700 rounded-md text-xs px-1 py-0.5 delay-100 duration-100">
                   {post.series.name}
                 </span>
-              </div>
+              </deps.LinkComponent>
             )}
           </div>
         </div>

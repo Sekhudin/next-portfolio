@@ -4,16 +4,16 @@ import Image, { NoImage } from 'src/components/atoms/image/base-image';
 import { Small } from 'src/components/atoms/typography/p';
 import LabelTag from 'src/components/atoms/tag/label';
 import Entity, { Series, UniqueSeriesTags } from 'src/service/hashnode/entity/series';
-import type { _RouteDI } from 'src/types/dependencies/util';
+import type { _LinkComponentDI } from 'src/types/dependencies/util';
 import { cn, PropsWithClassName } from 'src/utils';
 
-type Deps = {
+type DI = {
   deps: {
-    _router: _RouteDI;
+    LinkComponent: _LinkComponentDI;
   };
 };
 
-type Props = PropsWithClassName<{ uniqueTags: UniqueSeriesTags[] } & Deps & Series>;
+type Props = PropsWithClassName<{ uniqueTags: UniqueSeriesTags[] } & DI & Series>;
 const SeriesCard = ({ className, uniqueTags, deps, ...series }: Props) => {
   const v = new Entity(series);
 
@@ -35,9 +35,9 @@ const SeriesCard = ({ className, uniqueTags, deps, ...series }: Props) => {
       </div>
 
       <div
-        className="col-span-12 sm:col-span-8 lg:col-span-6 cursor-pointer rounded-lg md:rounded-xl
-      hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 overflow-hidden border"
-        onClick={() => deps._router.push(`/blog/series/${v.slug}`)}>
+        className="relative col-span-12 sm:col-span-8 lg:col-span-6 cursor-pointer rounded-lg md:rounded-xl
+      hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 overflow-hidden border">
+        <deps.LinkComponent className="absolute inset-0 z-10" href={`/blog/series/${v.slug}`} />
         <div className="relative overflow-hidden">
           {v.coverImage ? (
             <Image className="w-full h-dvh min-h-48 max-h-48" src={v.coverImage} alt={v.name} />

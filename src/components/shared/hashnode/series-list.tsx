@@ -4,28 +4,23 @@ import { Separator } from 'src/components/ui/separator';
 import { SkeletonText, SkeletonParagraph } from 'src/components/ui/skeleton';
 import { H1 } from 'src/components/atoms/typography/h';
 import { P } from 'src/components/atoms/typography/p';
-import type {
-  _UseApolloSuspenseQueryDI,
-  _UseStateDI,
-  _UseRouterDI,
-} from 'src/types/dependencies/hooks';
+import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
 import type { _HashnodeQueryPublicationSeriesListDI } from 'src/types/dependencies/service';
 import type { _HrefToDI } from 'src/types/dependencies/util';
-import { cn, PropsWithClassName } from 'src/utils';
+import { cn, PropsWithClassName, Deps } from 'src/utils';
 import SeriesCard, { SeriesCardFallback } from './series-card';
 
-type Deps = {
+type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
-    _useRouter: _UseRouterDI;
     _hrefTo: _HrefToDI;
     _service: _HashnodeQueryPublicationSeriesListDI;
-  };
+  } & Deps<'deps', typeof SeriesCard>['deps'];
 };
 
 type Props = PropsWithClassName<
-  Deps & {
+  DI & {
     pageSize?: number;
   }
 >;
@@ -33,7 +28,6 @@ type Props = PropsWithClassName<
 const SeriesList = ({ className, pageSize, deps }: Props) => {
   const [first, setFirst] = deps._useState<number>(pageSize || 10);
   const [after, setAfter] = deps._useState<string | null>(null);
-  const router = deps._useRouter();
   const { data } = deps._useQuery(deps._service.Query, {
     variables: { first, after, host: `${process.env.NEXT_PUBLIC_HASHNODE_MY_HOST}` },
   });
@@ -58,7 +52,7 @@ const SeriesList = ({ className, pageSize, deps }: Props) => {
           <SeriesCard
             key={key}
             uniqueTags={uniqueTagsList[key]}
-            deps={{ _router: router }}
+            deps={{ LinkComponent: deps.LinkComponent }}
             {...node}
           />
         ))}

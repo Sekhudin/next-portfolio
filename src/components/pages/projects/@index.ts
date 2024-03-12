@@ -11,19 +11,19 @@ import type { Deps } from 'src/utils';
 
 export const { profileSectionDeps }: Deps<'profileSectionDeps', typeof ProfileSection> = {
   profileSectionDeps: {
+    SuspenseComponent: React.Suspense,
     _useQuery: useApollosSuspenseQuery,
     _service: GithubQueryMe,
-    SuspenseComponent: React.Suspense,
   },
 };
 
 export const { projectSectionDeps }: Deps<'projectSectionDeps', typeof ProjectSection> = {
   projectSectionDeps: {
+    SuspenseComponent: React.Suspense,
     _useQuery: useApollosSuspenseQuery,
     _useState: React.useState,
     _service: GithubQueryRepos,
     _hrefTo: hrefTo,
     _toast: toast,
-    SuspenseComponent: React.Suspense,
   },
 };

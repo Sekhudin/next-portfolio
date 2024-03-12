@@ -21,9 +21,9 @@ const SeriesPostsSection = ({ className, slug, deps }: Props) => {
           slug={slug}
           pageSize={10}
           deps={{
+            LinkComponent: deps.LinkComponent,
             _useQuery: deps._useQuery,
             _useState: deps._useState,
-            _useRouter: deps._useRouter,
             _service: deps._service,
             _hrefTo: deps._hrefTo,
           }}

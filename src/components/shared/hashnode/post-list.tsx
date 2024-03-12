@@ -7,16 +7,11 @@ import {
   PaginationPrev,
   PaginationFallback,
 } from 'src/components/ui/pagination';
-import { ToggleGroup, ToggleGroupItem, TogleGroupFallback } from 'src/components/ui/toggle-group';
 import { Small } from 'src/components/atoms/typography/p';
 import type { QueryMePostsArgs, PostSortBy, PostFilter } from 'src/types/graphql/hashnode-type';
-import type {
-  _UseApolloSuspenseQueryDI,
-  _UseStateDI,
-  _UseRouterDI,
-} from 'src/types/dependencies/hooks';
+import type { _UseApolloSuspenseQueryDI, _UseStateDI } from 'src/types/dependencies/hooks';
 import type { _HashnodeQueryMePostsDI } from 'src/types/dependencies/service';
-import { cn, PropsWithClassName, PropsWithChildren, PickDeps } from 'src/utils';
+import { cn, PropsWithClassName, PropsWithChildren, PickDeps, Deps } from 'src/utils';
 import PostCard, { PostCardFallback } from './post-card';
 import SeriesButton, { SeriesButtonFallback } from './series-button';
 
@@ -30,9 +25,9 @@ type DI = {
   deps: {
     _useQuery: _UseApolloSuspenseQueryDI;
     _useState: _UseStateDI;
-    _useRouter: _UseRouterDI;
     _service: _HashnodeQueryMePostsDI;
-  } & PickDeps<typeof PostCard, '_hrefTo'>;
+  } & PickDeps<typeof PostCard, '_hrefTo'> &
+    Deps<'deps', typeof PostCard>['deps'];
 };
 
 type Props = PropsWithClassName<DI & Omit<QueryMePostsArgs, 'sortBy'>>;
@@ -47,7 +42,6 @@ const PostList = ({ className, deps, ...v }: Props) => {
     variables: { page, pageSize, sortBy, filter },
   });
   const { nodes, pageInfo, totalDocuments } = deps._service.flatten(data);
-  const router = deps._useRouter();
 
   const prevHandler = () => {
     if (pageInfo.previousPage) {
@@ -79,7 +73,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
               showCover
               deps={{
                 _hrefTo: deps._hrefTo,
-                _router: router,
+                LinkComponent: deps.LinkComponent,
               }}
             />
           ))}

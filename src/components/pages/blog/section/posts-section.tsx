@@ -30,9 +30,9 @@ const PostsSection = ({ className, deps }: Props) => {
           page={1}
           pageSize={5}
           deps={{
+            LinkComponent: deps.LinkComponent,
             _useQuery: deps._useQuery,
             _useState: deps._useState,
-            _useRouter: deps._useRouter,
             _service: deps._service,
             _hrefTo: deps._hrefTo,
           }}
