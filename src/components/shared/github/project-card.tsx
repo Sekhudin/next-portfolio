@@ -118,7 +118,7 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
               href={repo.homepageUrl}
               target="_blank"
               aria-label="Home Page">
-              {description.isPackage ? 'NPM' : 'Home Page'}
+              {description.isPackage ? 'NPM Docs' : 'Home Page'}
             </PlainAnchor>
           )}
           {description.api_url && (
@@ -130,7 +130,7 @@ const ProjectCard = ({ className, deps, ...projectValue }: Props) => {
                 href={description.api_url}
                 target="_blank"
                 aria-label="API Documentations">
-                Docs
+                API Docs
               </PlainAnchor>
             </>
           )}

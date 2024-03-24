@@ -4,6 +4,9 @@ import { AnchorKampurMerdeka, AnchorOrbitFutureAcademy } from 'src/components/at
 import { cn, PropsWithClassName } from 'src/utils';
 
 export default function DescriptionSection({ className }: PropsWithClassName) {
+  const date = new Date();
+  const currentYear = date.getFullYear();
+
   return (
     <div className={cn(``, className)}>
       <H1 className="w-11/12 lg:w-full">
@@ -11,9 +14,9 @@ export default function DescriptionSection({ className }: PropsWithClassName) {
       </H1>
       <P className="leading-7">
         {`As a software engineer, I bring `}
-        <SpanPoint>{`a year of freelance`}</SpanPoint>
+        <SpanPoint>{`${currentYear - 2023} year of freelance`}</SpanPoint>
         {` experience in software development and a total of `}
-        <SpanPoint>{`two years of personal programming`}</SpanPoint>
+        <SpanPoint>{`${currentYear - 2021} years of personal programming`}</SpanPoint>
         {` exploration. Armed with a `}
         <SpanPoint>{`Bachelor's degree in Computer Science,`}</SpanPoint>
         {` I am devoted to constantly refining my skills and staying abreast of the dynamic tech landscape.`}

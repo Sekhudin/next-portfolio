@@ -21,12 +21,12 @@ const PostsSection = ({ className, deps }: Props) => {
     <deps.SuspenseComponent
       fallback={
         <WithSeparator className={cn(className)}>
-          <PostlistFallback className="md:max-w-2xl xl:max-w-3xl" />
+          <PostlistFallback className="md:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl" />
         </WithSeparator>
       }>
       <WithSeparator className={cn(className)}>
         <PostList
-          className="md:max-w-2xl xl:max-w-3xl"
+          className="md:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl"
           page={1}
           pageSize={5}
           deps={{

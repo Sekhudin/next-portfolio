@@ -7,7 +7,7 @@ export default function DescriptionSection({ className }: PropsWithClassName) {
   return (
     <div className={cn(``, className)}>
       <H1 className="lg:max-w-xl">Software Engineer. Imaginator. Freelancer.</H1>
-      <P className="w-11/12 md:w-9/12 leading-7">
+      <P className="w-11/12 md:w-9/12 xl:w-10/12 leading-7">
         {`Hello, I'm Sekhudin. I'm a `}
         <SpanPoint>{'software engineer'}</SpanPoint>
         {' based in Purbalingga, Indonesia. I thoroughly enjoy using '}

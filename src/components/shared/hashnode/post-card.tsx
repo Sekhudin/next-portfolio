@@ -27,7 +27,7 @@ const PostCard = ({ className, deps, postValue, showCover }: Props) => {
   return (
     <div className={cn('grid grid-cols-12', className)}>
       <div
-        className="col-span-12 md:col-span-4 mb-1 md:mb-0
+        className="col-span-12 md:col-span-4 xl:col-span-5 mb-1 md:mb-0
         flex space-x-2 md:space-x-0 md:py-6 xl:py-8">
         <Separator className="w-0.5 md:hidden" orientation="vertical" />
         <Small
@@ -38,7 +38,7 @@ const PostCard = ({ className, deps, postValue, showCover }: Props) => {
       </div>
 
       <div
-        className="col-span-12 md:col-span-8 cursor-pointer rounded-lg md:rounded-xl
+        className="col-span-12 md:col-span-8 xl:col-span-7 cursor-pointer rounded-lg md:rounded-xl
         hover:bg-zinc-50 hover:dark:bg-secondary/50 delay-100 duration-300 p-4 md:p-6 xl:p-8">
         <div className="flex flex-col space-y-4">
           <div onClick={() => deps._hrefTo(post.url)}>

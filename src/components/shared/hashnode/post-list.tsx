@@ -60,7 +60,7 @@ const PostList = ({ className, deps, ...v }: Props) => {
   }
 
   return (
-    <div className={cn(`grow`, className)}>
+    <div className={cn(`grow w-full`, className)}>
       <SeriesButton className="my-6">Series</SeriesButton>
 
       <div className={cn('flex flex-col gap-y-16')}>
