@@ -8,6 +8,12 @@ export const MAIN: BaseLink[] = [
     ariaLabel: '',
   },
   {
+    display: 'Quran',
+    href: 'https://quran.syaikhu.com/',
+    tooltip: 'Quran',
+    ariaLabel: '',
+  },
+  {
     display: 'Blog',
     href: '/blog',
     tooltip: 'Blog',
