@@ -1,3 +1,4 @@
 "use client"
-import Error from "src/components/pages/_error/500";
-export default Error;
+import InternalServerError from 'components/shared/internal-server.error';
+
+export default InternalServerError;

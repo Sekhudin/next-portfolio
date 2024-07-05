@@ -1,3 +1,3 @@
-import Loading from 'src/components/pages/_loading/basic';
+import Loading from 'components/shared/common.loader';
 
 export default Loading;

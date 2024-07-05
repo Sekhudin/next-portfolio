@@ -21,9 +21,23 @@
     "paths": {
       "src/*": ["./src/*"],
       "public/*": ["./public/*"],
-    },
+      "components/*": ["./src/components/*"],
+      "configs/*": ["./src/configs/*"],
+      "modules/*": ["./src/modules/*"],
+      "packages/*": ["./src/packages/*"],
+      "stores/*": ["./src/stores/*"],
+      "styles/*": ["./src/styles/*"],
+      "types/*": ["./src/types/*"]
+    }
     // add by me
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/codegen/hashnode.ts", "src/components/pages/inquiry/@index.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/config/codegen/hashnode.ts",
+    "src/components/pages/inquiry/@index.ts"
+, "src/configs/social-media.config.ts", "src/configs/tools.config.ts"  ],
+  "exclude": ["node_modules", "dist", ".next"]
 }

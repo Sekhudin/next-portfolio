@@ -1,0 +1,27 @@
+import type { BaseWorkService, InquiryTimeFrame } from 'src/types/configs';
+
+export const TIME_FRAME: readonly [InquiryTimeFrame, ...InquiryTimeFrame[]] = [
+  '2 Weeks',
+  '1-3 Months',
+  '> 3 Months',
+  'undecided',
+] as const;
+
+export const HOUR_RATE: string = '$2.5';
+
+export const WEB_DEV: BaseWorkService = {
+  title: 'Web Development',
+  services: ['Next.js / React / Typescript', 'Landing Page'],
+};
+
+export const MOBILE_DEV: BaseWorkService = {
+  title: 'Mobile Development',
+  services: ['React Native'],
+};
+
+export const BE_DEV: BaseWorkService = {
+  title: 'Backend',
+  services: ['Firebase', 'MongoDB', 'PostgreSQL', 'NestJS / NodeJS'],
+};
+
+export const WORK_SERVICE: BaseWorkService[] = [WEB_DEV, MOBILE_DEV, BE_DEV];

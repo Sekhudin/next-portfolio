@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "codegen:hashnode": "graphql-codegen --require dotenv/config --config src/config/codegen/hashnode.ts dotenv_config_path=.env.development",
-    "codegen:github": "graphql-codegen --require dotenv/config --config src/config/codegen/github.ts dotenv_config_path=.env.development",
+    "gen:hashnode": "graphql-codegen --require dotenv/config --config src/configs/codegen/hashnode.ts dotenv_config_path=.env.development",
+    "gen:github": "graphql-codegen --require dotenv/config --config src/configs/codegen/github.ts dotenv_config_path=.env.development",
     "lint": "next lint"
   },
   "dependencies": {

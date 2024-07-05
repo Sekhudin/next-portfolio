@@ -1,2 +1,3 @@
-import Page from 'src/components/pages/main';
+import Page from 'modules/main/main.page';
+
 export default Page;

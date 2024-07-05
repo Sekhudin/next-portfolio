@@ -1,3 +1,4 @@
-import GlobalError from 'src/components/pages/_error/root-error';
+'use client';
+import RootError from 'components/shared/root.error';
 
-export default GlobalError;
+export default RootError;

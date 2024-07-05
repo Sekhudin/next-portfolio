@@ -1,3 +1,3 @@
-import Layout from 'src/components/organisms/layout/main-group';
+import Layout from 'components/shared/main-group.layout';
 
 export default Layout;

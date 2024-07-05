@@ -73,7 +73,4 @@
   body {
     @apply bg-background text-foreground;
   }
-  svg {
-    @apply stroke-zinc-500 duration-500 transition-all;
-  }
 }
