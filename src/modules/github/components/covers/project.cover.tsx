@@ -30,6 +30,8 @@ const ProjectCover = ({ className, description, fallback = null, ...props }: Cov
       <Avatar className={cn('relative h-fit w-full rounded-md border-red-600')}>
         <AvatarImage
           className={cn('object-cover aspect-auto', className)}
+          width={500}
+          height={500}
           onLoadingStatusChange={(status) => {
             if (status === 'loaded' || status === 'error') {
               setLoading(false);
