@@ -15,7 +15,7 @@ class Debuger {
   }
 
   apolloError() {
-    if (MODE.isDevelopment || !MODE.debug) {
+    if (MODE.isDevelopment && MODE.debug) {
       console.debug(`Apollo Client [Development]`);
       loadDevMessages();
       loadErrorMessages();
