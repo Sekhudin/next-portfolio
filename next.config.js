@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  crossOrigin: 'anonymous',
+  crossOrigin: "anonymous",
   images: {
     remotePatterns: [
       {
@@ -11,13 +11,21 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "github.com",
-        pathname: "/**"
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "raw.githubusercontent.com",
         pathname: "/**"
       }
+    ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/github.com/:path*',
+        destination: 'https://github.com/:path*',
+      },
     ]
   }
 }
