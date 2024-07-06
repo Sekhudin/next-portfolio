@@ -19,14 +19,6 @@ const nextConfig = {
         pathname: "/**"
       }
     ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/github.com/:path*',
-        destination: 'https://github.com/:path*',
-      },
-    ]
   }
 }
 

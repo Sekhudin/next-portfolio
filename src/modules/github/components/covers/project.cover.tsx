@@ -11,7 +11,7 @@ type CoverImageProps = React.ComponentPropsWithRef<typeof AvatarImage> & {
   description?: string;
 };
 
-const ProjectCover = ({ className, src, description, fallback = null, ...props }: CoverImageProps) => {
+const ProjectCover = ({ className, description, fallback = null, ...props }: CoverImageProps) => {
   const [loading, setLoading] = React.useState(true);
   const [loaded, setLoaded] = React.useState(false);
 
@@ -30,7 +30,6 @@ const ProjectCover = ({ className, src, description, fallback = null, ...props }
       <Avatar className={cn('relative h-fit w-full rounded-md border-red-600')}>
         <AvatarImage
           className={cn('object-cover aspect-auto', className)}
-          src={'https://github.com/Sekhudin/NunQ-quran-web/raw/main/public/cover.png'}
           onLoadingStatusChange={(status) => {
             if (status === 'loaded' || status === 'error') {
               setLoading(false);

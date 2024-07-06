@@ -221,9 +221,13 @@ class RepositoryMethods extends RepositoryEntity {
 
   getImageFromPublic(filename: string = 'cover.png') {
     if (this.defaultBranchRef && typeof this.url === 'string') {
-      const basePath = this.url;
+      let url = this.url;
+      if (!url.endsWith('/')) {
+        url = url.concat('/');
+      }
       const branch = this.defaultBranchRef.name;
-      return path.join(basePath, 'raw', branch, 'public', filename);
+      const routePath = path.join('raw', branch, 'public', filename);
+      return url.concat(routePath);
     }
     return '';
   }
