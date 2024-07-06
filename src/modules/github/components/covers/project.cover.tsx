@@ -39,6 +39,7 @@ const ProjectCover = ({ className, description, fallback = null, ...props }: Cov
               setLoaded(true);
             }
           }}
+          crossOrigin="anonymous"
           {...props}
         />
 
