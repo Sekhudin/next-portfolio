@@ -6,11 +6,7 @@ import { cn, Props } from 'packages/utils/cn';
 
 const SeriesButton = ({ className, children, ...props }: Omit<NextLinkButtonProps, 'href'>) => (
   <NextLinkButton
-    className={cn(
-      `w-fit px-3 py-1.5 text-sm text-zinc-50 dark:text-zinc-300 rounded-lg
-      bg-indigo-700 hover:bg-indigo-700/90 hover:shadow-md duration-300`,
-      className
-    )}
+    className={cn(`bg-indigo-700 hover:bg-indigo-700/90`, className)}
     href={'/blog/series'}
     prefetch={false}
     {...props}>

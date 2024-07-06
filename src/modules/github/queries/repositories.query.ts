@@ -40,6 +40,10 @@ class RepositoriesQuery {
             description
             url
             homepageUrl
+            defaultBranchRef {
+              id
+              name
+            }
             primaryLanguage {
               id
               name

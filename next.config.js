@@ -5,6 +5,14 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "cdn.hashnode.com",
+      },
+      {
+        protocol: "https",
+        hostname: "github.com",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
       }
     ]
   }

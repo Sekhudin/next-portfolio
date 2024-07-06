@@ -82,27 +82,15 @@ class DescriptionFormatterMethods extends DescriptionFormatterEntity {
     return this.type === type;
   }
 
-  getDescription() {
-    return this.description;
-  }
-
-  getIcon() {
-    return this.icon;
-  }
-
-  getTags() {
-    return this.tags;
-  }
-
   getUrl(key: GithubUrlTypeFromDescription) {
     return this.url[key];
   }
 
-  getClassName() {
-    if (this.hide) {
-      return 'cursor-not-allowed';
+  getSubDescription(max: number = 50) {
+    if (this.description.length > max) {
+      return this.description.substring(0, max).concat('...');
     }
-    return 'cursor-pointer';
+    return this.description;
   }
 
   mapTags(cb: MapCallbackfn<string>) {

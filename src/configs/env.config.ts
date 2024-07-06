@@ -5,7 +5,7 @@ export const APP = {
 export const MODE = {
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV === 'production',
-  debug: true,
+  debug: false,
 };
 
 export const CONTACT = {

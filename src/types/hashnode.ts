@@ -1103,6 +1103,7 @@ export type Draft = Node & {
   ogMetaData?: Maybe<OpenGraphMetaData>;
   /** The publication the draft belongs to. */
   publication?: Maybe<Publication>;
+  publishAs?: Maybe<User>;
   readTimeInMinutes: Scalars['Int']['output'];
   /** The date the draft is scheduled to be published. */
   scheduledDate?: Maybe<Scalars['DateTime']['output']>;
@@ -1335,6 +1336,12 @@ export enum FeedType {
   /** Returns posts based on old personalization algorithm. */
   Relevant = 'RELEVANT'
 }
+
+export type GptBotCrawlingFeature = Feature & {
+  __typename?: 'GPTBotCrawlingFeature';
+  /** A flag indicating if the GPT Bot Crawler feature is enabled or not. */
+  isEnabled: Scalars['Boolean']['output'];
+};
 
 /** Views implementation that will be returned if grouping by browser. */
 export type GroupedByBrowserViews = Node & Views & {
@@ -1766,8 +1773,12 @@ export type Mutation = {
    * Only available to the authenticated user.
    */
   toggleFollowUser: ToggleFollowUserPayload;
+  /** Toggle GPT bot crawling feature. */
+  toggleGPTBotCrawling: ToggleGptBotCrawlingPayload;
   /** Toggles role based invite links' active status. Users can join the publication by the invite link only if it is active. */
   toggleRoleBasedInviteLinks: ToggleRoleBasedInviteLinksPayload;
+  /** Toggle text selection sharer feature. */
+  toggleTextSelectionSharer: ToggleTextSelectionSharerPayload;
   triggerWebhookTest: TriggerWebhookTestPayload;
   unsubscribeFromNewsletter: UnsubscribeFromNewsletterPayload;
   /** Updates a comment on a post. */
@@ -1975,8 +1986,18 @@ export type MutationToggleFollowUserArgs = {
 };
 
 
+export type MutationToggleGptBotCrawlingArgs = {
+  input: ToggleGptBotCrawlingInput;
+};
+
+
 export type MutationToggleRoleBasedInviteLinksArgs = {
   publicationId: Scalars['ID']['input'];
+};
+
+
+export type MutationToggleTextSelectionSharerArgs = {
+  input: ToggleTextSelectionSharerInput;
 };
 
 
@@ -2386,6 +2407,14 @@ export type Post = Node & {
   ogMetaData?: Maybe<OpenGraphMetaData>;
   /** Preference settings for the post. Contains information about if the post is pinned to blog, comments are disabled, etc. */
   preferences: PostPreferences;
+  /**
+   * The previous slugs of the post. Only present if the slug has been changed.
+   *
+   * This could be used to create redirects for all posts from all previous slugs to the current slug.
+   *
+   * The latest slug is always the first element in the array.
+   */
+  previousSlugs: Array<Scalars['String']['output']>;
   /** The publication the post belongs to. */
   publication?: Maybe<Publication>;
   /** The date and time the post was published. */
@@ -2657,6 +2686,8 @@ export type Publication = Node & {
   about?: Maybe<Content>;
   /** Returns the list of drafts in the publication */
   allDrafts: DraftConnection;
+  /** Returns all the scheduled drafts of the publication. */
+  allScheduledDrafts: DraftConnection;
   /** Boolean flag indicating if the publication allows edits by contributors */
   allowContributorEdits: Scalars['Boolean']['output'];
   /** The author who owns the publication. */
@@ -2698,6 +2729,8 @@ export type Publication = Node & {
   invites?: Maybe<PublicationInvite>;
   /** Returns true if GitHub backup is configured and active and false otherwise. */
   isGitHubBackupEnabled: Scalars['Boolean']['output'];
+  /** Returns whether the publication's GitHub source repo is connected. */
+  isGithubAsSourceConnected: Scalars['Boolean']['output'];
   /** A flag to indicate if the publication is using Headless CMS. This can be used to check if the post redirect needs authentication. */
   isHeadless: Scalars['Boolean']['output'];
   /** True if the publication is a team publication and false otherwise. */
@@ -2721,9 +2754,18 @@ export type Publication = Node & {
   recommendedPublications: Array<UserRecommendedPublicationEdge>;
   /** Publications that are recommending this publication. */
   recommendingPublications: PublicationUserRecommendingPublicationConnection;
+  /**
+   * Returns a post by a previous slug. It does not resolve a post by its current slug.
+   *
+   * If a slug has been changed, we'll create a redirect from the old slug to the new one.
+   * With `redirectedPost` you can resolve a post by the old slug.
+   *
+   * This can be used to redirect a user to the new post slug (via `redirectedPost.slug`).
+   */
+  redirectedPost?: Maybe<Post>;
   /** Configured redirection rules for the publication. */
   redirectionRules: Array<RedirectionRule>;
-  /** Returns the scheduled drafts of the publication. */
+  /** Returns the scheduled drafts of the publication by the authenticated user. */
   scheduledDrafts: DraftConnection;
   /** Returns series by slug in the publication. */
   series?: Maybe<Series>;
@@ -2756,6 +2798,16 @@ export type Publication = Node & {
  * A publication is a blog that can be created for a user or a team.
  */
 export type PublicationAllDraftsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+};
+
+
+/**
+ * Contains basic information about the publication.
+ * A publication is a blog that can be created for a user or a team.
+ */
+export type PublicationAllScheduledDraftsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['Int']['input'];
 };
@@ -2810,6 +2862,15 @@ export type PublicationPostsViaPageArgs = {
 export type PublicationRecommendingPublicationsArgs = {
   page: Scalars['Int']['input'];
   pageSize: Scalars['Int']['input'];
+};
+
+
+/**
+ * Contains basic information about the publication.
+ * A publication is a blog that can be created for a user or a team.
+ */
+export type PublicationRedirectedPostArgs = {
+  slug: Scalars['String']['input'];
 };
 
 
@@ -2891,6 +2952,8 @@ export type PublicationFeatures = {
   audioBlog: AudioBlogFeature;
   /** Individual styling for the publication. */
   customCSS: CustomCssFeature;
+  /** GPT Bot crawler to index the publication. */
+  gptBotCrawling: GptBotCrawlingFeature;
   /** Headless CMS for the publication. */
   headlessCMS: HeadlessCmsFeature;
   /** Newsletter feature for the publication which adds a `/newsletter` route for collecting subscribers and allows sending out newsletters. */
@@ -3978,11 +4041,29 @@ export type ToggleFollowUserPayload = {
   user?: Maybe<User>;
 };
 
+export type ToggleGptBotCrawlingInput = {
+  publicationId: Scalars['ID']['input'];
+};
+
+export type ToggleGptBotCrawlingPayload = {
+  __typename?: 'ToggleGPTBotCrawlingPayload';
+  publication?: Maybe<Publication>;
+};
+
 /** Response to toggling role based invite links. */
 export type ToggleRoleBasedInviteLinksPayload = {
   __typename?: 'ToggleRoleBasedInviteLinksPayload';
   /** Signifies the status of invite links after toggling. */
   areRoleBasedInviteLinksActive: Scalars['Boolean']['output'];
+};
+
+export type ToggleTextSelectionSharerInput = {
+  publicationId: Scalars['ID']['input'];
+};
+
+export type ToggleTextSelectionSharerPayload = {
+  __typename?: 'ToggleTextSelectionSharerPayload';
+  publication?: Maybe<Publication>;
 };
 
 export type TriggerWebhookTestInput = {

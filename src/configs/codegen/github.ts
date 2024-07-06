@@ -6,8 +6,8 @@ const config: CodegenConfig = {
   schema: {
     'https://api.github.com/graphql': {
       headers: {
-        Authorization: `bearer ${GITHUB_CLIENT.ACCESS_TOKEN}`,
-        'User-Agent': `${GITHUB_CLIENT.APP_NAME}`,
+        Authorization: GITHUB_CLIENT.BEARER_ACCESS_TOKEN,
+        'User-Agent': GITHUB_CLIENT.APP_NAME,
       },
     },
   },

@@ -14845,8 +14845,6 @@ export type Organization = Actor & AnnouncementBanner & MemberStatusable & Node 
   updatedAt: Scalars['DateTime']['output'];
   /** The HTTP URL for this organization. */
   url: Scalars['URI']['output'];
-  /** Verified domains available to this organization. */
-  verifiedDomainsList: Array<Scalars['String']['output']>;
   /** Organization is adminable by the viewer. */
   viewerCanAdminister: Scalars['Boolean']['output'];
   /** Can the viewer pin repositories and gists to the profile? */
@@ -18062,6 +18060,8 @@ export type PropertyTargetDefinition = {
   name: Scalars['String']['output'];
   /** The values to match for */
   propertyValues: Array<Scalars['String']['output']>;
+  /** The source of the property. Choose 'custom' or 'system'. Defaults to 'custom' if not specified */
+  source?: Maybe<Scalars['String']['output']>;
 };
 
 /** A property that must match */
@@ -18070,6 +18070,8 @@ export type PropertyTargetDefinitionInput = {
   name: Scalars['String']['input'];
   /** The values to match for */
   propertyValues: Array<Scalars['String']['input']>;
+  /** The source of the property. Choose 'custom' or 'system'. Defaults to 'custom' if not specified */
+  source?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A user's public key. */
@@ -29768,8 +29770,6 @@ export type User = Actor & Node & PackageOwner & ProfileOwner & ProjectOwner & P
   updatedAt: Scalars['DateTime']['output'];
   /** The HTTP URL for this user */
   url: Scalars['URI']['output'];
-  /** Verified domains available to this organization. */
-  verifiedDomainsList: Array<Scalars['String']['output']>;
   /** Can the viewer pin repositories and gists to the profile? */
   viewerCanChangePinnedItems: Scalars['Boolean']['output'];
   /** Can the current viewer create new projects on this owner. */

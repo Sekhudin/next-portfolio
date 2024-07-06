@@ -1,3 +1,4 @@
+import path from 'path';
 import type {
   BranchProtectionRuleConnection,
   CodeOfConduct,
@@ -30,7 +31,6 @@ import type {
   Milestone,
   MilestoneConnection,
   PackageConnection,
-  PageInfo,
   PinnedDiscussionConnection,
   PinnedEnvironmentConnection,
   PinnedIssueConnection,
@@ -51,7 +51,6 @@ import type {
   RepositoryCollaboratorConnection,
   RepositoryConnection,
   RepositoryContactLink,
-  RepositoryEdge,
   RepositoryInteractionAbility,
   RepositoryLockReason,
   RepositoryOwner,
@@ -214,6 +213,19 @@ export class RepositoryEntity implements Repository {
 class RepositoryMethods extends RepositoryEntity {
   constructor(values: Partial<Repository>) {
     super(values);
+  }
+
+  getName() {
+    return this.name.replace(/-/g, ' ').trim();
+  }
+
+  getImageFromPublic(filename: string = 'cover.png') {
+    if (this.defaultBranchRef && typeof this.url === 'string') {
+      const basePath = this.url.replace('github.com', 'raw.githubusercontent.com');
+      const branch = this.defaultBranchRef.name;
+      return path.join(basePath, branch, 'public', filename);
+    }
+    return '';
   }
 }
 
