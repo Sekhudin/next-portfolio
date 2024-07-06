@@ -15,6 +15,8 @@ const ProjectCover = ({ className, description, fallback = null, ...props }: Cov
   const [loading, setLoading] = React.useState(true);
   const [loaded, setLoaded] = React.useState(false);
 
+  // eslint-disable-next-line no-console
+  console.log(props.src)
   return (
     <React.Fragment>
       <ConditionalContainer isVisible={loading}>
