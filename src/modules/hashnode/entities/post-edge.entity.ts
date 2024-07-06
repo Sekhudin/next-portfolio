@@ -20,6 +20,9 @@ import type {
 } from 'types/hashnode';
 
 class PostEdgeEntity implements PostEdge {
+  constructor(values: Partial<PostEdge>) {
+    Object.assign(this, values);
+  }
   cursor!: string;
   node!: Node & {
     __typename?: 'Post';
@@ -45,6 +48,7 @@ class PostEdgeEntity implements PostEdge {
     likedBy: PostLikerConnection;
     ogMetaData?: Maybe<OpenGraphMetaData>;
     preferences: PostPreferences;
+    previousSlugs: Array<Scalars['String']['output']>;
     publication?: Maybe<Publication>;
     publishedAt: Scalars['DateTime']['output'];
     reactionCount: Scalars['Int']['output'];
@@ -63,10 +67,6 @@ class PostEdgeEntity implements PostEdge {
     views: Scalars['Int']['output'];
   };
   __typename?: 'PostEdge' | undefined;
-
-  constructor(values: Partial<PostEdge>) {
-    Object.assign(this, values);
-  }
 }
 
 class PostEdgeMethods extends PostEdgeEntity {

@@ -43,6 +43,7 @@ export class PostEntity implements Post {
   likedBy!: PostLikerConnection;
   ogMetaData?: Maybe<OpenGraphMetaData> | undefined;
   preferences!: PostPreferences;
+  previousSlugs!: string[];
   publication?: Maybe<Publication> | undefined;
   publishedAt: any;
   reactionCount!: number;

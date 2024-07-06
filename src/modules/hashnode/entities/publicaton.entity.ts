@@ -32,10 +32,15 @@ import type {
 } from 'types/hashnode';
 
 class PublicationEntity implements Publication {
+  constructor(values: Partial<Publication>) {
+    Object.assign(this, values);
+  }
+  
   id!: string;
   __typename?: 'Publication' | undefined;
   about?: Maybe<Content> | undefined;
   allDrafts!: DraftConnection;
+  allScheduledDrafts!: DraftConnection;
   allowContributorEdits!: boolean;
   author!: User;
   canonicalURL!: string;
@@ -54,6 +59,7 @@ class PublicationEntity implements Publication {
   integrations?: Maybe<PublicationIntegrations> | undefined;
   invites?: Maybe<PublicationInvite> | undefined;
   isGitHubBackupEnabled!: boolean;
+  isGithubAsSourceConnected!: boolean;
   isHeadless!: boolean;
   isTeam!: boolean;
   links?: Maybe<PublicationLinks> | undefined;
@@ -66,9 +72,10 @@ class PublicationEntity implements Publication {
   preferences!: Preferences;
   recommendedPublications!: UserRecommendedPublicationEdge[];
   recommendingPublications!: PublicationUserRecommendingPublicationConnection;
+  redirectedPost?: Maybe<Post> | undefined;
   redirectionRules!: RedirectionRule[];
   scheduledDrafts!: DraftConnection;
-  series?: Maybe<Series>;
+  series?: Maybe<Series> | undefined;
   seriesList!: SeriesConnection;
   sponsorship?: Maybe<PublicationSponsorship> | undefined;
   staticPage?: Maybe<StaticPage> | undefined;
@@ -78,10 +85,6 @@ class PublicationEntity implements Publication {
   totalRecommendedPublications!: number;
   url!: string;
   urlPattern!: UrlPattern;
-
-  constructor(values: Partial<Publication>) {
-    Object.assign(this, values);
-  }
 }
 
 class PublicationMethods extends PublicationEntity {
