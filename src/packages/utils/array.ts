@@ -1,10 +1,10 @@
 import type { MapCallbackfn } from 'types/common';
 
 class ArrayUtils<T extends unknown> {
-  private value!: T[];
+  private value?: T[];
 
   constructor(value?: T[] | null) {
-    if (Array.isArray(value)) {
+    if (Array.isArray(value) && value.length) {
       this.value = value;
     }
   }
