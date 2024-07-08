@@ -33,6 +33,7 @@ const RepositoryCard = ({ ...props }: RepositoryEntity) => {
         toast.info('Open New Window', {
           description: 'Want to open the link in a new window?',
           position: 'top-center',
+          duration: 5000,
           action: {
             label: 'Continue',
             onClick: () => {

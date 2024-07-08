@@ -12,6 +12,10 @@ export const MAIN: BaseLink[] = [
     href: 'https://quran.syaikhu.com/',
     tooltip: 'Quran',
     ariaLabel: '',
+    options: {
+      prefetch: false,
+      target: '_blank',
+    },
   },
   {
     display: 'Blog',

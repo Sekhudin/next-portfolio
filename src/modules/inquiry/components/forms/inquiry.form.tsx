@@ -15,8 +15,8 @@ import inquiryService from 'modules/inquiry/services/inquiry.service';
 export default function InquiryForm({ className }: Props) {
   const { form, onValid, onInvalid, loading, FixedLoader } = useForm({
     service: inquiryService.sendInquiry,
-    resolver: formResolver(inquirySchema.getSchema()),
-    defaultValues: inquirySchema.getDefaultValue(),
+    resolver: formResolver(inquirySchema.schema),
+    defaultValues: inquirySchema.defaultValue,
     okMsg: 'Email sent successfully',
     failMsg: 'Email failed to send',
   });

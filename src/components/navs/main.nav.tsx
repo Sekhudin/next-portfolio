@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from 'lucide-react';
 import { Div, Span } from 'components/typography/p';
-import { cn, Props, WithChildren } from 'packages/utils/cn';
+import { cn, Props } from 'packages/utils/cn';
 import MainCellularNav from './main-cellular.nav';
 import MainTabNav from './main-tab.nav';
 

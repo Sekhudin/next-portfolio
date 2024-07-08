@@ -18,16 +18,16 @@ import NavigationItem from './item';
 export default function MainCellularNav({ children, className }: Props<WithChildren>) {
   const [open, setOpen] = React.useState<boolean>();
   const pathName = usePathname();
-  const isMatch = (v: string) => pathName.includes(v);
 
-  const closeHandler = () => {
+  const isMatch = React.useCallback((value: string) => pathName.includes(value), [pathName]);
+  const closeHandler = React.useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   React.useEffect(() => {
     const evenListener = () => {
       if (open) {
-        closeHandler();
+        setOpen(false);
         return;
       }
     };
@@ -52,18 +52,17 @@ export default function MainCellularNav({ children, className }: Props<WithChild
           <h3 className="text-sm font-bold mb-2">Navigation</h3>
           <Separator orientation="horizontal" className="mb-2 dark:bg-zinc-700/50" />
           <div className={cn(`flex flex-col space-y-1`)}>
-            {MAIN.map((v, key) => (
+            {MAIN.map((link, key) => (
               <NavigationItem
-                key={key}
-                href={v.href}
-                onClick={closeHandler}
                 className={cn(
                   `hover:bg-indigo-700/10 hover:text-indigo-700 rounded-md px-2 py-1.5`,
-                  `${
-                    isMatch(v.href) ? `bg-indigo-700/10 text-indigo-700 dark:text-indigo-700` : null
-                  }`
-                )}>
-                {v.display}
+                  isMatch(link.href) ? `bg-indigo-700/10 text-indigo-700 dark:text-indigo-700` : ''
+                )}
+                key={key}
+                href={link.href}
+                onClick={closeHandler}
+                {...link.options}>
+                {link.display}
               </NavigationItem>
             ))}
           </div>

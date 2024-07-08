@@ -1,3 +1,5 @@
+import type Link from 'next/link';
+import type React from 'react';
 import type { LucideIcon } from 'lucide-react';
 
 export type GithubUrlTypeFromDescription = 'homePage' | 'api';
@@ -13,14 +15,20 @@ export interface GithubDescriptionFormatter {
 }
 
 export type GithubIconDictionary = Record<GithubRepoTypeFromDescription, LucideIcon>;
-export type GithubTypeDictionary = Record<GithubRepoTypeFromDescription, GithubRepoTypeFromDescription>;
+export type GithubTypeDictionary = Record<
+  GithubRepoTypeFromDescription,
+  GithubRepoTypeFromDescription
+>;
 export type GithubTypePattern = Record<GithubRepoTypeFromDescription, RegExp>;
 export type GithubUrlPattern = Record<GithubUrlTypeFromDescription, RegExp>;
 
 export type InquiryTimeFrame = '2 Weeks' | '1-3 Months' | '> 3 Months' | 'undecided';
 export type BaseContact = BaseAnchor & { icon: LucideIcon; contact: string };
-export type BaseLink = BaseAnchor;
 export type BaseSocialMedia = BaseAnchor & { icon: LucideIcon };
+export type BaseLink = BaseAnchor & {
+  href: React.ComponentPropsWithoutRef<typeof Link>['href'];
+  options?: Omit<React.ComponentPropsWithoutRef<typeof Link>, keyof BaseLink | 'onClick'>;
+};
 export type BaseTools = {
   title: string;
   stacks: Omit<BaseAnchor & { sub: string }, 'tooltip'>[];

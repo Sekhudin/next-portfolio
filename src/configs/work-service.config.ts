@@ -7,7 +7,7 @@ export const TIME_FRAME: readonly [InquiryTimeFrame, ...InquiryTimeFrame[]] = [
   'undecided',
 ] as const;
 
-export const HOUR_RATE: string = '$2.5';
+export const HOUR_RATE: string = '$3';
 
 export const WEB_DEV: BaseWorkService = {
   title: 'Web Development',

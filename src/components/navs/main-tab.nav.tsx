@@ -13,15 +13,16 @@ export default function MainTabNav({ className }: Props) {
         `flex justify-center rounded-full shadow-xl border gap-x-4 py-2 px-8`,
         className
       )}>
-      {MAIN.map((v, key) => (
+      {MAIN.map((link, key) => (
         <NavigationItem
-          key={key}
-          href={v.href}
           className={cn(
             `hover:text-indigo-700`,
-            `${isMatch(v.href) ? 'text-indigo-700 dark:text-indigo-700' : ''}`
-          )}>
-          {v.display}
+            isMatch(link.href) ? 'text-indigo-700 dark:text-indigo-700' : ''
+          )}
+          key={key}
+          href={link.href}
+          {...link.options}>
+          {link.display}
         </NavigationItem>
       ))}
     </div>
