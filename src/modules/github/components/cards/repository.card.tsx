@@ -14,8 +14,9 @@ import Repository, { RepositoryEntity } from 'modules/github/entities/repository
 import DescriptionParser from 'modules/github/entities/description-parser';
 
 const ExternalLinkIcon = IconHOC(ExternalLink);
-const RepositoryCard = ({ ...props }: RepositoryEntity) => {
-  const repository = React.useMemo(() => Repository(props), [props]);
+type RepositoryCardProps = { repository: RepositoryEntity };
+const RepositoryCard = ({ ...props }: RepositoryCardProps) => {
+  const repository = React.useMemo(() => Repository(props.repository), [props.repository]);
   const repo = React.useMemo(() => {
     return DescriptionParser(repository.description).parse(repository.name);
   }, [repository.description, repository.name]);

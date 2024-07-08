@@ -70,7 +70,7 @@ const RepositoryList = ({ pageSize, ...props }: RepositoryListProps) => {
     <div className="flex flex-col gap-y-16">
       <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}>
         {repositories.mapRepos((repository, key) => (
-          <MemoizeRepositoryCard key={key} {...repository} />
+          <MemoizeRepositoryCard key={key} repository={repository} />
         ))}
       </div>
 
