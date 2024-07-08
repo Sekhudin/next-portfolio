@@ -3,7 +3,7 @@ import { MONTHS } from 'configs/constant.config';
 type CustomDateFormat = 'M D, Y';
 class StringUtils {
   private value: string;
-  constructor(value?: string | null) {
+  constructor(value?: unknown) {
     if (value && typeof value === 'string') {
       this.value = value;
     } else {
@@ -79,5 +79,5 @@ class StringUtils {
   }
 }
 
-const stringUtils = (value?: string | null) => new StringUtils(value);
+const stringUtils = (value?: unknown) => new StringUtils(value);
 export default stringUtils;
