@@ -67,6 +67,8 @@ NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
 ```
 
+For the development process, create `.env.development` file, and create `.env.production` for production process.
+
 ### Instalation
 
 1. Clone the repository:
@@ -117,3 +119,10 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
 - **Instagram** : [@sekhudin_y](https://www.instagram.com/sekhudin_y)<br>
 - **Twitter** : [@sekhudin_y](https://twitter.com/sekhudin_y)<br>
 - **Trakteer** : [syaikhu](teer.id/syaikhu)
+
+## Additional Information
+
+For more information, visit the official [Next.js documentation](https://nextjs.org/docs).
+
+## Support Me:
+<a href="https://trakteer.id/syaikhu" target="_blank"><img id="wse-buttons-preview" src="https://cdn.trakteer.id/images/embed/trbtn-red-1.png?date=18-11-2023" height="40" style="border:0px;height:40px;" alt="Trakteer Saya"></a>
