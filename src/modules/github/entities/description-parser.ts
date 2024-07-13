@@ -6,7 +6,7 @@ import type {
   GithubUrlTypeFromDescription,
 } from 'types/configs';
 import Arr from 'packages/utils/array';
-import * as Regx from 'configs/regex';
+import * as Regx from 'src/configs/regex.config';
 
 class DescriptionFormatterEntity implements GithubDescriptionFormatter {
   protected repoToHide = ['sekhudin', 'nest', 'rest-nestjs'];
