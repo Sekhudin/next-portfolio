@@ -1,0 +1,22 @@
+name: Simple JS Script
+
+on:
+  push:
+    branches:
+      - main  # Hanya berjalan jika ada push ke branch main
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Run JS script
+        run: node script.js
