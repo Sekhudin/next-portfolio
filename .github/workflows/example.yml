@@ -19,4 +19,4 @@ jobs:
           node-version: '16'
 
       - name: Run JS script
-        run: node script.js
+        run: node actions.js
